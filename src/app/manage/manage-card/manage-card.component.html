@@ -1,0 +1,83 @@
+<ng-template #delete let-c="close" let-d="dismiss">
+    <div class="modal-header">
+        <h4 class="modal-title">
+            Modal Title
+        </h4>
+        <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-3">
+                <img [src]="event.imagePath" class="img-fluid" />
+            </div>
+            <div class="col-9">
+                Are you sure you want to delete {{ event.title }}?
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteEvent();c('')">
+            <i class="fa fa-times"></i>
+            Delete Draft
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="c('')">
+            Cancel
+        </button>
+    </div>
+</ng-template>
+
+<div *ngIf="set" class="manage-card-container">
+    <div class="row align-items-center">
+        <div class="col-md-4">
+            <span *ngIf="eventType == 'live' || eventType == 'past' || eventType == 'promotedLive' || eventType == 'attendingLive'" class="liveStatus {{event.liveStatus">
+                {{event.liveStatus}}
+            </span>
+            <img [src]="event.imagePath" class="img-fluid" />
+        </div>
+        <div class="col-md-8">
+            <div class="c-info-list">
+                <h3 class="c-title c-font-bold c-font-22 c-font-dark">
+                    {{event.title}}
+                </h3>
+                <div>{{event.location}}</div>
+                <div>{{event.date}} || {{event.time}}</div>
+
+                <!-- Show Signup Progress to Organizer-->
+                <div *ngIf="eventType=='live' || eventType == 'past'">
+                    <status-bar [percentage]="percentage"></status-bar>
+                    <div style="font-size: 12px;">
+                        {{event.ticketsUsed}} / {{event.totalTickets}} registration filled.
+                    </div>
+                </div>
+
+                <!--Show Promoter COntribution to Promoter-->
+                <div *ngIf="eventType == 'promotedLive' || eventType == 'promotedPast'">
+                    <status-bar [percentage]="promoted.percentage"></status-bar>
+                    <div style="font-size: 12px;">
+                        You've referred
+                        <strong>{{promoted.displayPercentage}}%</strong>
+                        of registrants ({{promoted.totalPromotions}})
+                    </div>
+
+                    <div>
+                        <a [routerLink]="'/manage/promoted/'+eventId+'/event-details'">
+                            <i class="fa fa-gear"></i>
+                            Manage
+                        </a>
+                        <a [routerLink]="'/manage/promoted/'+eventId+'/invite'" style="margin-left: 15px;">
+                            <i class="fa fa-users"></i>
+                            Invite
+                        </a>
+                    </div>
+                </div>
+
+                <!--Bookmarked Events-->
+                <div *ngIf="eventType == 'bookmark'">
+                    <div *ngIf="organizerSet &&"
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
