@@ -1,0 +1,35 @@
+:host {
+    font-size: 9rem;
+}
+
+.liveStatus {
+    position: absolute;
+    display: inline-block;
+    padding: 0px 14px;
+    font-size: .75rem;
+    background-color: rgba(0, 128, 0, 0.85);
+    color: #fff;
+    text-transform: lowercase;
+}
+
+.liveStatus.closed {
+    background-color: rgba(243, 61, 4, .85);
+}
+
+.liveStatus.cancelled {
+    background-color: rgba(224, 202, 26, .85);
+}
+
+h3 {
+    font-weight: 100;
+    font-size: 15px;
+    margin-bottom: 0;
+}
+
+.low {
+    font-size: .75rem;
+}
+
+.manage-card-container {
+    padding-bottom: 2rem;
+}

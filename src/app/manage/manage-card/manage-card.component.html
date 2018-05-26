@@ -75,8 +75,59 @@
 
                 <!--Bookmarked Events-->
                 <div *ngIf="eventType == 'bookmark'">
-                    <div *ngIf="organizerSet &&"
+                    <div *ngIf="organizerSet && organizerOcode.length" style="margin-bottom: 1rem;">
+                        Organized By
+                        <a [routerLink]="'/' + organizerOcode" target="_blank">
+                            {{ organizer.organizerName }}
+                        </a>
+                    </div>
+
+                    <div>
+                        <a [routerLink]="'/event/' + eventId" target="_blank" style="padding-left: 2rem;">
+                            <i class="fa fa-desktop"></i>
+                            Event Page
+                        </a>
+                    </div>
                 </div>
+
+                <!--Showing to Attendees-->
+                <div *ngIf="eventType == 'attendingLive'">
+                    <div *ngIf="organizerSet && organizerOcode.length" style="margin-bottom: 1rem;">
+                        Organized By
+                        <a [routerLink]="'/' + organizerOcode" target="_blank">
+                            {{ organizer.organizerName }}
+                        </a>
+                    </div>
+
+                    <div>
+                        <a [routerLink]="'/manage/attending/' + eventId">
+                            <i class="fa fa-desktop"></i>
+                            Event Page
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row" *ngIf="eventType == 'live'" style="margin-top: 5px;">
+                <a routerLink = "/my-event/{{eventId}}">
+                    <i class="fa fa-gear"></i>
+                    Manage
+                </a>
+                <a>
+                    <i class="fa fa-users">
+                        Invite
+                    </i>
+                </a>
+            </div>
+            <div class="low" *ngIf="eventType == 'draft'" style="margin-top: 5px;">
+                <a routerLink = "/create/{{eventId}}">
+                    <i class="fa fa-edit"></i>
+                    Edit
+                </a>
+                <a (click) = "open(delete)">
+                    <i class="fa fa-trash"></i>
+                    Delete
+                </a>
             </div>
         </div>
     </div>
