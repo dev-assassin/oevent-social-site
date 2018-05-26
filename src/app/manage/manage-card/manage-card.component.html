@@ -109,7 +109,7 @@
 
             </div>
             <div class="row" *ngIf="eventType == 'live'" style="margin-top: 5px;">
-                <a routerLink = "/my-event/{{eventId}}">
+                <a routerLink="/my-event/{{eventId}}">
                     <i class="fa fa-gear"></i>
                     Manage
                 </a>
@@ -120,11 +120,11 @@
                 </a>
             </div>
             <div class="low" *ngIf="eventType == 'draft'" style="margin-top: 5px;">
-                <a routerLink = "/create/{{eventId}}">
+                <a routerLink="/create/{{eventId}}">
                     <i class="fa fa-edit"></i>
                     Edit
                 </a>
-                <a (click) = "open(delete)">
+                <a (click)="open(delete)">
                     <i class="fa fa-trash"></i>
                     Delete
                 </a>
