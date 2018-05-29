@@ -1,0 +1,61 @@
+<td>
+    <div class="row">
+        <div class="col-md-7">
+            <input [(mgModel)]="ticket.ticketTitle" class="form-control" (blur)="saveTicket()">
+        </div>
+        <div class="col-md-2">
+            <input [(ngModel)]="ticket.ticketQuantity" class="form-control" (blur)="saveTicket()">
+        </div>
+        <div class="col-md-2">
+            <div class="input-group" *ngIf="ticket.ticketType == 'paid'">
+                <div class="input-group-addon">$</div>
+                <input [(ngModel)]="ticket.ticketPrice" (ngModelChange)="ticket.ticketPrice=$event" class="form-control" style="margin-left: -3px;"
+                    (blur)="saveTicket()">
+            </div>
+        </div>
+        <div class="col-md-1 icons text-right">
+            <a (click)="toggleSetting()" style="margin-right: 5px;">
+                <i class="fa fa-gear"></i>
+            </a>
+            <a (click)="removeTicket()">
+                <i class="fa fa-trash"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="row padding-vertical-sm" *ngIf="ticket.open">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Description</label>
+                    <input class="form-control" [(ngModel)]="ticket.ticketDescription" (blur)="saveTicket()" />
+                </div>
+            </div>
+
+            <div class="row padding-vertical-sm">
+                <div class="col-md-12">
+                    <label style="margin-right: 15px;" class="inline-label" *ngIf="ticket.ticketType == 'paid'">
+                        <input type="checkbox" [(ngModel)]="ticket.buyMultiple" (click)="saveCheckbox()" />
+                        Registrant can buy multiple tickets.
+                    </label>
+
+                    <label style="margin-right: 15px;" class="inline-label" *ngIf="ticket.buyMultiple">
+                        <input type="checkbox" [(ngModel)]="ticket.multiRegistrant" (click)="saveCheckbox()" />
+                        Require seprate registration information
+                    </label>
+                </div>
+            </div>
+
+            <div class="row padding-vertical-sm" *ngIf="ticket.buyMultiple || ticket.ticketType =='paid'">
+                <div class="col-md-6">
+                    <label>Max Number of Registrants Per Ticket</label>
+                    <input [(ngModel)]="ticket.maxPer" class="form-control" (blur)="saveTicket()" />
+                </div>
+                <div class="col-md-6" *ngIf="ticket.ticketType == 'paid'">
+                    <label>PayPal Address for Ticket</label>
+                    <input [(ngModel)]="ticket.payPal" class="form-control" (blur)="saveTicket()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</td>

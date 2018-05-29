@@ -8,45 +8,7 @@ import {ITicket} from "../../../models/tickets.models";
 
 @Component({
     selector: 'event-tickets',
-
-    template: `
-
-        <table class="table table-striped" style="margin-top:15px;" *ngIf="ticketLength"> 
-            <thead>
-                <tr>
-                    <td> 
-                        <div class="row"> 
-                            <div class="col-sm-7"> 
-                                Ticket Title
-                            </div>
-                            <div class="col-sm-2"> 
-                                Quantity
-                            </div>
-                            <div class="col-sm-2"> 
-                                Price
-                            </div>                            
-                        </div>
-                    </td>
-                </tr>
-            </thead>
-            <tbody> 
-                <tr *ngFor="let ticket of createTicketService.ticketList$ | async" event-ticket [ticketKey]="ticket.$key"></tr> 
-            </tbody>
-        </table>
-        
-        <div style="margin-top:25px;">
-            
-            <button (click)="addTicket('free')" class="btn btn-primary" style="margin-right:15px;">
-                Add Free Ticket <i class="fa fa-plus-square-o"></i>    
-            </button>
-            
-            <button (click)="addTicket('paid')" class="btn btn-primary">
-                Add Paid Ticket <i class="fa fa-plus-square-o"></i>    
-            </button>
-            
-        </div>
-        
-    `,
+    templateUrl: './tickets.component.html',
     styles: [
         `
             :host{
