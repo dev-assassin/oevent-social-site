@@ -1,0 +1,259 @@
+@import 'bootstrap/bootstrap',
+'tbreplaced/main',
+'tbreplaced/blob',
+'vendor/toasty',
+'styles/navigation';
+
+button{
+  cursor:pointer;
+}
+
+.profile-dropdown.open > .dropdown-menu{
+  display:block;
+}
+
+.form-group .error-text{
+  display:none;
+}
+
+a.btn-primary:not([href]):not([tabindex]){
+  color:white;
+  cursor:pointer;
+}
+
+.btn-primary{
+  cursor:pointer;
+}
+
+ngb-timepicker{
+
+  position: relative;
+  top: -13px;
+
+  .btn-outline-primary{
+    position:relative;
+    top:-3px;
+  }
+
+}
+
+.time-label{
+  position: relative;
+  top: -17px;
+  padding-right: 15px;
+}
+
+.primary-text{
+  color:#26C6DA;
+}
+
+.form-group.has-error .error-text{
+  display:block;
+}
+
+button.close{
+  position: absolute;
+  right: 5px;
+  top: 1px;
+}
+
+ng2-slim-loading-bar{
+
+}
+
+.slim-loading-bar-progress{
+  transition:all .5s;
+  position: fixed;
+  z-index: 2147483647;
+  top:0;
+}
+
+.cd-bg-video-wrapper video {
+  /* you won't see this element in the html, but it will be injected using js */
+  display: block;
+  min-height: 100%;
+  min-width: 100%;
+  max-width: none;
+  height: auto;
+  width: auto;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  bottom: auto;
+  right: auto;
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.form-control.input[read-only]{
+  background-color:white;
+}
+
+.ql-editor[contenteditable="false"]{
+  padding:0px;
+}
+
+.fade.show{
+  opacity:1;
+}
+
+ngb-modal-backdrop.fade.show{
+  opacity:.25;
+}
+
+ngb-modal-window{
+  overflow:visible;
+}
+
+.modal{
+  top:55px;
+}
+
+.modal-dialog{
+  margin-top:157px;
+}
+
+a.btn-default{
+  color:#333;
+}
+
+.c-sidebar-menu li.active>a{
+  font-weight:bold;
+}
+
+h4.round-heading{
+
+  margin-top:80px;
+  margin-left: 55px;
+  position: relative;
+  padding-bottom: 1px;
+  font-size: 19px;
+
+  & > span{
+    display: inline-block;
+    position: absolute;
+    left: -55px;
+    color: white;
+    border-radius: 100%;
+    background-color: #26C6DA;
+    width: 35px;
+    height: 35px;
+    padding: 4px 0px;
+    top: -7px;
+    font-size: 25px;
+    font-weight: 100;
+    text-align: center;
+  }
+
+}
+
+.float-center{
+  margin:0 auto;
+}
+
+h3.second-tier{
+  margin-top: 10px;
+  margin-bottom: 45px;
+  font-size: 25px;
+}
+
+h4.center-no-line{
+  border:0;
+  text-align:center;
+}
+
+.shift-up-5{
+  position:relative;
+  top:-5px;
+}
+
+.block-info{
+  color:#999;
+}
+
+.round-icon{
+  border-radius: 50%;
+  border: 0px;
+  padding: .5rem;
+  text-align: center;
+  min-width: 3rem;
+  min-height: 3rem;
+  background-color: #26c6da;
+  color: white;
+  transition:all .15s;
+
+  &:hover, &:active, &:focus{
+    background-color:#1fa1b1;
+  }
+
+}
+
+.editing .ql-editor{
+  background-color:#f7f7f7;
+}
+
+@media print {
+  app-header{
+    display:none;
+  }
+
+  .hide-print, .print-hide{
+    display:none;
+  }
+
+  .show-print{
+    display:block;
+  }
+
+}
+
+body .swiper .swiper-container.swiper-container-horizontal{
+  padding-bottom:35px;
+  .swiper-pagination{
+    bottom:0px;
+  }
+
+  .swiper-button-prev, .swiper-button-next{
+    background-color: rgba(214, 214, 214, 0.44);
+    border-radius: 50%;
+    width: 63px;
+    height: 63px;
+    background-position: 15px center;
+  }
+
+  .swiper-button-next{
+    background-position: 19px center;
+  }
+
+  >.swiper-pagination .swiper-pagination-handle .swiper-pagination-bullet.swiper-pagination-bullet-first{
+    margin:0px;
+  }
+
+
+}
+
+
+.swiper-button-next, .swiper-button-prev{
+
+}
+
+.login-page{
+
+  .close{
+    display:none;
+  }fire
+
+  .modal-body{
+    padding-top:3px;
+    background-color:white;
+    box-shadow: 0 0 25px rgba(0,0,0,.12);
+  }
+
+}
+
+.swiper-slide vertical-card>.margin-vertical{
+  margin-top:0;
+}
