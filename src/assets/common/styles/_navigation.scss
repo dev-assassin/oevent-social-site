@@ -1,0 +1,60 @@
+.flyout-container{
+  position:relative;
+}
+
+.flyout-dropdown {
+
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  -o-transform: scale(0);
+  transform: scale(0);
+  opacity: 0;
+  transition: all .25s;
+  filter: alpha(opacity=0);
+  webkit-transform-origin: top right;
+  -moz-transform-origin: top right;
+  -ms-transform-origin: top right;
+  transform-origin: top right;
+  right: 0;
+  left: auto;
+  position: absolute;
+  top: 100%;
+  z-index: 9;
+  float: left;
+  min-width: 160px;
+  padding: 5px 0;
+  margin: 2px 0 0;
+  list-style: none;
+  font-size: 13px;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+  display:block;
+
+  &.active{
+    -webkit-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+    filter: alpha(opacity=100);
+  }
+
+  &>li{
+
+    padding: .25rem .75rem;
+
+    &:first-child{
+      padding-top:.75rem;
+    }
+    &:last-child{
+      padding-bottom:.75rem
+    }
+
+  }
+
+}
