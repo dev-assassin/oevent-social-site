@@ -1,0 +1,68 @@
+<section class="secondary-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 sec-nav">
+                <div class="c-layout-sidebar-menu c-theme ">
+                    <!-- BEGIN: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+                    <div class="c-sidebar-menu-toggler">
+                        <h3 class="c-title c-font-uppercase c-font-bold">My Profile</h3>
+                        <a href="javascript:;" class="c-content-toggler" data-toggle="collapse" data-target="#sidebar-menu-1">
+                            <span class="c-line"></span>
+                            <span class="c-line"></span>
+                            <span class="c-line"></span>
+                        </a>
+                    </div>
+                    <ul class="c-sidebar-menu collapse " id="sidebar-menu-1">
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">My Profile
+
+                            </a>
+                            <ul class="c-dropdown-menu">
+                                <li routerLinkActive="active">
+                                    <a routerLink='contact'>Contact Info</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='password'>Password</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='about'>About Me</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='social'>Social Media</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">Membership
+
+                            </a>
+                            <ul class="c-dropdown-menu">
+                                <li routerLinkActive="active">
+                                    <a routerLink='subscription'>Manage Subscription</a>
+                                </li>
+                                <li  routerLinkActive="active">
+                                    <a routerLink='payment'>Payment History</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">Account Settings
+
+                            </a>
+                            <ul class="c-dropdown-menu">
+                                <li  routerLinkActive="active">
+                                    <a routerLink='preferences'>Email Preferences</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <!-- END: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+                </div>
+            </div>
+
+            <div class="col-md-9 sec-main">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</section>
