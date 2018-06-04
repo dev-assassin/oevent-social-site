@@ -1,0 +1,16 @@
+.navbar-nav .nav-link{
+  padding-top:1rem;
+}
+
+.container-fluid{
+  margin-left:15px;
+  margin-right:15px;
+}
+
+@media(min-width:767px){
+  .navbar-collapse.collapse{
+    display:block;
+  }
+}
+
+
