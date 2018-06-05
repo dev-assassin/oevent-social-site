@@ -1,0 +1,50 @@
+<header>
+    <nav class="fixed-top">
+        <top-bar-reminder
+            [show]="showProfileReminder"
+            [title]="'Your almost done!'"
+            [message]="'Don't forget to add your profile information.'"
+            [linkText]="'Go to profile &#8594;'"
+            [linkAddress]="'/account/contact'"
+        ></top-bar-reminder>
+
+        <top-bar-reminder
+            [show]="!showProfileReminder && showAboutMeReminder"
+            [title]="'Your almost done!'"
+            [message]="'Don't forget to add your picture and other information in about me section'"
+            [linkText]="'Go to about me &#8594;'"
+            [linkAddress]="'/account/about'"
+        ></top-bar-reminder>
+
+        <nav class="navbar navbar-light bg-faded">
+            <div class="container-fluid">
+                <a class="navbar-brand" routerLink="/" routerLinkActive="active">
+                    <img src="../../assets//images//logo.svg" alt="ōevent logo">
+                </a>
+
+                <div class="pull-right">
+                    <button class="navbar-toggle hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+                        ☰
+                    </button>
+                </div>
+
+                <div class="pull-right main-nav-container">
+                    <div class="navbar-collapse navbar-left navbar-toggle-sm collapse" id="exCollapsingNavbar2">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item" *ngIf="authenticated">
+                                <a class="nav-link" routerLink="/create" routerLinkActive="active">
+                                    <span class="fa fa-plus"></span>
+                                    Create Event
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </nav>
+</header>

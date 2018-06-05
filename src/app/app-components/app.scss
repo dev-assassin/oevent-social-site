@@ -1,0 +1,31 @@
+//===================================================================
+//  APP
+//===================================================================
+app{
+  z-index:1;
+}
+
+footer.footer{
+  padding-bottom:125px;
+  box-shadow: 0px 362px 0px 35px #2e3336;
+}
+
+.footer:after,
+.footer .container:after{content:'';clear:both;display:block;}
+.footer{background:#2e3336;padding:40px 0 30px;display:block;}
+.footer .container{max-width:440px;margin:0 auto;width:100%;}
+.ftr-logo{margin:0 0 35px;}
+.ftr-r{float:right;}
+.ftr-l{float:left;}
+.ftr-r h2{margin:0 0 30px;padding:0 0 20px;font-size:21px;color:#fff;font-weight:700;display:block;text-transform:uppercase;position:relative;}
+.ftr-r h2:after{content:'';display:block;background:#34c1d6;width:30px;height:3px;position:absolute;bottom:0;left:0;}
+
+.ftr-r p{margin:0 0 22px;padding:0;font-size:16px;color:#fff;font-weight:400;line-height:100%;}
+.ftr-r h6{margin:0 0 22px;padding:0;}
+.ftr-r h6 > a{font-size:16px;color:#fff;font-weight:400;line-height:22px;text-decoration:none;background:url(../../assets/images/home/call.png) no-repeat 0 50%;padding:0 0 0 20px;}
+.ftr-r a{font-size:16px;color:#34c1d6;font-weight:400;line-height:22px;text-decoration:none;background:url(../../assets/images/home/envelopment.png) no-repeat 0 50%;padding:0 0 0 20px;}
+.ftr-r a:hover{text-decoration:underline;}
+.social-icon{padding:0 0 22px;margin:0 0 22px;border-bottom:1px solid #fff;width:175px;}
+.ftr-l p{margin:0;padding:0;font-size:13px;color:#fff;line-height:100%;display:block;}
+.ftr-l p span{color:#4f5961;}
+
