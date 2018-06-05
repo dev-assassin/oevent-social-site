@@ -1,20 +1,10 @@
 <header>
     <nav class="fixed-top">
-        <top-bar-reminder
-            [show]="showProfileReminder"
-            [title]="'Your almost done!'"
-            [message]="'Don't forget to add your profile information.'"
-            [linkText]="'Go to profile &#8594;'"
-            [linkAddress]="'/account/contact'"
-        ></top-bar-reminder>
+        <top-bar-reminder [show]="showProfileReminder" [title]="'Your almost done!'" [message]="'Don't forget to add your profile information.'"
+            [linkText]="'Go to profile &#8594;'" [linkAddress]="'/account/contact'"></top-bar-reminder>
 
-        <top-bar-reminder
-            [show]="!showProfileReminder && showAboutMeReminder"
-            [title]="'Your almost done!'"
-            [message]="'Don't forget to add your picture and other information in about me section'"
-            [linkText]="'Go to about me &#8594;'"
-            [linkAddress]="'/account/about'"
-        ></top-bar-reminder>
+        <top-bar-reminder [show]="!showProfileReminder && showAboutMeReminder" [title]="'Your almost done!'" [message]="'Don't forget to add your picture and other information in about me section'"
+            [linkText]="'Go to about me &#8594;'" [linkAddress]="'/account/about'"></top-bar-reminder>
 
         <nav class="navbar navbar-light bg-faded">
             <div class="container-fluid">
@@ -39,7 +29,57 @@
                             </li>
 
                             <li class="nav-item">
-                                
+                                <a class="nav-link" routerLink="/search" routerLinkActive="active">
+                                    <span class="fa fa-search"></span>
+                                    Find Events
+                                </a>
+                            </li>
+
+                            <li class="nav-item" *ngIf="!authenticated">
+                                <a class="nav-link" (click)="join()">
+                                    Join Now
+                                </a>
+                            </li>
+                            <li class="nav-item" *ngIf="!authenticated">
+                                <a class="nav-link" (click)="signIn()">
+                                    Login
+                                </a>
+                            </li>
+
+                            <li class="nav-item" *ngIf="authenticated">
+                                <a class="nav-link notifications" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="fa fa-bell"></span>
+                                    <span class="hidden-sm-up notifications-icon"> &nbsp; &nbsp;Notifications</span>
+                                    <span class="badge top-icon-right">{{activeMessages.length}}</span>
+                                </a>
+                                <ul class="dropdown-menu notifications-dropdown pull-left" aria-labelledby="user-drop">
+                                    <li *ngFor="let message of activeMessages">
+                                        <notif-item [message]="messsage" [mini]="true"></notif-item>
+                                    </li>
+                                    <li class="text-center">
+                                        <button onclick="document.location = '/notifications'" class="btn btn-primary text-center">
+                                            View Notifications Center
+                                        </button>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown profile-dropdown" *ngIf="authenticated">
+                                <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="avatar-wrapper">
+                                        <img *ngIf="profileSet" [src]="profile" class="img-circle user-avatar-image">
+                                    </span>
+                                    {{ appService.header.first }}
+                                    <span class="fa fa-caret-down"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="user-drop">
+                                    <a class="dropdown-item" routerLink="/bookmarks">Bookmarks</a>
+                                    <a class="dropdown-item" routerLink="/following">Following</a>
+                                    <a class="dropdown-item" routerLink="/manage">Managing Events</a>
+                                    <a class="dropdown-item" routerLink="/account/contact">Account Settings</a>
+                                    <a *ngIf="appService.ocodeSet" class="dropdown-item" href="organizer.html" routerLink="/{{appService.ocode}}">My Profile</a>
+                                    <a class="dropdown-item" (click)="triggerSignOut();">Logout</a>
+                                </div>
                             </li>
                         </ul>
                     </div>
