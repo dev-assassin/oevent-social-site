@@ -1,0 +1,40 @@
+<section class="secondary-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line">
+                    My Bookmarked Events
+                </h3>
+
+                <a (click)="makeHorizontal()" [ngClass]="{'selected':verticalCard == false}">
+                    <span class="fa fa-align-justify" title="list view"></span>
+                </a>
+
+                <a (click)="makeVertical()" [ngClass]="{'selected':verticalCard == true}">
+                    <span class="fa fa-th-large" title="card view"></span>
+                </a>
+
+                <div class="grid-container">
+
+                    <div style="min-height:350px" *ngIf="verticalCard">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-6" *ngFor="let event of events">
+                                <vertical-card [id]="event.$key" (removeEvent)="bookmarkService.removeBookmark($event)"></vertical-card>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="min-height:350px;margin-top:25px;" *ngIf="!verticalCard">
+                        <div>
+                            <horizontal-card *ngFor="let event of events" [id]="event.$key" (removeEvent)="bookmarkService.removeBookmark($event)"></horizontal-card>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div><!-- .container -->
+
+</section>
