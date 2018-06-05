@@ -1,0 +1,23 @@
+
+<div ngbModalContainer>
+    <div class="modal-body" style="padding:30px 9% 60px;">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()" style="margin:10px 15px;"><span aria-hidden="true">×</span></button>
+        <div class="panel-body" *ngIf="appService.authChecked">
+
+            <h3 class="line" *ngIf="!appService.ocodeSet && auth.authenticated">Start your 30 day free trial</h3>
+            <h3 class="line" *ngIf="appService.ocodeSet">You have an ōcode</h3>
+
+            <set-ocode></set-ocode>
+
+        </div>
+
+        <div class="login-btn-wrapper">
+
+            <button (click)="activeModal.dismiss()"  class="btn btn-default" data-dismiss="modal" style="margin-right:15px;">
+                Not Now
+            </button>
+
+        </div>
+
+    </div>
+</div>
