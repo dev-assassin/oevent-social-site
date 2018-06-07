@@ -1,8 +1,8 @@
 import { Component, AfterContentInit, OnInit } from '@angular/core';
 import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
-import { AppService } from "../../../../services/app-service";
-import { AuthService } from "../../../../auth/services/auth-service";
-import { CreateAdvancedService } from "../services/advanced.service";
+import { AppService } from '../../../../services/app-service';
+import { AuthService } from '../../../../auth/services/auth-service';
+import { CreateAdvancedService } from '../services/advanced.service';
 import { EventFormFields } from '../models/advanced-settings';
 
 @Component({
@@ -55,7 +55,7 @@ export class AdvancedFieldsComponent implements OnInit {
 
     save() {
         this.appService.startLoadingBar();
-        //GIVE TIME FOR THE UI-SWITCH VALUE TO CYCLE
+        // GIVE TIME FOR THE UI-SWITCH VALUE TO CYCLE
 
         setTimeout(() => {
             this.advancedService.eventSettings$.update({

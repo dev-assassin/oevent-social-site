@@ -24,22 +24,102 @@
             </tr>
 
             <tr>
-                <td>Birthday</td>
+                <td>First Name</td>
                 <td>
-                    <ui-switch [(ngModel)]="eventFields.prefix.enabled" (change)="enableChange('prefix')" size="small"></ui-switch>
+                    <ui-switch [(ngModel)]="eventFields.firstName.enabled" [disabled]="true" size="small"></ui-switch>
                 </td>
                 <td>
-                    <ui-switch [(ngModel)]="eventFields.prefix.required" (change)="requireChange('prefix')" size="small"></ui-switch>
+                    <ui-switch [(ngModel)]="eventFields.firstName.required" [disabled]="true" size="small"></ui-switch>
                 </td>
             </tr>
 
             <tr>
-                <td>Prefix</td>
+                <td>Last Name</td>
                 <td>
-                    <ui-switch [(ngModel)]="eventFields.prefix.enabled" (change)="enableChange('prefix')" size="small"></ui-switch>
+                    <ui-switch [(ngModel)]="eventFields.lastName.enabled" [disabled]="true" size="small"></ui-switch>
                 </td>
                 <td>
-                    <ui-switch [(ngModel)]="eventFields.prefix.required" (change)="requireChange('prefix')" size="small"></ui-switch>
+                    <ui-switch [(ngModel)]="eventFields.lastName.required" [disabled]="true" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Suffix</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.suffix.enabled" (change)="enableChange('suffix')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.suffix.required" (change)="requireChange('suffix')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Email</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.email.enabled" [disabled]="true" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.email.required" [disabled]="true" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Phone</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.phone.enabled" (change)="enableChange('phone')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.phone.required" (change)="requireChange('phone')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Home Address</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.homeAddress.enabled" (change)="enableChange('homeAddress')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.homeAddress.required" (change)="requireChange('homeAddress')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Shipping Address</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.shippingAddress.enabled" (change)="enableChange('shippingAddress')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.shippingAddress.required" (change)="requireChange('shippingAddress')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Website</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.website.enabled" (change)="enableChange('website')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.website.required" (change)="requireChange('website')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Gender</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.gender.enabled" (change)="enableChange('gender')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.gender.required" (change)="requireChange('gender')" size="small"></ui-switch>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Birth Date</td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.birthDate.enabled" (change)="enableChange('birthDate')" size="small"></ui-switch>
+                </td>
+                <td>
+                    <ui-switch [(ngModel)]="eventFields.birthDate.required" (change)="requireChange('birthDate')" size="small"></ui-switch>
                 </td>
             </tr>
 
