@@ -109,7 +109,7 @@ export class AdvancedPromoterComponent {
         }).then(() => {
             this.toasty.success('Promoter Welcome Email Updated!');
             this.appService.stopLoadingBar();
-        })
+        });
 
 
     }
