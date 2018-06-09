@@ -1,0 +1,1218 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="row padding-vertical">
+            <div class="col-md-3 col-sm-6">
+
+                <label>Schedule</label>
+
+                <select class="form-control" id="event-type" [(ngModel)]="values.eventType" (change)="saveTheDate()">
+                    <option>Select Event Type</option>
+                    <option value="singleDay">Single-day</option>
+                    <option value="multiDay">Multi-day</option>
+                    <!-- BRINGING THESE BACK LATER
+                    <option value="recurring">Recurring</option>
+                    <option value="course">Course/Series</option>
+                    <option value="custom">Custom</option> -->
+                </select>
+
+            </div>
+
+            <!-- recurring & series secondary selects -->
+
+            <div class="col-md-4 col-sm-6" *ngIf="values.eventType == 'recurring'">
+                <label>Event Cycle</label>
+                <select class="form-control" id="event-cycle" [(ngModel)]="values.recurring.type" (change)="onSelectCycle()">
+                    <option>Select Event Cycle</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Biweekly</option>
+                    <option value="monthly-date">Monthly (date)</option>
+                    <option value="monthly-day">Monthly (day)</option>
+                </select>
+            </div>
+
+            <div class="col-md-9 col-sm-6" *ngIf="values.eventType == 'course'">
+                <label>Event Cycle</label>
+                <select class="form-control" id="course-event-cycle" [(ngModel)]="values.course.type" (change)="onSelectCycle()">
+                    <option>Select Event Cycle</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="biweekly">Biweekly</option>
+                    <option value="monthly-date">Monthly (date)</option>
+                    <option value="monthly-day">Monthly (day)</option>
+                </select>
+            </div>
+
+        </div>
+
+        <!-- single day -->
+
+        <div class="row" *ngIf="values.eventType == 'singleDay'">
+
+            <div class="col-lg-4 col-md-7 col-sm-4">
+                <div class="event-type-container">
+                    <label>Event Date</label>
+                    <div class="input-group {{!createEventService.isFieldValid('event-date')?'has-error':''}}">
+                        <input id="event-date" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" type="text"
+                            [(ngModel)]="values.single.date" (blur)="saveTheDate()" (change)="saveTheDate()">
+
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar" (click)="startDate.toggle(); "></span>
+                        </span>
+
+                    </div>
+
+                    <div *ngIf="!createEventService.isFieldValid('event-date')" class="validation-error-text">{{createEventService.fieldValidations.get("event-date").errorMessage}}</div>
+
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="pull-right time-label">Starts</label>
+                        </td>
+                        <td>
+                            <div class="single-start-container">
+                                <ngb-timepicker [(ngModel)]="values.single.start" [meridian]="true" [minuteStep]="15" (click)="saveTheDate()"></ngb-timepicker>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="pull-right time-label">Ends</label>
+                        </td>
+                        <td>
+                            <div class="single-start-container">
+                                <ngb-timepicker [(ngModel)]="values.single.end" [meridian]="true" [minuteStep]="15" (click)="saveTheDate()"></ngb-timepicker>
+                            </div>
+                            <div *ngIf="!createEventService.isFieldValid('end-time')" class="validation-error-text">
+                                {{createEventService.fieldValidations.get("end-time").errorMessage}}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+        <!-- end single-day parts -->
+
+
+        <div class="row padding-vertical" *ngIf="values.eventType == 'multiDay'">
+            <!-- multi-day -->
+
+            <div class="col-sm-3">
+                <div class="start-date-multi">
+                    <label>Start Date</label>
+                    <div class="input-group">
+                        <input class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.multi.start.date"
+                        />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                        </span>
+                    </div>
+                    <div *ngIf="!createEventService.isFieldValid('event-start-date')" class="validation-error-text">
+                        {{createEventService.fieldValidations.get("event-start-date").errorMessage}}
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="start-date-multi">
+                    <label>End Date</label>
+                    <div class="input-group">
+                        <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" [(ngModel)]="values.multi.end.date"
+                        />
+                        <span class="input-group-addon">
+                            <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                        </span>
+                    </div>
+                    <div *ngIf="!createEventService.isFieldValid('event-date')" class="validation-error-text">
+                        {{createEventService.fieldValidations.get("event-date").errorMessage}}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="values.eventType == 'multiDay'">
+
+            <div class="col-lg-5 col-md-6">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="pull-right time-label">Daily Start Time</label>
+                        </td>
+                        <td>
+                            <div class="single-start-container">
+                                <ngb-timepicker [(ngModel)]="values.multi.start.time" [meridian]="true" [minuteStep]="15" (click)="saveTheDate();"></ngb-timepicker>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-lg-5 col-md-6">
+                <table>
+                    <tr>
+                        <td>
+                            <label class="pull-right time-label">Daily End Time</label>
+                        </td>
+                        <td>
+                            <div class="single-start-container">
+                                <ngb-timepicker [(ngModel)]="values.multi.end.time" [meridian]="true" [minuteStep]="15" (click)="saveTheDate()"></ngb-timepicker>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div *ngIf="!createEventService.isFieldValid('end-time')" class="validation-error-text">
+                    {{createEventService.fieldValidations.get("end-time").errorMessage}}
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- recurring -->
+
+        <div id="recurring" class="col-sm-12" *ngIf="values.eventType == 'recurring'">
+
+            <div class="row">
+
+                <!-- RECURRING WEEKLY -->
+                <div id="weekly" class="col-md-12" *ngIf="values.recurring.type == 'weekly'">
+                    <div class="row padding-vertical">
+
+                        <div class="col-md-2 col-sm-3">
+                            Repeat on:
+                        </div>
+
+                        <div class="col-md-10 col-sm-9">
+                            <div class="btn-group">
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Sun}" (click)="toggleDayValue('Sun', 'weekly')">
+                                    S
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Mon}" (click)="toggleDayValue('Mon', 'weekly')">
+                                    M
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Tue}" (click)="toggleDayValue('Tue', 'weekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Wed}" (click)="toggleDayValue('Wed', 'weekly')">
+                                    W
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Thu}" (click)="toggleDayValue('Thu', 'weekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Fri}" (click)="toggleDayValue('Fri', 'weekly')">
+                                    F
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.weekly.days.Sat}" (click)="toggleDayValue('Sat', 'weekly')">
+                                    S
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 error-text">
+                            <!-- error text here for selected days -->
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.recurring.weekly.start.date"
+                                        id="weekly-start-date" (change)="showEventsLength()" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Date
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="weekly-end-day" [(ngModel)]="values.recurring.weekly.end.date"
+                                        (change)="showEventsLength()">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Daily Start Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.recurring.weekly.start.time" id="weekly-start-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Time
+                                </label>
+                                <label>Daily End Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.recurring.weekly.end.time" id="weekly-end-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- RECURRING WEEKLY -->
+                <div id="biweekly" class="col-md-12" *ngIf="values.recurring.type == 'biweekly'">
+                    <div class="row padding-vertical">
+
+                        <div class="col-md-2 col-sm-3">
+                            Repeat on:
+                        </div>
+
+                        <div class="col-md-10 col-sm-9">
+                            <div class="btn-group">
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Sun}" (click)="toggleDayValue('Sun', 'biweekly')">
+                                    S
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Mon}" (click)="toggleDayValue('Mon', 'biweekly')">
+                                    M
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Tue}" (click)="toggleDayValue('Tue', 'biweekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Wed}" (click)="toggleDayValue('Wed', 'biweekly')">
+                                    W
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Thu}" (click)="toggleDayValue('Thu', 'biweekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Fri}" (click)="toggleDayValue('Fri', 'biweekly')">
+                                    F
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Sat}" (click)="toggleDayValue('Sat', 'biweekly')">
+                                    S
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 error-text">
+                            <!-- error text here for selected days -->
+                        </div>
+
+
+                    </div>
+                    <div class="row padding-vertical">
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.recurring.biweekly.start.date"
+                                        id="biweekly-start-date" (change)="showEventsLength()" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Date
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="biweekly-end-day" [(ngModel)]="values.recurring.biweekly.end.date"
+                                        (change)="showEventsLength()">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Daily Start Time</label>
+                                <ngb-timepicker [(ngModel)]="values.recurring.biweekly.start.time" [meridian]="true" [minuteStep]="15"></ngb-timepicker>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>Daily End Time</label>
+                                <ngb-timepicker [(ngModel)]="values.recurring.biweekly.end.time" [meridian]="true" [minuteStep]="15"></ngb-timepicker>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- RECURRING MONTHLY DATE -->
+                <div id="monthly-date" class="col-md-12" *ngIf="values.recurring.type == 'monthly-date'">
+                    <div class="row padding-vertical">
+                        <div class="col-sm-8 offset-sm-2">
+                            Repeat on the
+                            <select class="form-control" style="max-width:120px;display:inline;" [(ngModel)]="values.recurring.monthlyDate.repeatOn"
+                                (change)="showEventsLength()">
+                                <option value="">Select Date</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                <option value="5th">5th</option>
+                                <option value="6th">6th</option>
+                                <option value="7th">7th</option>
+                                <option value="8th">8th</option>
+                                <option value="9th">9th</option>
+                                <option value="10th">10th</option>
+                                <option value="11th">11th</option>
+                                <option value="12th">12th</option>
+                                <option value="13th">13th</option>
+                                <option value="14th">14th</option>
+                                <option value="15th">15th</option>
+                                <option value="16th">16th</option>
+                                <option value="17th">17th</option>
+                                <option value="18th">18th</option>
+                                <option value="19th">19th</option>
+                                <option value="20th">20th</option>
+                                <option value="21st">21st</option>
+                                <option value="22th">22nd</option>
+                                <option value="23th">23rd</option>
+                                <option value="24th">24th</option>
+                                <option value="25th">25th</option>
+                                <option value="26th">26th</option>
+                                <option value="27th">27th</option>
+                                <option value="28th">28th</option>
+                                <option value="29th">29th (only months with this date will show)</option>
+                                <option value="30th">30th (only months with this date will show)</option>
+                                <option value="31st">31st (only months with this date will show)</option>
+                                <option value="last day">Last Day</option>
+                            </select>
+                            of every month
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily Start Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.recurring.monthlyDate.dailyStartTime" id="mdate-start-time" (change)="showEventsLength()"
+                                    />
+                                    <ngb-timepicker [(ngModel)]="values.recurring.biweekly.start.time" [meridian]="true" [minuteStep]="15"></ngb-timepicker>
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily End Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.recurring.monthlyDate.dailyEndTime" id="mdate-end-time" (change)="showEventsLength()"
+                                    />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="start-date-multi">
+                                <label>Cycle Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.recurring.monthlyDate.cycleStartDate"
+                                        id="mdate-start-date" (change)="showEventsLength()" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="start-date-multi">
+                                <label>Cycle End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" [(ngModel)]="values.recurring.monthlyDate.cycleEndDate"
+                                        id="mdate-end-date" (change)="showEventsLength()" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- MONTHLY DAY -->
+                <div id="monthly-day" class="col-md-12" *ngIf="values.recurring.type == 'monthly-day'">
+                    <div class="row">
+
+
+                        <div class="col-sm-8 offset-sm-2">
+                            <div class="padding-vertical">
+                                Repeat on the:
+                            </div>
+
+                            <label>Week(s) of the month:</label>
+                            <div>
+                                <div class="btn-group">
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.First}" (click)="toggleDayValue('First', 'monthlyWeek')">
+                                        1st
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.Second}" (click)="toggleDayValue('Second', 'monthlyWeek')">
+                                        2nd
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.Third}" (click)="toggleDayValue('Third', 'monthlyWeek')">
+                                        3rd
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.Fourth}" (click)="toggleDayValue('Fourth', 'monthlyWeek')">
+                                        4th
+                                    </button>
+
+                                    <!-- TOO COMPLEX SINCE THERE ARE ALWAYS 4, BUT ONLY 5 OF EACH DAY 2 TIMES A YEAR-->
+                                    <!-- <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.Fifth}" (click)="toggleDayValue('Fifth', 'monthlyWeek')">
+                                        5th
+                                    </button> -->
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnWeeks.Last}" (click)="toggleDayValue('Last', 'monthlyWeek')">
+                                        Last
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-vertical">
+                        <div class="col-sm-8 offset-sm-2">
+                            <label>Day(s) of the week:</label>
+                            <div>
+                                <div class="btn-group">
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Sun}" (click)="toggleDayValue('Sun', 'monthDay')">
+                                        S
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Mon}" (click)="toggleDayValue('Mon', 'monthDay')">
+                                        M
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Tue}" (click)="toggleDayValue('Tue', 'monthDay')">
+                                        T
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Wed}" (click)="toggleDayValue('Wed', 'monthDay')">
+                                        W
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Thu}" (click)="toggleDayValue('Thu', 'monthDay')">
+                                        T
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Fri}" (click)="toggleDayValue('Fri', 'monthDay')">
+                                        F
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.monthlyDay.repeatOnDays.Sat}" (click)="toggleDayValue('Sat', 'monthDay')">
+                                        S
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="single-start-container padding-top">
+                                <label>
+                                    Daily Start Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="daily-start-time" [(ngModel)]="values.recurring.monthlyDay.dailyStartTime" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily End Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="daily-end-time" [(ngModel)]="values.recurring.monthlyDay.dailyEndTime" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row padding-vertical">
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="start-date-multi">
+                                <label>Cycle Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" id="mddate-start-date"
+                                        [(ngModel)]="values.recurring.monthlyDay.cycleStartDate" (change)="showEventsLength()"
+                                    />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="start-date-multi">
+                                <label>Cycle End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="mddate-end-date"
+                                        [(ngModel)]="values.recurring.monthlyDay.cycleEndDate" (change)="showEventsLength()"
+                                    />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div id="custom" class="col-md-12">
+                    Maybe hold off on this one... will take a lot of time since nothing is prebuilt that I know of like this.
+                </div> -->
+
+            </div>
+
+        </div>
+
+        <!-- | -> Course <- | -->
+        <div id="course" *ngIf="values.eventType == 'course'">
+
+            <div class="row padding-vertical">
+
+                <!-- COURSE WEEKLY -->
+                <div id="couse-weekly" class="col-md-12" *ngIf="values.course.type == 'weekly'">
+                    <div class="row padding-vertical">
+
+                        <div class="col-md-2 col-sm-3">
+                            Repeat on:
+                        </div>
+
+                        <div class="col-md-10 col-sm-9">
+                            <div class="btn-group">
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Sun}" (click)="toggleDayValue('Sun', 'courseWeekly')">
+                                    S
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Mon}" (click)="toggleDayValue('Mon', 'courseWeekly')">
+                                    M
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Tue}" (click)="toggleDayValue('Tue', 'courseWeekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Wed}" (click)="toggleDayValue('Wed', 'courseWeekly')">
+                                    W
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Thu}" (click)="toggleDayValue('Thu', 'courseWeekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Fri}" (click)="toggleDayValue('Fri', 'courseWeekly')">
+                                    F
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.weekly.days.Sat}" (click)="toggleDayValue('Sat', 'courseWeekly')">
+                                    S
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 error-text">
+                            <!-- error text here for selected days -->
+                        </div>
+
+
+                    </div>
+                    <div class="row padding-vertical">
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.course.weekly.start.date"
+                                        id="course-weekly-start-date" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Date
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="course-weekly-end-day"
+                                        [(ngModel)]="values.course.weekly.end.date">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Daily Start Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.weekly.start.time" id="course-weekly-start-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Time
+                                </label>
+                                <label>Daily End Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.weekly.end.time" id="course-weekly-end-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- COURSE BIWEEKLY -->
+                <div id="course-biweekly" class="col-md-12" *ngIf="values.course.type == 'biweekly'">
+                    <div class="row padding-vertical">
+
+                        <div class="col-md-2 col-sm-3">
+                            Repeat on:
+                        </div>
+
+                        <div class="col-md-10 col-sm-9">
+                            <div class="btn-group">
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.biweekly.days.Sun}" (click)="toggleDayValue('Sun', 'courseBiweekly')">
+                                    S
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Mon}" (click)="toggleDayValue('Mon', 'courseBiweekly')">
+                                    M
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Tue}" (click)="toggleDayValue('Tue', 'courseBiweekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Wed}" (click)="toggleDayValue('Wed', 'courseBiweekly')">
+                                    W
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Thu}" (click)="toggleDayValue('Thu', 'courseBiweekly')">
+                                    T
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Fri}" (click)="toggleDayValue('Fri', 'courseBiweekly')">
+                                    F
+                                </button>
+
+                                <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.recurring.biweekly.days.Sat}" (click)="toggleDayValue('Sat', 'courseBiweekly')">
+                                    S
+                                </button>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 error-text">
+                            <!-- error text here for selected days -->
+                        </div>
+
+
+                    </div>
+                    <div class="row padding-vertical">
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.course.biweekly.start.date"
+                                        id="course-biweekly-start-date" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Date
+                                </label>
+                                <div class="input-group">
+                                    <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="course-biweekly-end-day"
+                                        [(ngModel)]="values.course.biweekly.end.date">
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="start-date-multi">
+                                <label>Daily Start Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.biweekly.start.time" id="course-biweekly-start-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="single-start-container">
+                                <label>
+                                    End Time
+                                </label>
+                                <label>Daily End Time</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.biweekly.end.time" id="course-biweekly-end-time" />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <!-- COURSE MONTHLY DATE -->
+                <div id="course-monthly-date" class="col-md-12" *ngIf="values.course.type == 'monthly-date'">
+                    <div class="row padding-vertical">
+                        <div class="col-sm-8 offset-sm-2">
+                            Repeat on the:
+                            <select class="form-control" style="max-width:120px;display:inline;" [(ngModel)]="values.course.monthlyDate.repeatOn">
+                                <option value="">Select Date</option>
+                                <option value="1st">1st</option>
+                                <option value="2nd">2nd</option>
+                                <option value="3rd">3rd</option>
+                                <option value="4th">4th</option>
+                                <option value="5th">5th</option>
+                                <option value="6th">6th</option>
+                                <option value="7th">7th</option>
+                                <option value="8th">8th</option>
+                                <option value="9th">9th</option>
+                                <option value="10th">10th</option>
+                                <option value="11th">11th</option>
+                                <option value="12th">12th</option>
+                                <option value="13th">13th</option>
+                                <option value="14th">14th</option>
+                                <option value="15th">15th</option>
+                                <option value="16th">16th</option>
+                                <option value="17th">17th</option>
+                                <option value="18th">18th</option>
+                                <option value="19th">19th</option>
+                                <option value="20th">20th</option>
+                                <option value="21st">21st</option>
+                                <option value="22th">22nd</option>
+                                <option value="23th">23rd</option>
+                                <option value="24th">24th</option>
+                                <option value="25th">25th</option>
+                                <option value="26th">26th</option>
+                                <option value="27th">27th</option>
+                                <option value="28th">28th</option>
+                                <option value="29th">29th (only months with this date will show)</option>
+                                <option value="30th">30th (only months with this date will show)</option>
+                                <option value="31st">31st (only months with this date will show)</option>
+                                <option value="last day">Last Day</option>
+                            </select>
+                            of every month
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily Start Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.monthlyDate.dailyStartTime" id="course-mdate-start-time"
+                                    />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily End Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" [(ngModel)]="values.course.monthlyDate.cycleStartDate" id="course-mdate-end-time"
+                                    />
+                                    <span class="fa fa-clock-o"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="start-date-multi">
+                                <label>Cycle Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="values.course.monthlyDate.cycleStartDate"
+                                        id="course-mdate-start-date" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="start-date-multi">
+                                <label>Cycle End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" [(ngModel)]="values.course.monthlyDate.cycleEndDate"
+                                        id="course-mdate-end-date" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- COURSE DAY -->
+                <div id="course-monthly-day" class="col-md-12" *ngIf="values.course.type == 'monthly-day'">
+                    <div class="row">
+
+
+                        <div class="col-sm-8 offset-sm-2">
+                            <div class="">
+                                <h4>Repeat on the:</h4>
+                            </div>
+
+                            <label>Week(s) of the month:</label>
+
+                            <div>
+                                <div class="btn-group">
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.First}" (click)="toggleDayValue('First', 'courseMonthlyWeek')">
+                                        1st
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.Second}" (click)="toggleDayValue('Second', 'courseMonthlyWeek')">
+                                        2nd
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.Third}" (click)="toggleDayValue('Third', 'courseMonthlyWeek')">
+                                        3rd
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.Fourth}" (click)="toggleDayValue('Fourth', 'courseMonthlyWeek')">
+                                        4th
+                                    </button>
+
+                                    <!-- TOO COMPLEX
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.Fifth}" (click)="toggleDayValue('Fifth', 'courseMonthlyWeek')">
+                                        5th
+                                    </button> -->
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnWeeks.Last}" (click)="toggleDayValue('Last', 'courseMonthlyWeek')">
+                                        Last
+                                    </button>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row padding-vertical">
+                        <div class="col-sm-8 offset-sm-2">
+                            <label>Day(s) of the week:</label>
+
+                            <div>
+                                <div class="btn-group">
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Sun}" (click)="toggleDayValue('Sun', 'courseMonthDay')">
+                                        S
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Mon}" (click)="toggleDayValue('Mon', 'courseMonthDay')">
+                                        M
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Tue}" (click)="toggleDayValue('Tue', 'courseMonthDay')">
+                                        T
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Wed}" (click)="toggleDayValue('Wed', 'courseMonthDay')">
+                                        W
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Thu}" (click)="toggleDayValue('Thu', 'courseMonthDay')">
+                                        T
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Fri}" (click)="toggleDayValue('Fri', 'courseMonthDay')">
+                                        F
+                                    </button>
+
+                                    <button [ngClass]="{'btn':true, 'btn-primary':true, 'active':values.course.monthlyDay.repeatOnDays.Sat}" (click)="toggleDayValue('Sat', 'courseMonthDay')">
+                                        S
+                                    </button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="single-start-container padding-top">
+                                <label>
+                                    Daily Start Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="course-daily-start-time" [(ngModel)]="values.course.monthlyDay.dailyStartTime"
+                                    />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <div class="single-start-container">
+                                <label>
+                                    Daily End Time
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="course-daily-end-time" [(ngModel)]="values.course.monthlyDay.dailyEndTime" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-clock-o"></span>
+                                    </span>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row padding-vertical">
+
+                        <div class="col-sm-4 offset-sm-2">
+                            <div class="start-date-multi">
+                                <label>Cycle Start Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" id="course-mddate-start-date"
+                                        [(ngModel)]="values.course.monthlyDay.cycleStartDate" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                                    </span>
+                                </div>
+
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="start-date-multi">
+                                <label>Cycle End Date</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" id="course-mddate-end-date"
+                                        [(ngModel)]="values.course.monthlyDay.cycleEndDate" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                                    </span>
+                                </div>
+                                <div class="error-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div id="custom" class="col-md-12">
+                    Maybe hold off on this one... will take a lot of time since nothing is prebuilt that I know of like this.
+                </div> -->
+
+            </div>
+        </div>
+
+        <div class="col-md-12" id="custom" *ngIf="values.eventType == 'custom'">
+
+            <h3>Add multiple date ranges</h3>
+            <div class="row padding-vertical">
+                <div class="col-sm-3">
+                    <div class="start-date-multi">
+                        <label>Start Date</label>
+                        <div class="input-group">
+                            <input class="form-control" ngbDatepicker #startDate="ngbDatepicker" (focus)="startDate.toggle()" [(ngModel)]="custom.start.date"
+                            />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar" (click)="startDate.toggle()"></span>
+                            </span>
+                        </div>
+                        <div class="error-text"></div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="start-date-multi">
+                        <label>End Date</label>
+                        <div class="input-group">
+                            <input class="form-control" ngbDatepicker #endDate="ngbDatepicker" (focus)="endDate.toggle()" [(ngModel)]="custom.end.date"
+                            />
+                            <span class="input-group-addon">
+                                <span class="fa fa-calendar" (click)="endDate.toggle()"></span>
+                            </span>
+                        </div>
+                        <div class="error-text"></div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="single-start-container">
+                        <label>
+                            Daily Start Time
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="custom.start.time" />
+                            <span class="fa fa-clock-o"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="single-start-container">
+                        <label>
+                            Daily End Time
+                        </label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="custom.end.time" />
+                            <span class="fa fa-clock-o"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <a (click)="addCustom()" class="btn btn-lg btn-primary">
+                        <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+
+            </div>
+
+            <h4 *ngIf="values.custom">Custom Event Dates</h4>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped" *ngIf="values.custom">
+                        <tbody>
+
+                            <tr *ngFor="let custom of values.custom;let i = index">
+                                <td>
+                                    {{ custom.start.date | odate }}-{{ custom.end.date | odate }}
+                                </td>
+
+                                <td>
+                                    {{ custom.start.time | otime }}-{{ custom.end.time | otime }}
+                                </td>
+
+                                <td style="max-width:80px;">
+                                    <a (click)="deleteCustom(i)">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="showLength">
+            <div class="col-sm-10 offset-sm-2">
+                <span>
+                    <strong>Total events:</strong> {{ events.length }}
+                </span> &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;
+                <span>
+                    <strong>Events this month:</strong> {{ monthEvents.length }}
+                </span>
+            </div>
+        </div>
+    </div>
+
+</div>
