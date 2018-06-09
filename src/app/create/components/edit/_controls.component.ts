@@ -1,27 +1,29 @@
 import { Component, AfterContentInit, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
-import { AppService } from "../../../services/app-service";
-import { AuthService } from "../../../auth/services/auth-service";
-import { ToastyService } from "ng2-toasty";
-import { CreateEventService } from "../../services/create-event.service";
+import { AppService } from '../../../services/app-service';
+import { AuthService } from '../../../auth/services/auth-service';
+import { ToastyService } from 'ng2-toasty';
+import { CreateEventService } from '../../services/create-event.service';
 
 @Component({
-    selector: 'event-controls',
-
+    selector: `event-controls`,
     template: `
         <div *ngIf="!createService.valid" class="validation-error-text"> See errors above.</div>
         <button class="btn btn-primary btn-lg" style="margin-right:25px;" (click)="save()">Save</button>
-        <button class="btn btn-success btn-lg" style="margin-right:25px;" (click)="publish()" *ngIf="eventStatus == 'draft'">Go Live</button>
-        <button class="btn btn-warning btn-lg" style="margin-right:25px;" (click)="publish(false)" *ngIf="eventStatus == 'active'">Unpublish</button>
+        <button class="btn btn-success btn-lg" style="margin-right:25px;" (click)="publish()" *ngIf="eventStatus == 'draft'">
+            Go Live
+        </button>
+        <button class="btn btn-warning btn-lg" style="margin-right:25px;"(click)="publish(false)" *ngIf="eventStatus == 'active'">
+            Unpublish
+        </button>
         <a (click)="gotoAdvanced()" *ngIf="createService.showAdvanced()">Advanced Options</a>
-        
     `,
     styles: [
         `
             :host{
                 display:block;
                 text-align:center;
-            }  
+            }
         `
     ],
 
@@ -53,10 +55,9 @@ export class EditControlsComponent implements OnInit {
     save() {
         if (this.createService.isDraft()) {
             if (this.createService.validateMin()) {
-                this.toasty.success("Draft Saved!");
-            }
-            else {
-                this.toasty.error("Error validating");
+                this.toasty.success('Draft Saved!');
+            } else {
+                this.toasty.error('Error validating');
             }
         } else if (this.createService.isLive()) {
             if (this.createService.validateLive()) {
@@ -70,14 +71,13 @@ export class EditControlsComponent implements OnInit {
             this.save();
             if (live) {
 
-                this.createService.publish()
+                this.createService.publish();
 
-            }
-            else {
+            }  else {
                 this.createService.publish(false);
             }
         } else {
-            this.toasty.error("Error validating");
+            this.toasty.error('Error validating');
         }
     }
 
