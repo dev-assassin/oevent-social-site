@@ -1,67 +1,67 @@
-import {Component, AfterContentInit, OnInit, Input} from '@angular/core';
-import {Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params} from '@angular/router';
-import {AppService} from "../../../services/app-service";
-import {AuthService} from "../../../auth/services/auth-service";
-import {ToastyService} from "ng2-toasty";
-import {CreateEventService} from "../../services/create-event.service";
+import { Component, AfterContentInit, OnInit, Input } from '@angular/core';
+import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
+import { AppService } from '../../../services/app-service';
+import { AuthService } from '../../../auth/services/auth-service';
+import { ToastyService } from 'ng2-toasty';
+import { CreateEventService } from '../../services/create-event.service';
 
-//ADD QUILL FOR TYPING
-declare var Quill:any;
+// ADD QUILL FOR TYPING
+declare var Quill: any;
 
 @Component({
-    selector: 'event-description',
+    selector: 'app-event-description',
 
     template: `
 
-        <label>Description</label>   
+        <label>Description</label>
         <div id="toolbar"></div>
-        <div id="editor" style="min-height: 230px;"></div>        
+        <div id="editor" style="min-height: 230px;"></div>
     `,
     styles: [
         `
             :host{
                 display:block;
-            }  
+            }
         `
     ],
 
 })
 
-export class EditDescriptionComponent implements OnInit, AfterContentInit{
+export class EditDescriptionComponent implements OnInit, AfterContentInit {
 
-    //KEEP TRACK OF WYSIWYG OBJECT
-    quill:any;
-    description:any;
-    descriptionText:string = "";
+    // KEEP TRACK OF WYSIWYG OBJECT
+    quill: any;
+    description: any;
+    descriptionText: String = '';
 
     constructor(private auth: AuthService,
-                private appService: AppService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private toasty: ToastyService,
-                private createService: CreateEventService, ) {
+        private appService: AppService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private toasty: ToastyService,
+        private createService: CreateEventService, ) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
 
     }
 
     // -----------------------------------------------------------------------------------------------------------------------
     // USING QUILL WHICH NEEDS TO ATTACH TO AN ELEMENT SO WAIT UNTIL AFTER CONTENT LOADED (TODO PROPER QUILL ANGULAR2 COMPONENT)
     // -----------------------------------------------------------------------------------------------------------------------
-    ngAfterContentInit(){
+    ngAfterContentInit() {
 
-        //TODO DECIDE WHETHER TO KEEP IMAGES HERE
-        let toolbarOptions = [
+        // TODO DECIDE WHETHER TO KEEP IMAGES HERE
+        const toolbarOptions = [
             ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'color': [] }, { 'background': [] }],
             ['link']
         ];
 
-        //INSTANTIATE BASED ON ID
+        // INSTANTIATE BASED ON ID
         this.quill = new Quill('#editor', {
             modules: {
                 toolbar: toolbarOptions
@@ -69,9 +69,9 @@ export class EditDescriptionComponent implements OnInit, AfterContentInit{
             theme: 'snow'
         });
 
-        let $this = this;
+        const $this = this;
 
-        this.quill.on('selection-change', function(range, oldRange, source) {
+        this.quill.on('selection-change', function (range, oldRange, source) {
             if (range) {
 
             } else {
@@ -83,36 +83,35 @@ export class EditDescriptionComponent implements OnInit, AfterContentInit{
 
     }
 
-    initContent(){
-        this.createService.draftObject$.first().subscribe((data)=>{
+    initContent() {
+        this.createService.draftObject$.first().subscribe((data) => {
             this.quill.setContents(data.description);
             this.descriptionText = data.descriptionText;
         });
     }
 
-    saveContent(){
+    saveContent() {
 
         this.descriptionText = this.quill.container.innerText;
 
-        if(this.descriptionText.length){
+        if (this.descriptionText.length) {
             this.description = this.quill.getContents();
 
             this.createService.draftObject$.update({
-                                                           descriptionText: this.descriptionText,
-                                                           description: this.description
-                                                       }).then(()=>
-                                                               {
-                                                                   this.createService.showSavedDraft();
-                                                               });
+                descriptionText: this.descriptionText,
+                description: this.description
+            }).then(() => {
+                this.createService.showSavedDraft();
+            });
 
-            if(this.createService.isLive()){
+            if (this.createService.isLive()) {
                 this.createService.publish();
             }
         }
 
     }
 
-    editorBlur(){
+    editorBlur() {
         this.saveContent();
     }
 
