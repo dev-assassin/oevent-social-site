@@ -1,11 +1,11 @@
-import {Component, AfterContentInit, OnInit, Input} from '@angular/core';
-import {Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params} from '@angular/router';
-import {AppService} from "../../../services/app-service";
-import {AuthService} from "../../../auth/services/auth-service";
-import {CreateEventService} from "../../services/create-event.service";
+import { Component, AfterContentInit, OnInit, Input } from '@angular/core';
+import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
+import { AppService } from '../../../services/app-service';
+import { AuthService } from '../../../auth/services/auth-service';
+import { CreateEventService } from '../../services/create-event.service';
 
 @Component({
-    selector: 'event-type',
+    selector: 'app-event-type',
 
     template: `
         <div>
@@ -13,49 +13,47 @@ import {CreateEventService} from "../../services/create-event.service";
                Event Type
             </label>
         </div>
-        <div>        
+        <div>
             <label>
                 <input type="radio" [(ngModel)]="type" name="type" value="local" (click)="saveType()" />&nbsp; Local
             </label>
             <label style="padding-left:15px;">
                 <input type="radio" [(ngModel)]="type" name="type" value="online" (click)="saveType()" />&nbsp; Online
-            </label>            
+            </label>
         </div>
-        
+
     `,
     styles: [
         `
             :host{
                 display:block;
-            }  
+            }
         `
     ],
 
 })
 
-export class EditTypeComponent implements OnInit{
+export class EditTypeComponent implements OnInit {
 
-    type:string;
+    type: string;
 
     constructor(private auth: AuthService,
-                private appService: AppService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private createService: CreateEventService) {
+        private appService: AppService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private createService: CreateEventService) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         this.type = this.createService.draft.type;
     }
 
-    saveType(){
-        //GIVE IT A HALF A SECOND TO UPDATE THE MODEL AFTER CLICK
-        setTimeout(()=>{
-            this.createService.draftObject$.update({type:this.type}).then(()=>{this.createService.showSavedDraft();});
+    saveType() {
+        // GIVE IT A HALF A SECOND TO UPDATE THE MODEL AFTER CLICK
+        setTimeout(() => {
+            this.createService.draftObject$.update({ type: this.type }).then(() => { this.createService.showSavedDraft(); });
         }, 500);
 
     }
-
-
 }
