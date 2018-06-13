@@ -1,51 +1,64 @@
-export interface ITicket{
+export interface ITicket {
     $key?: string;
     $exists?();
-    open?:boolean;
+    // tslint:disable-next-line:member-ordering
+    open?: boolean;
+    // tslint:disable-next-line:member-ordering
     ticketType: string;
+    // tslint:disable-next-line:member-ordering
     ticketTitle: string;
+    // tslint:disable-next-line:member-ordering
     ticketDescription: string;
+    // tslint:disable-next-line:member-ordering
     ticketQuantity: number;
+    // tslint:disable-next-line:member-ordering
     ticketPrice?: number;
+    // tslint:disable-next-line:member-ordering
     buyMultiple?: boolean;
+    // tslint:disable-next-line:member-ordering
     refundable?: boolean;
+    // tslint:disable-next-line:member-ordering
     maxPer: number;
+    // tslint:disable-next-line:member-ordering
     payPal?: string;
-    ticketsUsed:number;
-    ticketsLeft:number;
-    multiRegistrant:boolean;
+    // tslint:disable-next-line:member-ordering
+    ticketsUsed: number;
+    // tslint:disable-next-line:member-ordering
+    ticketsLeft: number;
+    // tslint:disable-next-line:member-ordering
+    multiRegistrant: boolean;
 }
 
-export class Ticket implements ITicket{
-    open:boolean = false;
-    ticketType: string = "free";
-    ticketTitle: string = "";
-    ticketDescription: string = "";
-    ticketPrice: number = 0;
-    buyMultiple: boolean = false;
-    maxPer: number = 1;
-    multiRegistrant: boolean = false;
-    refundable:boolean = true;
-    payPal: string = "";
-    ticketQuantity: number = 0;
-    ticketsUsed:number = 0;
-    ticketsLeft:number = 0;
-    eventRef:string;
+export class Ticket implements ITicket {
+    open = false;
+    ticketType = 'free';
+    ticketTitle = '';
+    ticketDescription = '';
+    ticketPrice = 0;
+    buyMultiple = false;
+    maxPer = 1;
+    multiRegistrant = false;
+    refundable = true;
+    payPal = '';
+    ticketQuantity = 0;
+    ticketsUsed = 0;
+    ticketsLeft = 0;
+    eventRef;
 
-    //make sure and get event ref
-    constructor(eventRef){
+    // make sure and get event ref
+    constructor(eventRef) {
         this.eventRef = eventRef;
     }
 }
 
-export interface IDraftTickets{
-    $key?:string;
+export interface IDraftTickets {
+    $key?: string;
     tickets: ITicket[];
 }
 
-export class DraftTickets implements IDraftTickets{
+export class DraftTickets implements IDraftTickets {
     tickets: ITicket[];
-    constructor(tickets:ITicket[] = []){
+    constructor(tickets: ITicket[] = []) {
         this.tickets = tickets;
     }
 }

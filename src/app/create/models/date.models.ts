@@ -1,19 +1,19 @@
-//COMPLEXITY OF EVENT DATE TYPES MERITS COMPLEX SET OF OBJECTS (TODO REDUCE COMPLEXITY ONCE IMPLMENTATIONS SHOWS WHERE THIS IS OVERBOARD)
+// COMPLEXITY OF EVENT DATE TYPES MERITS COMPLEX SET OF OBJECTS (TODO REDUCE COMPLEXITY ONCE IMPLMENTATIONS SHOWS WHERE THIS IS OVERBOARD)
 
 
-import {NgbDateStruct, NgbTimeStruct, NgbTimepickerModule} from "@ng-bootstrap/ng-bootstrap";
-interface IDayTime{
+import { NgbDateStruct, NgbTimeStruct, NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
+interface IDayTime {
     date: NgbDateStruct;
     time: NgbTimeStruct;
 }
 
-export class DayTime implements IDayTime{
+export class DayTime implements IDayTime {
     date: NgbDateStruct;
     time: NgbTimeStruct;
 
-    constructor(){
+    constructor() {
 
-        let date = new Date();
+        const date = new Date();
 
         this.date = {
             day: date.getDate(),
@@ -22,28 +22,28 @@ export class DayTime implements IDayTime{
         };
 
         this.time = {
-           hour: 12,
+            hour: 12,
             minute: 0,
             second: 0
-        }
+        };
     }
 
 }
 
-export interface ISingleDay{
+export interface ISingleDay {
     date: NgbDateStruct;
     start: NgbTimeStruct;
     end: NgbTimeStruct;
 }
 
-export class SingleDay implements ISingleDay{
+export class SingleDay implements ISingleDay {
     date: NgbDateStruct;
     start: NgbTimeStruct;
     end: NgbTimeStruct;
 
-    constructor(){
+    constructor() {
 
-        let date = new Date();
+        const date = new Date();
 
         this.date = {
             month: (date.getMonth() + 1),
@@ -52,13 +52,13 @@ export class SingleDay implements ISingleDay{
         };
 
         this.start = {
-           hour: 12,
+            hour: 12,
             minute: 0,
             second: 0
         };
 
         this.end = {
-           hour: 12,
+            hour: 12,
             minute: 0,
             second: 0
         };
@@ -66,125 +66,125 @@ export class SingleDay implements ISingleDay{
 
 }
 
-export interface IMultiDay{
-    start:IDayTime;
-    end:IDayTime;
+export interface IMultiDay {
+    start: IDayTime;
+    end: IDayTime;
 }
 
-export class MultiDay implements IMultiDay{
-    start:IDayTime;
-    end:IDayTime;
+export class MultiDay implements IMultiDay {
+    start: IDayTime;
+    end: IDayTime;
 
-    constructor(start:IDayTime = new DayTime(), end:IDayTime = new DayTime()){
+    constructor(start: IDayTime = new DayTime(), end: IDayTime = new DayTime()) {
         this.start = start;
         this.end = end;
     }
 
 }
 
-export interface IRecurring{
+export interface IRecurring {
     type: string;
     monthlyDay: IRecurringMonthlyDay;
     monthlyDate: IRecurringMonthlyDate;
     weekly: IRecurringWeekly;
-    biweekly: IRecurringWeekly
+    biweekly: IRecurringWeekly;
 }
 
-export class Recurring implements IRecurring{
-    type:string = " ";
-    monthlyDay:IRecurringMonthlyDay =  new RecurringMonthlyDay();
-    monthlyDate:IRecurringMonthlyDate = new RecurringMonthlyDate();
-    weekly:IRecurringWeekly = new RecurringWeekly();
-    biweekly:IRecurringWeekly = new RecurringWeekly();
+export class Recurring implements IRecurring {
+    type = '';
+    monthlyDay: IRecurringMonthlyDay = new RecurringMonthlyDay();
+    monthlyDate: IRecurringMonthlyDate = new RecurringMonthlyDate();
+    weekly: IRecurringWeekly = new RecurringWeekly();
+    biweekly: IRecurringWeekly = new RecurringWeekly();
 }
 
-export interface IWeekDays{
-    Mon:boolean;
-    Tue:boolean;
-    Wed:boolean;
-    Thu:boolean;
-    Fri:boolean;
-    Sat:boolean;
-    Sun:boolean;
-    dayKeys:string[];
+export interface IWeekDays {
+    Mon: boolean;
+    Tue: boolean;
+    Wed: boolean;
+    Thu: boolean;
+    Fri: boolean;
+    Sat: boolean;
+    Sun: boolean;
+    dayKeys: string[];
 }
 
-export class WeekDays implements IWeekDays{
-    Mon:boolean = false;
-    Tue:boolean = false;
-    Wed:boolean = false;
-    Thu:boolean = false;
-    Fri:boolean = false;
-    Sat:boolean = false;
-    Sun:boolean = false;
-    //EASY STRING BUILDING
-    dayKeys:string[] = [
-        "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"
+export class WeekDays implements IWeekDays {
+    Mon = false;
+    Tue = false;
+    Wed = false;
+    Thu = false;
+    Fri = false;
+    Sat = false;
+    Sun = false;
+    // EASY STRING BUILDING
+    dayKeys: string[] = [
+        'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
     ];
 }
 
-export interface IMonthWeeks{
-    First:boolean;
-    Second:boolean;
-    Third:boolean;
-    Fourth:boolean;
-    Fifth:boolean;
-    Last:boolean;
-    weekKeys:string[];
+export interface IMonthWeeks {
+    First: boolean;
+    Second: boolean;
+    Third: boolean;
+    Fourth: boolean;
+    Fifth: boolean;
+    Last: boolean;
+    weekKeys: string[];
 }
 
-export class MonthWeeks implements IMonthWeeks{
-    First:boolean;
-    Second:boolean;
-    Third:boolean;
-    Fourth:boolean;
-    Fifth:boolean;
-    Last:boolean;
-    //SIMPLIFY STRING BUILDING (THESE WILL LOOP IN ORDER)
-    weekKeys:string[] = [
-        "First", "Second", "Third", "Fourth", "Last"
+export class MonthWeeks implements IMonthWeeks {
+    First: boolean;
+    Second: boolean;
+    Third: boolean;
+    Fourth: boolean;
+    Fifth: boolean;
+    Last: boolean;
+    // SIMPLIFY STRING BUILDING (THESE WILL LOOP IN ORDER)
+    weekKeys: string[] = [
+        'First', 'Second', 'Third', 'Fourth', 'Last'
     ];
 }
 
-export interface IRecurringWeekly{
+export interface IRecurringWeekly {
     reapeatOn: string[];
     start: IDayTime;
     end: IDayTime;
     days: IWeekDays;
 }
 
-export class RecurringWeekly implements IRecurringWeekly{
+export class RecurringWeekly implements IRecurringWeekly {
     reapeatOn: string[] = [];
     start: IDayTime = new DayTime();
     end: IDayTime = new DayTime();
     days: IWeekDays = new WeekDays();
 
-    constructor(){
+    constructor() {
     }
 
 }
 
-export interface IRecurringMonthlyDay{
-    repeatOnWeeks:IMonthWeeks;
-    repeatOnDays:IWeekDays;
+export interface IRecurringMonthlyDay {
+    repeatOnWeeks: IMonthWeeks;
+    repeatOnDays: IWeekDays;
     dailyStartTime: NgbTimeStruct;
     dailyEndTime: NgbTimeStruct;
     cycleStartDate: NgbDateStruct;
     cycleEndDate: NgbDateStruct;
 }
 
-export class RecurringMonthlyDay implements IRecurringMonthlyDay{
+export class RecurringMonthlyDay implements IRecurringMonthlyDay {
 
-    repeatOnWeeks:IMonthWeeks = new MonthWeeks();
-    repeatOnDays:IWeekDays = new WeekDays();
+    repeatOnWeeks: IMonthWeeks = new MonthWeeks();
+    repeatOnDays: IWeekDays = new WeekDays();
     dailyStartTime: NgbTimeStruct;
     dailyEndTime: NgbTimeStruct;
     cycleStartDate: NgbDateStruct;
     cycleEndDate: NgbDateStruct;
 
-    constructor(){
+    constructor() {
 
-        let date = new Date();
+        const date = new Date();
 
         this.cycleStartDate = this.cycleEndDate = {
             month: (date.getMonth() + 1),
@@ -193,7 +193,7 @@ export class RecurringMonthlyDay implements IRecurringMonthlyDay{
         };
 
         this.dailyStartTime = this.dailyEndTime = {
-           hour: 12,
+            hour: 12,
             minute: 0,
             second: 0
         };
@@ -202,7 +202,7 @@ export class RecurringMonthlyDay implements IRecurringMonthlyDay{
 
 }
 
-export interface IRecurringMonthlyDate{
+export interface IRecurringMonthlyDate {
     repeatOn: any;
     dailyStartTime: NgbTimeStruct;
     dailyEndTime: NgbTimeStruct;
@@ -210,16 +210,16 @@ export interface IRecurringMonthlyDate{
     cycleEndDate: NgbDateStruct;
 }
 
-export class RecurringMonthlyDate implements IRecurringMonthlyDate{
-    repeatOn: any = " ";
+export class RecurringMonthlyDate implements IRecurringMonthlyDate {
+    repeatOn: any = '';
     dailyStartTime: NgbTimeStruct;
     dailyEndTime: NgbTimeStruct;
     cycleStartDate: NgbDateStruct;
     cycleEndDate: NgbDateStruct;
 
-    constructor(){
+    constructor() {
 
-        let date = new Date();
+        const date = new Date();
 
         this.cycleStartDate = this.cycleEndDate = {
             month: (date.getMonth() + 1),
@@ -228,7 +228,7 @@ export class RecurringMonthlyDate implements IRecurringMonthlyDate{
         };
 
         this.dailyStartTime = this.dailyEndTime = {
-           hour: 12,
+            hour: 12,
             minute: 0,
             second: 0
         };
@@ -238,18 +238,24 @@ export class RecurringMonthlyDate implements IRecurringMonthlyDate{
 
 }
 
-export interface IDraftDate{
+export interface IDraftDate {
     $key?: string;
     $exists?();
+    // tslint:disable-next-line:member-ordering
     eventType: string;
+    // tslint:disable-next-line:member-ordering
     single: ISingleDay;
+    // tslint:disable-next-line:member-ordering
     multi: IMultiDay;
+    // tslint:disable-next-line:member-ordering
     recurring: IRecurring;
+    // tslint:disable-next-line:member-ordering
     course: IRecurring;
+    // tslint:disable-next-line:member-ordering
     custom: IMultiDay[];
 }
 
-export class DraftDate implements IDraftDate{
+export class DraftDate implements IDraftDate {
 
     eventType: string;
 
@@ -259,29 +265,29 @@ export class DraftDate implements IDraftDate{
     course: IRecurring = new Recurring();
     custom: IMultiDay[] = [];
 
-    constructor(eventType:string = " ") {
-         this.eventType = eventType;
+    constructor(eventType: string = '') {
+        this.eventType = eventType;
     }
 
 
 
 }
 
-export interface IGroomedDate{
-    dateString:string;
-    timeString:string;
-    startDate:number;
-    endDate:number;
+export interface IGroomedDate {
+    dateString: string;
+    timeString: string;
+    startDate: number;
+    endDate: number;
 }
 
-export class GroomedDate implements IGroomedDate{
+export class GroomedDate implements IGroomedDate {
 
-    dateString:string;
-    timeString:string;
-    startDate:number;
-    endDate:number;
+    dateString: string;
+    timeString: string;
+    startDate: number;
+    endDate: number;
 
-    constructor(dateString, timeString, startDate, endDate){
+    constructor(dateString, timeString, startDate, endDate) {
         this.dateString = dateString;
         this.timeString = timeString;
         this.startDate = startDate;
