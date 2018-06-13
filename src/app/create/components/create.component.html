@@ -1,0 +1,47 @@
+<section class="secondary-content">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div *ngIf="!needsOcode">
+
+                    <h3 class="line">Organize Your Event</h3>
+
+                    <div class="c-content-tab-1 c-theme c-margin-t-30">
+
+                        <ul class="nav nav-inline nav-tabs c-font-uppercase c-font-bold light-bottom-border">
+                            <li class="nav-item" routerLink="edit" routerLinkActive="active">
+                                <a class="nav-link">Edit</a>
+                            </li>
+                            <li class="nav-item" routerLink="preview" routerLinkActive="active">
+                                <a class="nav-link" >Preview</a>
+                            </li>
+                            <li class="nav-item" routerLink="advanced" routerLinkActive="active" *ngIf="createEventService.showAdvanced()">
+                                <a class="nav-link">Advanced</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div style="margin-top: 60px;px;">
+                    <router-outlet *ngIf="!needsOcode"></router-outlet>
+
+                    <div *ngIf="needsOcode">
+                        <h3 class="line">Membership Required to Create Events</h3>
+
+                        <p>A membership is required to create events.  You need to sign up and get an ōCode.</p>
+
+                        <hr />
+
+                        <a class="btn btn-default" routerLink="/home">Return to Home</a> &nbsp; <button class="btn btn-primary" (click)="appService.triggerFreeTrial.emit()">Get an ōCode</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
