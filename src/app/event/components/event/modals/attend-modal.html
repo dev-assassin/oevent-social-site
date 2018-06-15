@@ -1,0 +1,138 @@
+
+<div ngbModalContainer>
+    <div class="modal-body" style="padding:8%;padding-bottom:30px;" *ngIf="set">
+
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()" style="margin:15px 3px;"><span aria-hidden="true">×</span></button>
+
+        <h3 class="line">
+            Select Registration
+        </h3>
+
+        <div id="step-2">
+
+            <div *ngFor="let ticket of ticketsGroomed; let i = index" class="ticket-wrapper">
+
+
+                <div class="ticket-info">
+                    <table style="width:100%;">
+                        <tbody>
+                            <tr>
+                                <td style="">
+                                    <div>
+                                        <h4 class="ticket-title">
+                                            {{ ticket.ticketTitle }}
+                                        </h4>
+                                        <div>
+                                            {{ ticket.ticketDescription }}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td style="width:110px;padding-left:1rem">
+                                    <div class="text-center ticket-input">
+                                        <div class="text-center">
+                                            <span style="font-weight:bold" *ngIf="ticket.ticketType == 'free'">Free</span>
+                                            <span style="font-weight:bold" *ngIf="ticket.ticketType != 'free'">{{ ticket.ticketPrice | currency:'USD':true }}</span>
+                                        </div>
+
+                                        <div style="clear:both;"></div>
+
+                                        <div class="text-center">
+                                            <div class="input-group" *ngIf="ticket.buyMultiple && (ticket.ticketsLeft > 0)">
+                                                <span class="input-group-btn">
+                                                    <a class="btn btn-primary btn-narrow" (click)="updateTicket(ticket, i, false, 'minus')">
+                                                        <i class="fa fa-minus"></i>
+                                                    </a>
+                                                </span>
+                                                <input class="form-control" [(ngModel)]="ticketQty[ticket.$key]" (keyup.enter)="updateTicket(ticket, i)">
+                                                <span class="input-group-btn">
+                                                    <a class="btn btn-primary  btn-narrow" (click)="updateTicket(ticket, i, false, 'plus')">
+                                                        <i class="fa fa-plus"></i>
+                                                    </a>
+                                                </span>
+                                            </div>
+
+                                            <a class="btn btn-primary btn-block" (click)="updateTicket(ticket, i, true)" *ngIf="!ticket.buyMultiple && (ticket.ticketsLeft > 0)">
+                                                <i class="fa fa-plus" style="margin-right:0px;"></i>
+                                            </a>
+                                        </div>
+                                        <div *ngIf="ticket.buyMultiple" class="real-small">
+                                            Limit: {{ ticket.maxPer }} ({{ ticket.ticketsLeft }} left)
+                                        </div>
+                                        <div *ngIf="!ticket.buyMultiple" class="real-small">
+                                            Limit: 1  ({{ ticket.ticketsLeft }} left)
+                                        </div>
+                                        <div *ngIf="!ticket.refundable" style="color:red;" class="real-small">non-refundable</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="ticket-error" [ngClass]="{'has-error': ticketQtyErr[ticket.$key].error}">
+                        <div class="ticket-inner">
+                            <div class="row">
+                                <div class="col-sm-8">
+
+                                </div>
+                                <div class="col-sm-4">
+
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="error-text" *ngIf="ticketQtyErr[ticket.$key].error && ticketQtyErr[ticket.$key].total">There are only {{ ticket.ticketsLeft }} remaining tickets</div>
+                                    <div class="error-text" *ngIf="ticketQtyErr[ticket.$key].error && ticketQtyErr[ticket.$key].limit">You can only register {{ ticket.maxPer }}</div>
+                                    <h5 *ngIf="ticket.ticketsLeft <= 0">Sold Out</h5>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+            </div><!-- end accordion -->
+
+            <div class="totals" style="margin-top:2rem" >
+                <div *ngFor="let ticket of tickets;let i = index">
+
+                        <div class="row" *ngIf="ticket.quantity">
+
+                            <div class="col-sm-8">
+                                <strong>{{ ticket.quantity }}</strong> x {{ ticket.name }}
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="pull-right" style="position:relative">
+                                    {{ ticket.price | currency:'USD':true}}
+                                    <a (click)="removeTicket(i)" class="delete-ticket"><i class="fa fa-times"></i></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                </div>
+
+                <hr />
+
+                <div class="row" *ngIf="tickets.length">
+                    <div class="col-sm-8">
+                        <strong>TOTAL</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="pull-right">
+                            {{ ticketTotal | currency:'USD':true }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="padding-vertical text-center" style="clear:both;">
+                <a class="btn btn-lg btn-default" (click)="activeModal.dismiss()">Cancel</a>
+                <button class="btn btn-lg btn-primary" (click)="registerTickets()" *ngIf="ticketsValid">Continue Registration</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
