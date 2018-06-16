@@ -1,0 +1,168 @@
+<section class="secondary-content" *ngIf="eventService.set">
+    <div class="container no-heading">
+        <!-- <div>
+            {{ eventService.event | json }}
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-9">
+                <div class="c-content-blog-post-1-view">
+                    <div class="c-content-blog-post-1">
+                        <div class="c-media">
+                            <img class="img-fluid" [src]="eventService.event.imagePath" />
+                        </div>
+                        <div style="font-size:1rem;margin-top:7px;heigh:0px;overflow:visible;"
+                             class="pull-right" *ngIf="promoter">
+
+                            <i class="fa fa-check primary-text"></i> You are promoting this event
+                        </div>
+
+                        <div style="margin:15px 0" *ngIf="appService.admin">
+                            <button class="btn btn-block btn-success" *ngIf="!featured" (click)="addFeatured()">Add to Featured Events</button>
+                            <button class="btn btn-block btn-warning" *ngIf="featured" (click)="removeFeatured()">Remove from Featured Events</button>
+                        </div>
+
+                        <div class="c-title c-font-bold c-font-uppercase padding-vertical" style="clear:both;">
+
+                            <a (click)="toggleBookmark()">
+                                <i class="fa fa-bookmark-o" *ngIf="!bookmarkSet"></i>
+                                <i class="fa fa-bookmark" *ngIf="bookmarkSet"></i>
+                            </a>
+                            {{ eventService.event.title }}
+
+
+
+                            <div class="pull-right">
+
+                                <a (click)="openPromoter()" class="btn btn-primary btn-sm" *ngIf="appService.ocodeSet">
+                                    <span aria-hidden="true" class="fa fa-plus-square-o fa-1"></span>
+                                    <span *ngIf="!promoter">Promote this event</span>
+                                    <span *ngIf="promoter">Invite Attendees</span>
+                                </a>
+
+                                <a (click)="openAttend()" class="btn btn-primary btn-sm">
+                                    <span aria-hidden="true" class="fa fa-arrow-circle-o-right fa-1"></span>
+                                    Attend this event
+                                </a>
+
+                            </div>
+                        </div>
+                        <div class="c-panel c-margin-b-30">
+                            <div class="c-author">
+                                <a href="#">
+                                    <span class="c-font-uppercase">{{ eventService.event.date }}</span>
+                                </a>
+                            </div>
+                            <div class="c-date">
+                                <span class="c-font-uppercase">{{ eventService.event.time }}</span>
+                            </div>
+                            <!-- <ul class="c-tags c-theme-ul-bg">
+                                <li><a href="search-events.aspx" target="blank" class="o-no-color-change">Essential Oils</a></li>
+                                <li><a href="search-events.aspx" target="blank" class="o-no-color-change">Training</a></li>
+                                <li><a href="search-events.aspx" target="blank" class="o-no-color-change">Seminar</a></li>
+                            </ul> -->
+                            <div class="pull-right" *ngIf="eventService.event.showRemainingTickets">
+                                <strong>
+                                    Spots Left: {{ eventService.event.ticketsLeft }}/{{ eventService.event.totalTickets }}
+                                </strong>
+                            </div>
+                        </div>
+                        <h2>Description</h2>
+                        <div class="c-desc" >
+                            <div id="toolbar"></div>
+                            <div id="description" style="padding:30 0px;" ></div>
+                        </div>
+                        <div class="c-content-title-1 c-theme c-title-md c-margin-t-40" *ngIf="attendeesPresent && eventService.event.showRegisteredAttendees">
+                            <h3 class="c-font-bold c-font-uppercase">Who's Going </h3>
+                        </div>
+
+                        <div class="c-panel c-margin-b-30" *ngIf="attendeesPresent && eventService.event.showRegisteredAttendees">
+                            <div class="row o-whos-going c-margin-b-10">
+                                <div class="col-sm-2" *ngFor="let attender of attendees$ | async">
+                                    <o-attendee [profileId]="attender.uid" ></o-attendee>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row c-margin-t-10">
+                                <div class="col-md-6 col-md-offset-3">
+                                    <!-- invite here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- end .col-md-9 -->
+
+            <div class="col-md-3" style="padding: 20px; background-color: #f9f9f9; font-size: 15px;">
+
+                <div class="c-content-ver-nav c-margin-b-20" *ngIf="eventService.profileSet">
+                    <div class="c-content-title-1 c-theme c-title-md pull-left">
+                        <h3 class="c-font-bold c-font-uppercase c-margin-b-5">Organizer<br><small>{{ eventService.profile.organizerName }}</small></h3>
+                    </div>
+                    <img [src]="eventService.profile.imageURL" class="img-fluid">
+                    <div class="row c-margin-t-10">
+                        <a (click)="gotoProfile()" target="blank" class="btn btn-primary float-center">View Profile</a>
+                    </div>
+                </div>
+
+                <div class="c-content-ver-nav c-margin-b-40">
+                    <div class="c-content-title-1 c-theme c-title-md c-margin-t-40 pull-left">
+                        <h3 class="c-font-bold c-font-uppercase c-margin-b-5">
+                            <span *ngIf="eventService.event.type == 'local'">Location</span><span *ngIf="eventService.event.type == 'online'">URL</span><br>
+                            <small>
+                                <a [href]="eventService.event.location" target="_blank">
+                                    {{ eventService.event.location }}
+                                </a>
+                            </small>
+                        </h3>
+                    </div>
+
+
+
+                    <div class="google-maps" style="clear:both;" *ngIf="eventService.event.type == 'local'">
+                        <agm-map [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng">
+                            <agm-marker [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng"></agm-marker>
+                        </agm-map>
+                    </div>
+
+                </div>
+                <div style="clear:both;"></div>
+                <div class="c-content-ver-nav c-margin-b-40">
+                    <div class="c-content-title-1 c-theme c-title-md c-margin-t-40">
+                        <h3 class="c-font-bold c-font-uppercase c-margin-b-5">
+                            Add to Calendar
+                        </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <a href="#" class="socicon-btn socicon-btn-circle socicon-lg socicon-solid c-theme-bg c-font-white c-bg-red-hover socicon-facebook tip" data-tip="Facebook Events">
+                                <span class="fa fa-facebook"></span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="#" class="socicon-btn socicon-btn-circle socicon-lg socicon-solid c-theme-bg c-font-white c-bg-red-hover socicon-outlook tip" data-tip="Microsoft Outlook">
+                                <span class="fa fa-windows"></span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="#" class="socicon-btn socicon-btn-circle socicon-lg socicon-solid c-theme-bg c-font-white c-bg-red-hover socicon-apple tip" data-tip="iCalendar">
+                                <span class="fa fa-apple"></span>
+                            </a>
+                        </div>
+                        <div class="col-sm-3">
+                            <a href="#" class="socicon-btn socicon-btn-circle socicon-lg socicon-solid c-theme-bg c-font-white c-bg-red-hover socicon-google tip" data-tip="Google Calendar">
+                                <span class="fa fa-google"></span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+</section>
