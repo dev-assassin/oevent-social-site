@@ -1,0 +1,29 @@
+<div ngbModalContainer>
+    <div class="modal-body">
+        <div>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()"
+                    style="margin:15px 3px;"><span aria-hidden="true">×</span></button>
+        </div>
+
+        <h3 class="line" style="margin-bottom:0px;">
+            ADD CONTACT NAME
+        </h3>
+        <div clas="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" [(ngModel)]="inviteEmail.email" placeholder="Email">
+        </div>
+        <div clas="form-group">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="inviteEmail.firstName"
+                   placeholder="First name">
+        </div>
+        <div clas="form-group">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="inviteEmail.lastName"
+                   placeholder="Last name">
+        </div>
+        <button  class="btn btn-primary" (click)="save()">Save</button>
+        <button  class="btn btn-default" style="margin-left: 10px;" (click)="cancel()">Cancel</button>
+
+    </div>
+</div>
