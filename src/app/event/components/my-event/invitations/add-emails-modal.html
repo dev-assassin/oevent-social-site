@@ -1,0 +1,52 @@
+<div ngbModalContainer>
+    <div class="modal-body">
+        <div>
+            <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()"
+                    style="margin:15px 3px;"><span aria-hidden="true">×</span></button>
+        </div>
+
+        <h3 class="line" style="margin-bottom:0px;">
+            ADD EMAIL ADDRESSES
+        </h3>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Add emails</label>
+                        <select class="form-control" id="event-type" [(ngModel)]="addOption"
+                        >
+                            <option value="manual">Manually</option>
+                            <option value="from_file">From file</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px;" *ngIf="addOption == 'manual'">
+                    <div class="col-md-12">
+                        <textarea class="form-control" rows="7" [(ngModel)]="emails"></textarea>
+                        <span>Seperate emails by commas or linebreaks</span>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px;" *ngIf="addOption == 'from_file'">
+                    <div class="col-md-12">
+                         <span class="btn btn-primary btn-lg btn-file margin-vertical">
+                             Choose file <input (change)="fileChangeListener($event)" type="file" value="Choose file">
+                         </span>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 15px;">
+                    <div class="col-md-12" style="text-align: center;">
+                        <a href="javascript:null" class="btn btn-primary" (click)="addEmails()">
+                            Add
+                        </a>
+                        <a href="javascript:null" class="btn btn-secondary" style="margin-left: 10px;">
+                            Cancel
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
