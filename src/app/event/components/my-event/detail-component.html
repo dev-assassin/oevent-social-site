@@ -1,0 +1,53 @@
+<div *ngIf="eventService.event">
+    <h3 class="line" style="margin-bottom: 0px;">
+        {{ eventService.event.title }}
+    </h3>
+
+    <p>
+        <a routerLink="/create/{{eventService.eventId}}">
+            <i class="fa fa-pencil"></i>
+            <span style="font-size: 15px;">Edit event</span>
+        </a>
+        <br />
+        <a routerLink="/event/{{eventService.eventId}}" target="_blank">
+            <i class="fa fa-eye"></i>
+            <span style="font-size: 15px">View landing page</span>
+        </a>
+    </p>
+
+    <div class="row row-vertical" style="padding-top: 2rem;">
+        <div class="col-md-3">
+            <p><strong>Status:</strong></p>
+        </div>
+        <div class="col-md-9">
+            <p>
+                <span [ngClass]="eventService.event.liveStatus">
+                    {{ eventService.event.liveStatus }}
+                </span>
+                <a (click)="changeStatus()">change</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="row row-vertical">
+        <div class="col-md-3">
+            <p><strong>Schedule:</strong></p>
+        </div>
+        <div class="col-md-9">
+            <p>
+                {{ eventService.event.date }} || {{ eventService.event.time }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row row-vertical" *ngIf="eventService.event.type == 'local'">
+        <div class="col-md-3">
+            <p><strong>Location:</strong></p>
+        </div>
+        <div class="col-md-9">
+            <p>
+                {{ eventService.event.location }}
+            </p>
+        </div>
+    </div>
+</div>
