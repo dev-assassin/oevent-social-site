@@ -17,7 +17,9 @@
 
     <div class="row row-vertical" style="padding-top: 2rem;">
         <div class="col-md-3">
-            <p><strong>Status:</strong></p>
+            <p>
+                <strong>Status:</strong>
+            </p>
         </div>
         <div class="col-md-9">
             <p>
@@ -31,7 +33,9 @@
 
     <div class="row row-vertical">
         <div class="col-md-3">
-            <p><strong>Schedule:</strong></p>
+            <p>
+                <strong>Schedule:</strong>
+            </p>
         </div>
         <div class="col-md-9">
             <p>
@@ -42,12 +46,79 @@
 
     <div class="row row-vertical" *ngIf="eventService.event.type == 'local'">
         <div class="col-md-3">
-            <p><strong>Location:</strong></p>
+            <p>
+                <strong>Location:</strong>
+            </p>
         </div>
         <div class="col-md-9">
             <p>
                 {{ eventService.event.location }}
             </p>
+        </div>
+    </div>
+
+    <div class="row row-vertical">
+        <div class="col-md-3">
+            <p>
+                <strong>Description: </strong>
+            </p>
+        </div>
+        <div class="col-md-9" style="padding-top: 7px; padding-bottom: 15px;">
+            <div class="c-desc">
+                <div id="toolbar"></div>
+                <div id="description" style="padding: 30 0px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-vertical">
+        <div class="col-md-3">
+            <p>
+                <strong>Category:</strong>
+            </p>
+        </div>
+        <div class="col-md-9">
+            <p>
+                {{ eventService.event.visibility }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row row-vertical">
+        <div class="col-md-3">
+            <p>
+                <strong>Keywords:</strong>
+            </p>
+        </div>
+        <div class="col-md-9">
+            <p>
+                {{ keywordString }}
+            </p>
+        </div>
+    </div>
+
+    <div class="row row-vertical" style="padding-top: 1rem;">
+        <div class="col-md-3">
+            <p>
+                <strong>Registration Types:</strong>
+            </p>
+        </div>
+        <div class="col-md-9">
+            <table class="register-table">
+                <tbody>
+                    <tr *ngFor="let ticket of eventService.eventTickets$ | async">
+                        <td>
+                            {{ ticket.ticketTitle }}
+                        </td>
+                        <td>
+                            {{ ticket.ticketType }}
+                        </td>
+                        <td>
+                            {{ ticket.ticketUsed }} / {{ ticket.ticketQuantity }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
