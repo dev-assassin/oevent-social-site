@@ -1,0 +1,66 @@
+<div ngbModalContainer>
+    <div class="modal-body" style="padding:8%;padding-bottom:30px;">
+
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()" style="margin:15px 3px;"><span aria-hidden="true">×</span></button>
+
+        <h3 class="line">
+            CHANGE EVENT STATUS
+        </h3>
+
+        <p class="text-center">
+            <i>What would you like to do?</i>
+        </p><br />
+
+
+
+        <div class="row align-items-center" [class.active]="eventService.event.liveStatus=='active'">
+            <div class="col-3 col-md-2">
+                <button class="btn btn-primary btn-block" (click)="changeStatus('active')">
+                    <i class="fa fa-check-circle-o"></i>
+                </button>
+            </div>
+            <div class="col-9 col-md-10">
+                <h4><i class="fa fa-check"></i> Activate</h4>
+                Active events allow people to sign up to promote or attend your event.  If your even tis public, it will show up in the public search results.
+            </div>
+        </div>
+
+        <div class="row align-items-center" [class.active]="draftStatus == 'draft'">
+            <div class="col-3 col-md-2">
+                <button class="btn btn-primary btn-block" (click)="unpublish()">
+                    <i class="fa fa-eye-slash"></i>
+                </button>
+            </div>
+            <div class="col-9 col-md-10">
+                <h4><i class="fa fa-check"></i> Unpublish</h4>
+                Unpublished events will show up in your "Drafts." The event will no longer be searchable or accept registrations until you decide to go live again.
+            </div>
+        </div>
+
+        <div class="row align-items-center" [class.active]="eventService.event.liveStatus=='closed'">
+            <div class="col-3 col-md-2">
+                <button class="btn btn-primary btn-block" (click)="changeStatus('closed')">
+                    <i class="fa fa-stop-circle-o"></i>
+                </button>
+            </div>
+            <div class="col-9 col-md-10">
+                <h4><i class="fa fa-check"></i> Close</h4>
+                Closed events are no longer open for registrations and will not show up in the search results.  Events will close automatically when all registrations slots have been sold or when the event has started.
+            </div>
+        </div>
+
+        <div class="row align-items-center" [class.active]="eventService.event.liveStatus=='cancelled'">
+            <div class="col-3 col-md-2">
+                <button class="btn btn-primary btn-block" (click)="changeStatus('cancelled')">
+                    <i class="fa fa-times-circle-o"></i>
+                </button>
+            </div>
+            <div class="col-9 col-md-10">
+                <h4><i class="fa fa-check"></i> Cancel</h4>
+                Cancelled events have a 5-day grace period before the event is deleted, along with the attendees and promoters.  The organizer is responsible for providing refunds.
+            </div>
+        </div>
+
+
+    </div>
+</div>
