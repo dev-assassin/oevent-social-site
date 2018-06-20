@@ -1,0 +1,82 @@
+<section class="secondary-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 sec-nav">
+                <div class="c-layout-sidebar-menu c-theme ">
+
+
+                    <!-- BEGIN: LAYOUT/SIDEBARS -->
+                    <div class="c-sidebar-menu-toggler">
+                        <h3 class="c-title c-font-uppercase c-font-bold" style="margin-bottom:0px;">Manage Event</h3>
+                        <a href="javascript:;" class="c-content-toggler" data-toggle="collapse" data-target="#sidebar-menu-1">
+                            <span class="c-line"></span>
+                            <span class="c-line"></span>
+                            <span class="c-line"></span>
+                        </a>
+                    </div>
+                    <ul class="c-sidebar-menu collapse " id="sidebar-menu-1">
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">Event</a>
+                            <ul class="c-dropdown-menu">
+                                <li routerLinkActive="active">
+                                    <a routerLink='details'>Event Details</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='form'>Registration Form</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='confirmation'>Confirmation Page</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">Management
+
+                            </a>
+                            <ul class="c-dropdown-menu">
+                                <li routerLinkActive="active">
+                                    <a routerLink='promoters'>Promoters</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='attendees'>Attendees</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='registration'>Registration Types</a>
+                                </li>
+                                <!-- <li routerLinkActive="active">
+                                    <a routerLink='refunds'>Refunds</a>
+                                </li>-->
+                            </ul>
+                        </li>
+                        <li class="c-dropdown c-open">
+                            <a class="c-toggler">Communication
+
+                            </a>
+                            <ul class="c-dropdown-menu">
+                                <li routerLinkActive="active">
+                                    <a routerLink='invitations'>Send Invitations</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='send-email'>Send Email</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='emails'>Scheduled Emails</a>
+                                </li>
+                                <li routerLinkActive="active">
+                                    <a routerLink='sent'>Sent Messages</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <!-- END: LAYOUT/SIDEBARS/SHOP-SIDEBAR-DASHBOARD -->
+                </div>
+            </div>
+
+            <div class="col-md-9 sec-main"> 
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</section>   
