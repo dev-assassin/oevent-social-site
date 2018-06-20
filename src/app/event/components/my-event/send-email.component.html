@@ -1,0 +1,51 @@
+<h3 class="line" style="margin-bottom: 0px;">
+    {{ eventService.event.title }} - Send Email
+</h3>
+
+<div class="row">
+    <div class="col-md-12">
+        <label>
+            Reply-to Email
+        </label>
+        <div>
+            <input class="form-control" [(ngModel)]="replyToEmail" />
+        </div>
+    </div>
+</div>
+
+<div class="row padding-vertical">
+    <div class="col-md-4">
+        <label>
+            To:
+        </label>
+        <select class="form-control" [(ngModel)]="listGroup">
+            <option value="all">
+                Everyone ({{allEmails.length}})
+            </option>
+            <option value="all_attendees">
+                All Attendees ({{attendeeEmails.length}})
+            </option>
+            <option value="all_promoters">
+                All Promoters ({{promoterEmails.length}})
+            </option>
+            <option value="attendees_by_registration_type">
+                Attendees by Registration Type
+            </option>
+        </select>
+    </div>
+    <div class="col-md-4" *ngIf="listGroup == 'attendees_by_registration_type'">
+        <label>
+            Registration Type:
+        </label>
+        <select class="form-control" [(ngModel)]="regType">
+            <option value="{{regType.$key}}" *ngFor="let regType of eventService.eventTickets$ | async">
+                {{ regType.ticketTitle}}
+                ({{registrationTypeAttendees.get(regType.$key)?registrationTypeAttendees.get(regType.$key).length:0}})
+            </option>
+        </select>
+    </div>
+</div>
+
+<div class="row">
+    
+</div>
