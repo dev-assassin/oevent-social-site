@@ -1,4 +1,4 @@
-export interface IAccountAbout{
+export interface IAccountAbout {
     $key?: string;
     organizerName: string;
     tagLine: string;
@@ -11,23 +11,23 @@ export interface IAccountAbout{
     imageSet: boolean;
     imageURL: string;
     phone: string;
-    email: string
+    email: string;
     $exists?();
 }
 
-export class AccountAbout implements IAccountAbout{
-    organizerName: string = "";
-    aboutMe: string = "";
-    tagLine: string = "";
-    includeEmail: boolean = false;
-    includePhone: boolean = false;
-    includeSocials: boolean = false;
-    includeWebsite: boolean = false;
-    website: string = "";
-    imageSet: boolean = false;
-    imageURL: string = "";
-    phone:string = "";
-    email:string = "";
+export class AccountAbout implements IAccountAbout {
+    organizerName = '';
+    aboutMe = '';
+    tagLine = '';
+    includeEmail = false;
+    includePhone = false;
+    includeSocials = false;
+    includeWebsite = false;
+    website = '';
+    imageSet = false;
+    imageURL = '';
+    phone = '';
+    email = '';
 
     constructor() {
 
