@@ -1,8 +1,8 @@
-export interface IAccountContact{
+export interface IAccountContact {
     $key?: string;
     first: string;
     last: string;
-    gender: number;
+    gender;
     email: string;
     phone: string;
     country: string;
@@ -11,28 +11,28 @@ export interface IAccountContact{
     city: string;
     state: string;
     postal: string;
-    bMonth: number;
-    bDay: number;
-    bYear: number;
-    timeZone: number;
+    bMonth;
+    bDay;
+    bYear;
+    timeZone;
 }
 
-export class AccountContact implements IAccountContact{
-    first: string = "";
-    last: string = "";
-    gender: number = 0;
-    email: string = "";
-    phone: string = "";
-    country: string = "";
-    address: string = "";
-    address2: string = "";
-    city: string = "";
-    state: string = "";
-    postal: string = "";
-    bMonth: number = 0;
-    bDay: number = 0;
-    bYear: number = 0;
-    timeZone: number = 0;
+export class AccountContact implements IAccountContact {
+    first = '';
+    last = '';
+    gender = 0;
+    email = '';
+    phone = '';
+    country = '';
+    address = '';
+    address2 = '';
+    city = '';
+    state = '';
+    postal = '';
+    bMonth = 0;
+    bDay = 0;
+    bYear = 0;
+    timeZone = 0;
 
     constructor() {
 
