@@ -1,4 +1,4 @@
-export interface IAccountPreferences{
+export interface IAccountPreferences {
     $key?: string;
     $exists?;
     personNewEvent: boolean;
@@ -9,11 +9,11 @@ export interface IAccountPreferences{
 
 }
 
-export class AccountPreferences implements IAccountPreferences{
-    personNewEvent: boolean = false;
-    placeNewEvent: boolean = false;
-    newsletter: boolean = false;
-    features: boolean = false;
+export class AccountPreferences implements IAccountPreferences {
+    personNewEvent = false;
+    placeNewEvent = false;
+    newsletter = false;
+    features = false;
 
     constructor() {
         this.personNewEvent = false;
