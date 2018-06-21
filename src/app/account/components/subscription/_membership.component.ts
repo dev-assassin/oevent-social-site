@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../../auth/services/auth-service";
-import {AccountSubscriptionService} from "./account-subscription-service";
+import { AuthService } from '../../../auth/services/auth-service';
+import { AccountSubscriptionService } from './account-subscription-service';
 
 @Component({
-    selector: 'account-subscription-memebership',
+    selector: 'app-account-subscription-memebership',
     styles: [
 
     ],
     template: `
-        
-       
-            
                 <div class="tab-pane active" id="tab_1_1_content">
                     <div class="row">
                         <div class="col-md-4">
@@ -29,7 +26,12 @@ import {AccountSubscriptionService} from "./account-subscription-service";
 
                         </div>
                         <div class="col-md-8">
-                            <p> <small>*This shows the membership level that you are at for the current billing cycle. Note that if you downgrade your membership level, you will still retain your higher membership level until the next billing cycle, in which the downgrade process will be complete. If you have downgraded your membership level, you can verify that the change was successfully made by looking at the "Next Bill" tab. </small></p>
+                            <p>
+                                <small>*This shows the membership level that you are at for the current billing cycle. Note
+                                 that if you downgrade your membership level, you will still retain your higher membership level until the
+                                 next billing cycle, in which the downgrade process will be complete. If you have downgraded your membership
+                                  level,you can verify that the change was successfully made by looking at the "Next Bill" tab.</small>
+                            </p>
                             <br>
                             <a routerLink="/membership" class="btn btn-lg btn-primary">Modify Membership</a>
                         </div>
@@ -38,15 +40,12 @@ import {AccountSubscriptionService} from "./account-subscription-service";
 
                     </div>
                 </div>
-                
-
-                
     `
 })
 
 export class AccountSubscriptionMembershipComponent {
 
-    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService){
+    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService) {
 
     }
 

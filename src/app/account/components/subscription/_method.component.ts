@@ -1,15 +1,13 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../../auth/services/auth-service";
-import {AccountSubscriptionService} from "./account-subscription-service";
+import { AuthService } from '../../../auth/services/auth-service';
+import { AccountSubscriptionService } from './account-subscription-service';
 
 @Component({
-    selector: 'account-subscription-method',
+    selector: 'app-account-subscription-method',
     styles: [
 
     ],
     template: `
-        
-        
         <div class="tab-pane" id="tab_1_2_content">
             <div class="row">
                 <div class="col-md-4">
@@ -25,21 +23,23 @@ import {AccountSubscriptionService} from "./account-subscription-service";
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <p> <small>*This is the credit card information that will be used for your monthly subscription payment. You can change this at anytime.</small></p>
+                    <p>
+                        <small>*This is the credit card information that will be used for your monthly subscription payment.
+                         You can change this at anytime.</small>
+                    </p>
                     <br>
-                    <a href="membership-modify.aspx" class="c-action-btn btn btn-lg c-theme-btn c-btn-bold c-btn-uppercase">Modify Payment</a>
+                    <a href="membership-modify.aspx" class="c-action-btn btn btn-lg c-theme-btn c-btn-bold c-btn-uppercase">
+                        Modify Payment
+                    </a>
                 </div>
             </div>
         </div>
-                
-
-                
     `
 })
 
 export class AccountSubscriptionMethodComponent {
 
-    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService){
+    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService) {
 
     }
 

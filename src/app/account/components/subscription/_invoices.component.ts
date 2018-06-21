@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import {AuthService} from "../../../auth/services/auth-service";
-import {AccountSubscriptionService} from "./account-subscription-service";
+import { AuthService } from '../../../auth/services/auth-service';
+import { AccountSubscriptionService } from './account-subscription-service';
 
 @Component({
-    selector: 'account-subscription-invoices',
+    selector: 'app-account-subscription-invoices',
     styles: [
 
     ],
     template: `
-        
+
                 <div class="tab-pane" id="tab_1_3_content">
                     <div class="row">
 
@@ -103,14 +103,12 @@ import {AccountSubscriptionService} from "./account-subscription-service";
                         </div>
                     </div>
                 </div>
-
-                
     `
 })
 
 export class AccountSubscriptionInvoicesComponent {
 
-    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService){
+    constructor(private auth: AuthService, private subscriptionService: AccountSubscriptionService) {
 
     }
 
