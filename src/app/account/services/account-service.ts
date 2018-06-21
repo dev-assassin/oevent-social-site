@@ -2,24 +2,25 @@ import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/switchMap';
 
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
+import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database-deprecated';
 import { Observable } from 'rxjs/Observable';
 import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { IAccount, Account } from '../models/account';
-import {Subject} from "rxjs";
-import {AuthService} from "../../auth/services/auth-service";
+// tslint:disable-next-line:import-blacklist
+import { Subject } from 'rxjs';
+import { AuthService } from '../../auth/services/auth-service';
 
 
 @Injectable()
 export class AccountService {
 
-    destroyObservable:Subject<any> = new Subject();
+    destroyObservable: Subject<any> = new Subject();
 
     constructor(af: AngularFireDatabase, auth: AuthService) {
-        //const path = `/tasks/${auth.id}`;
+        // const path = `/tasks/${auth.id}`;
     }
 
-    onDestroy(){
+    onDestroy() {
         this.destroyObservable.next(true);
     }
 
