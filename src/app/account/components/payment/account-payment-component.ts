@@ -1,14 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../auth/services/auth-service";
-import {AccountPaymentService} from "./account-payment-service";
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../../auth/services/auth-service';
+import { AccountPaymentService } from './account-payment-service';
 
 @Component({
-    selector: 'account-payment',
+    selector: 'app-account-payment',
     styles: [
 
     ],
     template: `
-        
+
         <h3 class="line">
             Payment History (TODO)
         </h3>
@@ -63,13 +63,13 @@ import {AccountPaymentService} from "./account-payment-service";
     `
 })
 
-export class AccountPaymentComponent implements OnInit{
+export class AccountPaymentComponent implements OnInit {
 
-    constructor(private auth: AuthService, private paymentService: AccountPaymentService){
+    constructor(private auth: AuthService, private paymentService: AccountPaymentService) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
         console.log(this.auth.id);
     }
 
