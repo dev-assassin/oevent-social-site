@@ -1,4 +1,4 @@
-export interface IFile{
+export interface IFile {
     uploaded: boolean;
     percentage: number;
     uploading: boolean;
@@ -7,7 +7,7 @@ export interface IFile{
     errorMessage: string;
 }
 
-export class File implements IFile{
+export class File implements IFile {
     uploaded: boolean;
     uploading: boolean;
     percentage: number;
@@ -15,7 +15,7 @@ export class File implements IFile{
     error: boolean;
     errorMessage: string;
 
-    constructor(uploading?:boolean, uploaded?: boolean, percentage?: number, url?:string){
+    constructor(uploading?: boolean, uploaded?: boolean, percentage?: number, url?: string) {
         this.uploaded = uploaded;
         this.percentage = percentage;
         this.url = url;

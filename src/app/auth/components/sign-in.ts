@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth-service';
 
 
 @Component({
-  selector: 'fl-sign-in',
+  selector: 'app-fl-sign-in',
   styleUrls: [
     './sign-in.scss'
   ],
@@ -12,7 +12,7 @@ import { AuthService } from '../services/auth-service';
 })
 
 export class SignInComponent {
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router) { }
 
   private postSignIn(): void {
     this.router.navigate(['/dashboard']);

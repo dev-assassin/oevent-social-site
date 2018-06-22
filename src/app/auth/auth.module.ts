@@ -21,8 +21,8 @@ import { AuthService } from './services/auth-service';
   ]
 })
 
-export class AuthModule {};
+export class AuthModule { }
 export { AuthGuard };
 export { AuthService };
 export { UnauthGuard };
-export { SignInComponent }
+export { SignInComponent };
