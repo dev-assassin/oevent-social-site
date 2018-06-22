@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from "../auth/services/auth-service";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { AppService } from "../services/app-service";
-import {ToastyService} from "ng2-toasty";
-import {AccountContactService} from "../shared-module/services/account-contact-service";
-import {AccountMeService} from "../shared-module/services/account-me-service";
-import {IAccountContact} from "../account/components/contact/contact-model";
+import { AuthService } from '../auth/services/auth-service';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { AppService } from '../services/app-service';
+import { ToastyService } from 'ng2-toasty';
+import { AccountContactService } from '../shared-module/services/account-contact-service';
+import { AccountMeService } from '../shared-module/services/account-me-service';
+import { IAccountContact } from '../account/components/contact/contact-model';
 import { FirebaseApp, AngularFireModule } from 'angularfire2';
 
 @Component({
-    selector: 'fl-forgot-password',
+    selector: 'app-fl-forgot-password',
     styles: [
-       `
+        `
             .login-error{padding-bottom:15px;}
         `
     ],
@@ -20,8 +20,8 @@ import { FirebaseApp, AngularFireModule } from 'angularfire2';
 })
 
 export class ForgotPasswordComponent {
-    email:string;
-    emailSent:boolean = false;
+    email: string;
+    emailSent = false;
 
     constructor(
         public appService: AppService,
@@ -32,21 +32,21 @@ export class ForgotPasswordComponent {
         private contactService: AccountContactService,
         private aboutService: AccountMeService,
         private app: FirebaseApp
-        ) {
+    ) {
     }
 
-    login(){
+    login() {
         this.appService.openLogin();
     }
 
-    onSubmit(form){
+    onSubmit(form) {
 
-        if(form.valid){
-            let email = form.controls['email'].value;
+        if (form.valid) {
+            const email = form.controls['email'].value;
 
-            this.app.auth().sendPasswordResetEmail(email).then(()=>{
+            this.app.auth().sendPasswordResetEmail(email).then(() => {
                 this.emailSent = true;
-            }, ()=>{
+            }, () => {
 
             });
 
