@@ -29,7 +29,7 @@ import { EventFormFields } from '../models/advanced-settings';
 export class AdvancedFieldsComponent implements OnInit {
 
     eventFields: EventFormFields = new EventFormFields();
-    loaded: boolean = false;
+    loaded = false;
 
     constructor(private auth: AuthService,
         private appService: AppService,

@@ -34,7 +34,7 @@ export class AdvancedRegistrantComponent {
 
     quill: any;
     RegistrantWelcome: RegistrantWelcomeEmailSettings = new RegistrantWelcomeEmailSettings();
-    localSet: boolean = false;
+    localSet = false;
 
     constructor(private auth: AuthService,
         private appService: AppService,
@@ -66,7 +66,7 @@ export class AdvancedRegistrantComponent {
     }
 
     setQuill() {
-        let toolbarOptions = [
+        const toolbarOptions = [
             ['bold', 'italic', 'underline'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -97,8 +97,8 @@ export class AdvancedRegistrantComponent {
 
         this.appService.startLoadingBar();
 
-        let body = this.quill.getContents();
-        let html = this.quill.root.innerHTML;
+        const body = this.quill.getContents();
+        const html = this.quill.root.innerHTML;
         this.RegistrantWelcome.body = body;
         this.RegistrantWelcome.html = html;
 
