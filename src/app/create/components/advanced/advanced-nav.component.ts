@@ -1,10 +1,10 @@
-import {Component, AfterContentInit, OnInit} from '@angular/core';
-import {Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params} from '@angular/router';
-import {AppService} from "../../../services/app-service";
-import {AuthService} from "../../../auth/services/auth-service";
+import { Component, AfterContentInit, OnInit } from '@angular/core';
+import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
+import { AppService } from '../../../services/app-service';
+import { AuthService } from '../../../auth/services/auth-service';
 
 @Component({
-    selector: 'advanced-nav',
+    selector: 'app-advanced-nav',
     template: `
         <div class="csec-nav">
                 <div class="c-layout-sidebar-menu c-theme ">
@@ -25,7 +25,7 @@ import {AuthService} from "../../../auth/services/auth-service";
                             <ul class="c-dropdown-menu">
                                 <li routerLinkActive="active">
                                     <a routerLink='email'>Email Settings</a>
-                                </li>                                
+                                </li>
                             </ul>
                         </li>
                         <li class="c-dropdown c-open">
@@ -45,7 +45,7 @@ import {AuthService} from "../../../auth/services/auth-service";
                                 <li routerLinkActive="active">
                                     <a routerLink='completion'>Event Completion</a>
                                 </li>
-                                
+
                             </ul>
                         </li>
                         <li class="c-dropdown c-open">
@@ -70,19 +70,19 @@ import {AuthService} from "../../../auth/services/auth-service";
         `
             .c-sidebar-menu{
                 margin-top:25px;
-            }  
+            }
         `
     ],
 
 })
 
-export class AdvancedNavComponent implements OnInit{
+export class AdvancedNavComponent implements OnInit {
 
     constructor(private auth: AuthService, private appService: AppService, private router: Router, private route: ActivatedRoute) {
 
     }
 
-    ngOnInit(){
+    ngOnInit() {
 
     }
 
