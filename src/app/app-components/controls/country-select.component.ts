@@ -1,21 +1,21 @@
-import { Component, Input, Output, EventEmitter} from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'country-select',
+  selector: 'app-country-select',
   styles: ['body'],
   templateUrl: './country-select.component.html'
 })
 
-export class CountrySelectComponent  {
-    @Input() country:string;
-    @Input() required:boolean = false;    
-    @Output() countryChange:EventEmitter<String> = new EventEmitter<String>();
+export class CountrySelectComponent {
+  @Input() country: string;
+  @Input() required = false;
+  @Output() countryChange: EventEmitter<String> = new EventEmitter<String>();
 
-    constructor() {
-    }
+  constructor() {
+  }
 
-    onChange(select){
-      this.country = select.value; 
-      this.countryChange.next(this.country); 
-    }
+  onChange(select) {
+    this.country = select.value;
+    this.countryChange.next(this.country);
+  }
 }
