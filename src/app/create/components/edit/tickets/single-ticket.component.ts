@@ -1,13 +1,13 @@
 import { Component, AfterContentInit, OnInit, Input } from '@angular/core';
 import { Router, NavigationEnd, RoutesRecognized, ActivatedRoute, Params } from '@angular/router';
-import { AppService } from "../../../../services/app-service";
-import { AuthService } from "../../../../auth/services/auth-service";
-import { CreateEventService } from "../../../services/create-event.service";
-import { CreateTicketsService } from "../../../services/create-tickets.service";
-import { ITicket } from "../../../models/tickets.models";
+import { AppService } from '../../../../services/app-service';
+import { AuthService } from '../../../../auth/services/auth-service';
+import { CreateEventService } from '../../../services/create-event.service';
+import { CreateTicketsService } from '../../../services/create-tickets.service';
+import { ITicket } from '../../../models/tickets.models';
 
 @Component({
-    selector: '[event-ticket]',
+    selector: 'app-event-ticket',
     templateUrl: './single-ticket.component.html',
     styles: [
         `
@@ -16,11 +16,11 @@ import { ITicket } from "../../../models/tickets.models";
                 color:#777;
                 margin-top:9px;
             }
-            
+
             .icons .fa:hover{
                 color:#333;
             }
-            
+
         `
     ],
 
@@ -31,8 +31,8 @@ export class SingleTicketComponent implements OnInit {
     @Input() ticketKey;
     ticketRef$: any;
     ticket: ITicket;
-    open: boolean = false;
-    maxPer: number = 1;
+    open = false;
+    maxPer = 1;
 
     constructor(private auth: AuthService,
         private appService: AppService,
@@ -56,8 +56,7 @@ export class SingleTicketComponent implements OnInit {
     toggleSettings() {
         if (this.ticket.open) {
             this.ticket.open = false;
-        }
-        else {
+        } else {
             this.ticket.open = true;
         }
         this.saveTicket();
