@@ -1,0 +1,113 @@
+<section class="secondary-content registration-view">
+    <div class="container no-heading">
+
+        <div class="row">
+            <div class="col-md-8">
+                <h3 style="margin-top:0px;margin-bottom:30px;" class="line">Confirmation</h3>
+                <h5>Congratulations! You are registered for {{event.title}}. </h5>
+                Please review the information below.
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row border-panel">
+                    <div class="col-md-12">
+                        <h2>
+                            A MESSAGE FROM THE ORGANIZER
+                        </h2>
+
+                        <div style="padding:1rem 0;">
+                            <div id="toolbar"></div>
+                            <div id="description" ></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row border-panel" style="margin-top:25px;">
+                    <div class="col-md-12">
+                        <h2>
+                            ORDER SUMMARY
+                        </h2>
+                        <div>
+                            <table class="table  table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Registration Type
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Line Total
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let ticket of registration.tickets"
+                                    [hidden]="ticket.quantity == 0">
+                                    <td>
+                                        {{ticket.name}}
+                                    </td>
+                                    <td>
+                                        {{ticket.quantity}}
+                                    </td>
+                                    <td>
+                                        {{ (ticket.unitPrice > 0)? (ticket.unitPrice | currency:'USD':true) : "FREE"}}
+                                    </td>
+                                    <td>
+                                        {{ (ticket.price > 0)? (ticket.price | currency:'USD':true) : "FREE"}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td>
+                                        {{ eventService.ticketTotal | currency:'USD':true }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4" style="padding-left:25px;">
+                <div class="row border-panel" style="padding:25px;">
+                    <strong>{{ event.title }}</strong>
+                    <div>
+                        <img [src]="eventService.event.imagePath" class="img-fluid"/>
+                    </div>
+                    <div class="margin-vertical-sm">
+                        <strong>Date(s):</strong> {{ event.date }}<br/>
+                        <strong>Time:</strong> {{ event.time }}<br/>
+
+                        <strong *ngIf="eventService.event.type == 'local'">Location:</strong>
+                        <strong *ngIf="eventService.event.type != 'local'">URL:</strong>
+                        {{ event.location }}
+                    </div>
+
+
+                    <div class="c-margin-t-15">
+
+                        <!-- <o-invite
+                                *ngIf="eventService.eventId.length"
+                                [eventId]="eventService.eventId"
+                                [ocode]="eventService.refOcode"
+                                [title]="eventService.event.title"
+                                [description]="eventService.event.descriptionText"
+                                [imagePath]="eventService.event.imagePath"
+                                [width]="small"></o-invite> -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
