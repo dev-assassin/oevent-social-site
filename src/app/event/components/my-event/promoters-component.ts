@@ -7,7 +7,7 @@ import { AuthService } from '../../../auth/services/auth-service';
 import { EventService } from '../../services/event-service';
 import { IoEvent, oEvent } from '../../../shared-models/oevent';
 import { PromoteModalComponent } from '../event/modals/promote-modal-component';
-import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database'
+import { FirebaseListObservable, AngularFireDatabase } from 'angularfire2/database';
 import { AttendModalComponent } from '../event/modals/attend-modal-component';
 declare var Quill: any;
 
