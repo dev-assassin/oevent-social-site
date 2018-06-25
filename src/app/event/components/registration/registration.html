@@ -1,0 +1,316 @@
+<section class="secondary-content registration-view">
+    <div class="container no-heading">
+
+            <div class="row">
+
+                <div class="col-md-8">
+                    <h3 style="margin-top:0px;margin-bottom:30px;" class="line" *ngIf="!eventService.registered">Event Registration</h3>
+                    <h3 style="margin-top:0px;margin-bottom:30px;" class="line" *ngIf="eventService.registered">Confirmation</h3>
+
+                    <!-- TOTALS: SHOWS ON REGISTERED AND NOT REGISTERED -->
+                    <div class="row" *ngIf="!eventService.registered">
+                        <div class="col-md-12">
+                            <h2>
+                                Ticket Summary:
+                            </h2>
+                            <div>
+                                <div *ngFor="let ticket of eventService.currentTickets" class="row"  [hidden]="ticket.quantity == 0">
+
+                                    <div class="col-sm-8">
+                                        <strong>{{ ticket.quantity }}</strong> x {{ ticket.name }}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="pull-right">
+                                            {{ ticket.price | currency:'USD':true}}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div style="border-top:1px solid #cecece;">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <strong>TOTAL</strong>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="pull-right">
+                                                {{ eventService.ticketTotal | currency:'USD':true }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a (click)="change()" class="pull-right">Change</a>
+                        </div>
+                    </div>
+
+
+
+                    <div *ngIf="!eventService.registered">
+                        <div class="c-margin-t-25">
+
+                            <h3>Your Information
+                                <img [src]="appService.userImage" style="width:45px;position:relative;top:-3px;left:10px;border-radius:50%;" *ngIf="appService.userImage.length">
+                            </h3>
+                            <div class="row">
+                                <div class="col-md-10 col-9">
+                                    <div style="margin-bottom:30px;">
+                                        <label class="control-label">Referrer's ōCode</label>
+                                        <div>
+                                            <input type="text" class="form-control  c-square c-theme" [disabled]="ocodeDisable || eventService.refOcodeSet" [(ngModel)]="registration.ocode">
+
+                                            <div class="promoters" *ngIf="lookupOcode && !registration.ocodeToggle">
+                                                <strong>Select Promoter Who Referred You</strong>
+                                                <ul *ngFor="let promoter of promoters">
+                                                    <li>
+                                                        <a (click)="selectPromoter(promoter.ocode)"> <i class="fa fa-plus"></i> {{ promoter.name }}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div *ngIf="!eventService.refOcodeSet">
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input type="checkbox" [(ngModel)]="registration.ocodeToggle" (click)="toggleDont()"> &nbsp;
+                                                            I don't have an ōCode
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-2 col-3">
+                                    <label>&nbsp; </label>
+                                    <a class="btn btn-primary btn-block" (click)="lookupOcode = true" *ngIf="!eventService.refOcodeSet">Search</a>
+                                </div>
+                            </div>
+
+                            <div class="row c-margin-b-10">
+                                <div class="col-sm-9">
+                                    <label class="control-label">First Name <span style="color:red">*</span></label>
+                                    <input type="text" class="form-control  c-square c-theme" [(ngModel)]="registration.firstName">
+                                    <div *ngIf="!fieldValidations.get('fname').valid" class="validation-error-text">{{fieldValidations.get("fname").errorMessage}}</div>
+                                </div>
+                            </div>
+                            <div class="row c-margin-b-10">
+                                <div class="col-sm-9">
+                                    <label class="control-label">Last Name <span style="color:red">*</span></label>
+                                    <input type="text" class="form-control  c-square c-theme" [(ngModel)]="registration.lastName">
+                                    <div *ngIf="!fieldValidations.get('lname').valid" class="validation-error-text">{{fieldValidations.get("lname").errorMessage}}</div>
+                                </div>
+                            </div>
+
+                            <div class="row c-margin-b-10">
+                                <div class="col-sm-9">
+                                    <label class="control-label">Email <span style="color:red">*</span></label>
+                                    <input type="email" class="form-control  c-square c-theme" [(ngModel)]="registration.email">
+                                    <div *ngIf="!fieldValidations.get('email').valid" class="validation-error-text">{{fieldValidations.get("email").errorMessage}}</div>
+                                </div>
+                            </div>
+
+                            <div class="c-margin-t-30" *ngIf="eventService.registrationTickets.length">
+
+                                <h3 style="padding-bottom:0px;">Registration Information</h3>
+
+                                <single-registration
+                                    *ngFor="let ticket of eventService.registrationTickets;let i = index"
+                                    [registration]="ticket"
+                                    [fieldValidations]="fieldValidations"
+                                    [index]="i"
+                                    [fields]="eventService.fields">
+                                </single-registration>
+
+                            </div>
+
+                            <hr />
+
+                            <div class="row">
+                                <div class="form-group c-margin-t-30">
+                                    <div *ngIf="!valid" class="validation-error-text">Check the errors above</div>
+                                    <div class="col-md-12">
+                                        <button (click)="activeModal.dismiss()" type="button" class="btn btn-lg btn-default">
+                                            Cancel
+                                        </button>
+                                        <button (click)="register()" class="btn btn-lg btn-primary" [disabled]="disableRegisterButton">Register</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- ONCE REGISTERED -->
+                    <div *ngIf="eventService.registered">
+                        <h2>Congratulations! you are now registered for {{eventService.event.title}}</h2>
+                        <em>Please review the information below.</em>
+                    </div>
+
+                    <div [hidden]="!eventService.registered" style="margin-bottom: 25px;">
+                        <h3>A message from the organizer:</h3>
+                        <div class="row">
+                            <div id="confirmation" class="col-sm-8">
+                            </div>
+                            <div class="col-sm-4">
+                                <quick-contact [profileId]="eventService.profileId" [color]="'#26C6DA'"
+                                               [headerDisplay]="false"
+                                               [title]="'Event Organizer'"></quick-contact>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <!-- TOTALS: SHOWS ON REGISTERED AND NOT REGISTERED -->
+                    <div class="row" *ngIf="eventService.registered">
+                        <div class="col-md-12">
+                            <h2>
+                                Order Summary:
+                            </h2>
+                            <div>
+                                <div class="row" style="margin-bottom: 10px;">
+                                    <div class="col-sm-4">
+                                        <strong>Registration Type</strong>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <strong>Quantity</strong>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <strong>Price</strong>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <strong>Line Total</strong>
+                                    </div>
+                                </div>
+                                <div *ngFor="let ticket of eventService.currentTickets" class="row"  [hidden]="ticket.quantity == 0" style="margin-bottom: 10px;">
+                                    <div class="col-sm-4">
+                                        {{ ticket.name }}
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <strong>{{ ticket.quantity }}</strong>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        {{ (ticket.unitPrice > 0)? (ticket.unitPrice | currency:'USD':true) : "FREE"}}
+                                    </div>
+                                    <div class="col-sm-4">
+                                        {{ (ticket.price > 0)? (ticket.price | currency:'USD':true) : "FREE"}}
+                                    </div>
+                                </div>
+
+
+                                <div class="row" style="border-top:1px solid #cecece;">
+                                    <div class="col-sm-8">
+                                        <strong>TOTAL</strong>
+                                    </div>
+                                    <div class="col-sm-4">
+
+                                        {{ eventService.ticketTotal | currency:'USD':true }}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div *ngIf="eventService.registered" class="row">
+                        <div class="col-sm-4">
+                            <h3>Registration</h3>
+                            <div style="height: 80px;">
+                                Your registration information has been saved in My Registrations.
+                            </div>
+                            <div>
+                                <a class="btn btn-primary btn-sm" routerLink="/manage/attending/upcoming">Go to My Registrations</a>
+                            </div>
+                        </div>
+                        <div class="col-sm-8">
+                            <h3>Do More </h3>
+                            <div style="height: 80px;">
+                                Want to organize your own event or become an official promoter for this event? Try it now!
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <a class="btn btn-primary btn-sm" routerLink="/create">Create an event</a>
+                                </div>
+                                <div class="col-sm-4">
+                                    <a (click)="openPromoter()" class="btn btn-primary btn-sm" *ngIf="appService.ocodeSet">
+                                        <span *ngIf="!promoter">Promote this event</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-4" style="margin-top:35px;">
+                    <div *ngIf="eventService.set">
+                        <h2>{{ eventService.event.title }}</h2>
+                        <div>
+                            <img [src]="eventService.event.imagePath" class="img-fluid"/>
+                        </div>
+
+                        <div>
+                            <div class="margin-vertical-sm" *ngIf="eventService.profileSet">
+                                Organized by:
+                                <a [routerLink]="'/'+eventService.eventOwnerOcode">
+                                    {{ eventService.profile.organizerName }}
+                                </a>
+                                <a (click)="emailOrganizer()" *ngIf="eventService.profileSet">
+                                    <i class="fa fa-envelope"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div style="clear:both;">
+                            <hr />
+                        </div>
+
+                        <div class="margin-vertical-sm">
+                            <div>{{ eventService.event.date }}<div>
+                                <div>{{ eventService.event.time }}</div>
+                            </div>
+
+                            <hr />
+
+                            <div *ngIf="eventService.event.type == 'local'">
+                                {{ eventService.event.location }}
+                            </div>
+
+
+                            <div class="google-maps" style="clear:both;" *ngIf="eventService.event.type == 'local'">
+                                <agm-map [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng">
+                                    <agm-marker [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng"></agm-marker>
+                                </agm-map>
+                            </div>
+                        </div>
+
+                        <div class="c-margin-t-15">
+
+                                <!-- <o-invite
+                                        *ngIf="eventService.eventId.length"
+                                        [eventId]="eventService.eventId"
+                                        [ocode]="eventService.refOcode"
+                                        [title]="eventService.event.title"
+                                        [description]="eventService.event.descriptionText"
+                                        [imagePath]="eventService.event.imagePath"
+                                        [width]="small"></o-invite> -->
+
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+
+</section>
+
+
+
+
