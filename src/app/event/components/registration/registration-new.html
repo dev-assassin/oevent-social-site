@@ -1,0 +1,256 @@
+<section class="secondary-content registration-view">
+    <div class="container no-heading">
+        <div class="row">
+            <h3 style="margin-top:0px;margin-bottom:30px;" class="line">Checkout and Registration</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row border-panel">
+                    <div class="col-md-8">
+                        <h2 class="line">
+                            Order Summary:
+                        </h2>
+
+                        <div>
+                            <table class="table  table-responsive">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        Registration Type
+                                    </th>
+                                    <th>
+                                        Quantity
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Line Total
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let ticket of registration1.tickets"
+                                    [hidden]="ticket.quantity == 0">
+                                    <td>
+                                        {{ticket.name}}
+                                    </td>
+                                    <td>
+                                        {{ticket.quantity}}
+                                    </td>
+                                    <td>
+                                        {{ (ticket.unitPrice > 0)? (ticket.unitPrice | currency:'USD':true) : "FREE"}}
+                                    </td>
+                                    <td>
+                                        {{ (ticket.price > 0)? (ticket.price | currency:'USD':true) : "FREE"}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">Total</td>
+                                    <td>
+                                        {{ eventService.ticketTotal | currency:'USD':true }}
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row border-panel" *ngIf="!eventService.registered">
+                    <div class="col-md-12">
+                        <div class="col-md-8">
+                            <h4 class="line">
+                                Buyer Information:
+                            </h4>
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <div class="row">
+                                <div class="col-md-8" style="padding-left: 30px;">
+                                    <label class="control-label">ōCode</label>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-8" style="padding-left: 30px;">
+                                    <div>
+                                        <input type="text" class="form-control  c-square c-theme"
+                                               [disabled]="ocodeDisable || eventService.refOcodeSet"
+                                               [(ngModel)]="registration1.ocode"/>
+
+                                        <div *ngIf="!eventService.refOcodeSet">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" [(ngModel)]="registration.ocodeToggle"
+                                                           (click)="toggleDont()"> &nbsp;
+                                                    I don't have an ōCode
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="vertical-align: bottom;">
+                                    <input type="button" class="btn btn-primary" value="Search"
+                                           (click)="openSearchOcodeModal()"/>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="promoters" *ngIf="lookupOcode && !registration.ocodeToggle">
+                                        <strong>Select Promoter Who Referred You</strong>
+                                        <ul *ngFor="let promoter of promoters">
+                                            <li>
+                                                <a (click)="selectPromoter(promoter.ocode)"> <i
+                                                        class="fa fa-plus"></i>
+                                                    {{
+                                                    promoter.name }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8">
+
+                            <label>First Name</label><br/>
+                            <input type="text" class="form-control"
+                                   [(ngModel)]="registration1.buyerInfo.firstName"><br/>
+                            <label>Last Name</label><br/>
+                            <input type="text" class="form-control"
+                                   [(ngModel)]="registration1.buyerInfo.lastName"><br/>
+                            <label>Email</label><br/>
+                            <input type="text" class="form-control"
+                                   [(ngModel)]="registration1.buyerInfo.email"><br/>
+                            <label>Phone</label><br/>
+                            <input type="text" class="form-control"
+                                   [(ngModel)]="registration1.buyerInfo.phone"><br/>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="row border-panel">
+                    <div class="col-md-8">
+                        <h4 style="margin-top:0px;margin-bottom:30px;" class="line">Registration information</h4>
+                    </div>
+                    <div class="col-md-8" *ngFor="let field of registration1.formFields" [hidden]="!field.enabled"
+                         style="margin-top:.75rem">
+                        <div *ngIf="field.enabled">
+
+                            <div *ngIf="field.type === 'checkbox'" style="padding-top:1.5rem">
+                                <label>
+                                    <input
+                                            type="checkbox"
+                                            [(ngModel)]="field.value"/>
+                                    {{ field.label }}
+                                </label>
+                            </div>
+
+                            <div *ngIf="field.type === 'text'">
+                                <label>{{ field.label }}</label>
+                                <div>
+                                    <input
+                                            type="text"
+                                            class="form-control"
+                                            [(ngModel)]="field.value"
+                                            [required]="field.required"/>
+                                </div>
+                            </div>
+
+                            <!--
+                            <div *ngIf="field.data.type === 'select'">
+                                <label>{{ field.label }}</label>
+                                <div>
+                                    <custom-input-select
+                                            [(ngModel)]="field.value"
+                                            [inputValue]="field.value"
+                                            [values]="field.values"
+                                            [required]="field.value.required"
+                                            ngDefaultControl ></custom-input-select>
+                                </div>
+                            </div>
+                            -->
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 25px">
+                    <label>
+                        <input type="checkbox" [(ngModel)]="registration1.termsAccepted">
+                        I accept the oevent terms of policy and privacy policy
+                    </label>
+                </div>
+                <div class="row" style="margin-top: 25px;">
+                    <input type="button" value="Register" class="btn btn-primary" (click)="register()">
+                    <input type="button" value="Cancel" class="btn btn-secondary" style="margin-left: 15px;">
+                </div>
+            </div>
+            <div class="col-md-4" style="padding-left:25px;">
+                <div class="border-panel">
+                    <h2>{{ event.title }}</h2>
+                    <div>
+                        <img [src]="eventService.event.imagePath" class="img-fluid"/>
+                    </div>
+
+                    <div>
+                        <div class="margin-vertical-sm">
+                            Organized by:
+                            <a (click)="emailOrganizer()" *ngIf="eventService.profileSet">
+                                {{ eventService.profile.organizerName }}
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div style="clear:both;">
+                        <hr />
+                    </div>
+
+                    <div class="margin-vertical-sm">
+                        <div>{{ event.date }}<div>
+                        <div>{{ event.time }}</div>
+                    </div>
+
+                    <hr />
+
+                    <div *ngIf="eventService.event.type == 'local'">
+                        {{ event.location }}
+                    </div>
+
+
+                    <div class="google-maps" style="clear:both;" *ngIf="eventService.event.type == 'local'">
+                        <agm-map [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng">
+                            <agm-marker [latitude]="eventService.event.gps.lat" [longitude]="eventService.event.gps.lng"></agm-marker>
+                        </agm-map>
+                    </div>
+
+
+
+                    <div class="c-margin-t-15">
+
+                        <!-- <o-invite
+                                *ngIf="eventService.eventId.length"
+                                [eventId]="eventService.eventId"
+                                [ocode]="eventService.refOcode"
+                                [title]="eventService.event.title"
+                                [description]="eventService.event.descriptionText"
+                                [imagePath]="eventService.event.imagePath"
+                                [width]="small"></o-invite> -->
+
+                    </div>
+                </div>
+            </div>
+                </div></div></div>
+
+    </div>
+</section>
+
