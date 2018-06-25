@@ -1,0 +1,31 @@
+<div ngbModalContainer>
+    <div class="modal-body" style="padding:50px 20px">
+        <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()"
+                style="margin:10px 15px;"><span aria-hidden="true">×</span></button>
+        <h3 style="margin-top:0px;margin-bottom:30px;" class="line">FIND AN OCODE</h3>
+        <div style="text-align: center;">Who referred you to this event?</div>
+        <div class="row">
+            <div class="col-md-8" style="padding-left: 30px;">
+                <div>
+                    <input type="text" class="form-control  c-square c-theme" [(ngModel)]="oCodeSearchStr"/>
+                </div>
+            </div>
+            <div class="col-md-4" style="vertical-align: bottom;">
+                <input type="button" class="btn btn-primary" value="Search"
+                       (click)="searchOcode()"/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                //Search Results
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8" style="padding-left: 30px;">
+                <input type="button" class="btn btn-primary" value="Select">
+                <input type="button" class="btn btn-secondary" value="Cancel" style="margin-left: 15px;">
+            </div>
+
+        </div>
+    </div>
+</div>
