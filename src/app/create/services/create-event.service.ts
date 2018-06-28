@@ -89,7 +89,7 @@ export class CreateEventService {
 
     registerConnection(conn) {
         this.firebaseConnections.push(conn);
-    };
+    }
 
     getGeoCode(address): Observable<any> {
         const key = 'AIzaSyCXlzLSm5F9D0W16PcX-FQQGi9W51E2SLM';
@@ -105,7 +105,7 @@ export class CreateEventService {
     validateMin(): boolean {
         this.valid = true;
         this.fieldValidations.forEach((entryVal, entryKey) => {
-            if (!entryVal.valid && (entryKey == 'title' || entryKey == 'event-date')) {
+            if (!entryVal.valid && (entryKey === 'title' || entryKey === 'event-date')) {
                 this.valid = false;
             }
         });
@@ -186,7 +186,7 @@ export class CreateEventService {
         if (minsDifference < 15) {
             console.log('Invalid time');
             this.fieldValidations.get('end-time').valid = false;
-            this.fieldValidations.get('end-time').errorMessage = 'End time needs to be at least fifteen minutes more then the start time'
+            this.fieldValidations.get('end-time').errorMessage = 'End time needs to be at least fifteen minutes more then the start time';
         }
         return this.fieldValidations.get('end-time').valid;
     }
@@ -265,6 +265,7 @@ export class CreateEventService {
 
                                 // WRITE DATA TO THE LIVE EVENT
                                 liveObject$.update({ ref: this.eventId, ocode: this.appService.ocode,
+                                    // tslint:disable-next-line:no-shadowed-variable
                                     uid: this.auth.id, data: data }).then((success) => {
 
                                     this.toasty.success('Event is now live!');
@@ -276,6 +277,7 @@ export class CreateEventService {
                                     });
 
                                     // TAKE ACTIONS ON THE TICKETS
+                                    // tslint:disable-next-line:no-shadowed-variable
                                     this.ticketService.ticketListObject$.first().subscribe((data) => {
 
                                         console.log('ticket object', data.val());
@@ -294,70 +296,6 @@ export class CreateEventService {
 
                                 });
                             }
-
-                            // --------------EVENT IS RECURRING----------------------
-                            /*else{
-
-                                preventTwice = true;
-
-                                let dates:number[] = this.createMultiple(dateData);
-                                //CLONE IT FOR MULTIPLES
-                                let copies:IoEvent[] = [];
-                                //CLEAN IT UP FOR UPLOAD
-                                let i:number = 0;
-
-                                console.log(dates);
-
-                                //CREATE ARRAY OF NEW EVENTS WITH VARIOUS DATES ETC...
-                                for(let date of dates){
-                                    let copy:IoEvent = Object.assign({},data);
-                                    delete copy['$key'];
-                                    delete copy['$exists'];
-                                    copies[i] = copy;
-                                    let start = moment.unix(date).startOf('day');
-                                    let endUnix = start.clone().endOf('day').unix();
-                                    let startUnix = moment(start).unix();
-
-                                    //MOMENT MANIPULATES THE STRING SO I'M TRYING TO CLONE WHENEVER MANIPULATING
-                                    let startCopy = start.clone();
-
-                                    copies[i].endDate = endUnix;
-                                    copies[i].startDate = startUnix;
-                                    copies[i].parentKey = data.$key;
-                                    copies[i].date = this.createDateString(startCopy);
-
-                                    console.log(i);
-
-                                    i++;
-                                }
-
-                                for(let copy of copies){
-
-                                    this.af.object(`/events/events/${this.auth.id}/${this.id}/childEventKeys/`).remove().then(()=>{
-                                        this.af.list(`/events/live/`).push({
-                                            ref: this.id, ocode: this.appService.ocode, uid: this.auth.id, data:copy
-                                        }).then((success)=>{
-                                            this.af.object(`/events/events/${this.auth.id}/
-                                                ${this.id}/childEventKeys/${success.key}`).set({'set':true});
-
-                                            this.singleTicketList$.first().subscribe((data)=>{
-
-                                                console.log(data);
-
-                                                this.af.object(`/tickets/stage/${this.id}`).remove().then(()=>{
-                                                    for(let ticket of data){
-                                                        delete ticket['$key'];
-                                                        delete ticket['$exists'];
-                                                        this.af.list(`/tickets/stage/${this.id}/${success.key}`).push(ticket);
-                                                    }
-                                                });
-
-                                            });
-
-                                        });
-                                    });
-                                }
-                            }*/
                         }
 
                     });
@@ -371,23 +309,14 @@ export class CreateEventService {
 
                         // IF NOT RECURRING IT'S A SINGLE EVENT AND CAN BE REMOVED AS SUCH
                         if (dateData.eventType !== 'recurring') {
-                            liveObject$.remove().then((success) => {
+                            liveObject$.remove().then(() => {
                                 profileUpcoming$.remove().then(() => {
                                     this.toasty.info('Event is no longer live.');
                                 });
-
                             }, (err) => {
 
                             });
                         }
-                        // REMOVE ALL CHILD EVENTS
-                        /*else {
-                            let $this = this;
-                            Object.keys(data.childEventKeys).forEach(function(key,index) {
-                                $this.af.object(`/events/live/${key}`).remove();
-                            });
-
-                        }*/
                     });
 
                 });
