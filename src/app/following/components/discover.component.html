@@ -1,0 +1,38 @@
+<section class="secondary-content">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li>
+                <a routerLink="/following">
+                    Following Home
+                </a>
+            </li>
+            <li>
+                Discover
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line" style="margin-bottom:30px;">
+                    Discover
+                </h3>
+
+                <div class="input-group" style="display:none;">
+                    <input class="form-control input-lg">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-lg">
+                            <span class="fa fa-search"></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+                <strong>OUR SUGGESTIONS FOR YOU:</strong>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4"  following-person *ngFor="let ocode of ocodes" [id]="ocode.uid"></div>
+        </div>
+
+    </div>
+
+</section>
