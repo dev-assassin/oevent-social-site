@@ -1,0 +1,38 @@
+<section class="secondary-content">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li>
+                <a routerLink="/following">
+                    Following Home
+                </a>
+            </li>
+            <li>
+                People I'm Following
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line" style="margin-bottom:30px;">
+                    People I'm Following
+                </h3>
+
+                <div class="input-group" style="display:none;">
+                    <input class="form-control input-lg">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-lg">
+                            <span class="fa fa-search"></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4" following-person *ngFor="let person of follows" [id]="person"></div>
+        </div>
+
+    </div>
+    <!-- .container -->
+
+</section>
