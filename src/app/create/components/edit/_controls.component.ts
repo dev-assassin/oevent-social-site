@@ -6,7 +6,7 @@ import { ToastyService } from 'ng2-toasty';
 import { CreateEventService } from '../../services/create-event.service';
 
 @Component({
-    selector: `event-controls`,
+    selector: `app-event-controls`,
     template: `
         <div *ngIf="!createService.valid" class="validation-error-text"> See errors above.</div>
         <button class="btn btn-primary btn-lg" style="margin-right:25px;" (click)="save()">Save</button>
@@ -73,7 +73,7 @@ export class EditControlsComponent implements OnInit {
 
                 this.createService.publish();
 
-            }  else {
+            } else {
                 this.createService.publish(false);
             }
         } else {
