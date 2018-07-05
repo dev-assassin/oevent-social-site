@@ -1,0 +1,40 @@
+<section class="secondary-content">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li>
+                <a routerLink="/following">
+                    Following Home
+                </a>
+            </li>
+            <li>
+                People Following Me
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line" style="margin-bottom:30px;">
+                    People Following Me
+                </h3>
+
+                <div class="input-group" style="display:none;">
+                    <input class="form-control input-lg">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary btn-lg">
+                            <span class="fa fa-search"></span>
+                            Search
+                        </button>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+        <div class="people-results-wrapper">
+
+            <div following-person *ngFor="let person of followers" [id]="person"></div>
+
+        </div>
+
+    </div>
+    <!-- .container -->
+
+</section>
