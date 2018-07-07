@@ -1,0 +1,298 @@
+<!-- reference https://codyhouse.co/gem/hero-slider/ -->
+<section class="cd-hero">
+    <a class="prev">
+        <span class="fa fa-chevron-left"></span>
+    </a>
+    <a class="next">
+        <span class="fa fa-chevron-right"></span>
+    </a>
+    <ul class="cd-hero-slider autoplay">
+        <li class="selected">
+            <div class="cd-full-width">
+                <h2>DŌTERRA EVENTS.</h2>
+                <h2>ALL IN ONE PLACE.</h2>
+
+                <a routerLink="/create" class="btn btn-lg btn-primary">Get started</a>
+            </div>
+            <!-- .cd-full-width -->
+        </li>
+
+        <li class="second">
+            <div class="cd-full-width">
+                <h2>ORGANIZE YOUR EVENT</h2>
+                <h2>IN 5 MINUTES OR LESS</h2>
+
+                <a routerLink="/create" class="btn btn-lg btn-primary">Get started</a>
+            </div>
+            <!-- .cd-full-width -->
+        </li>
+
+        <!-- <li class="third">
+            <div class="cd-full-width">
+
+                <h2>DŌTERRA EVENTS.</h2>
+                <h2>ALL IN ONE PLACE.</h2>
+                <a routerLink="/create" class="btn btn-lg btn-primary">Get started <span class="fa fa-arrow-right"></span></a>
+
+            </div>
+        </li>-->
+
+    </ul>
+    <!-- .cd-hero-slider -->
+</section>
+<!-- .cd-hero -->
+
+<section id="content">
+    <div class="container">
+        <div class="row search-container">
+            <div class="col-md-8">
+                <table style="width:100%;">
+                    <tr>
+                        <td style="width:48%;padding-right:4%;">
+                            <input type="text" class="form-control input-lg" placeholder="Event title or keywords" [(ngModel)]="searchString" />
+                        </td>
+                        <td style="width:48%">
+                            <input type="text" class="form-control input-lg" placeholder="Location (City, ST)" [(ngModel)]="location" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-4">
+                <table style="width:100%;">
+                    <tbody>
+                        <tr>
+                            <td style="width:80%;">
+                                <select class="form-control input-lg" [(ngModel)]="date">
+                                    <option value="all">All dates</option>
+                                    <option value="today">Today</option>
+                                    <option value="tomorrow">Tomorrow</option>
+                                    <option value="next-week">Next Week</option>
+                                </select>
+                            </td>
+                            <td style="width:17%;padding-left:3%;">
+                                <a class="btn btn-primary" (click)="search()">Quick search</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="get-ocode-now" *ngIf="appService.ocodeChecked && !appService.ocodeSet" style="text-align:center;margin-top:55px;margin-bottom:30px;">
+            <h2 style="font-size:43px;margin-bottom:15px;">
+                Reserve My Ōcode
+            </h2>
+
+            <button class="btn btn-primary" (click)="appService.triggerFreeTrial.emit()">Get ōcode now</button>
+
+        </div>
+
+        <h3 style="padding-top:30px;text-align:center;">
+            Featured Events
+        </h3>
+
+        <hr />
+        <div style="min-height:225px">
+            <div *ngIf="featuredEvents.length">
+                <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
+                    <swiper overlay-controls [config]="config" style="display:block;">
+
+                        <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center" style="width:250px" *ngFor="let event of featuredEvents">
+                            <vertical-card [id]="event.$value"></vertical-card>
+                        </div>
+
+                    </swiper>
+                </div>
+            </div>
+        </div>
+
+
+
+        <h3 class="line">
+            Browse By Category
+        </h3>
+
+        <div class="row grid-container">
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'retreats'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/retreatsbootcamps.jpg)">
+                        <h3>Retreats & Boot Camps</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'intro'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/introtoessentialoils.jpg)">
+                        <h3>Intro Classes</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'essential'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/wellness.jpg)">
+                        <h3>Essential Wellness</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'international'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/international.jpg)">
+                        <h3>International</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'corporate'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/corporate.jpg)">
+                        <h3>Corporate Events</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'diamond'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/diamondclub.jpg)">
+                        <h3>Diamond Club</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'business'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/businesstraining.jpg)">
+                        <h3>Business Training</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'specialty'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/specialtyclasses.jpg)">
+                        <h3>Specialty Oil Classes</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'skin'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/skinandbodycare.jpg)">
+                        <h3>Skin & Body Care</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category:'aromatic' }" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/aromatouchcertification.jpg)">
+                        <h3>Aromatic Certificate</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'personal'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/personal_development.jpg)">
+                        <h3>Personal Development</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3 col-sm-6">
+                <a [routerLink]="['/search']" [queryParams]="{ category: 'online'}" class="grid-item">
+                    <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/onlineevent.jpg)">
+                        <h3>Online Events</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div *ngIf="dontShow">
+
+            <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex>
+                <swiper overlay-controls [config]="config" class="grid-container" style="display:block;">
+
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'retreats'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/retreatsbootcamps.jpg)">
+                                <h3>Retreats & Boot Camps</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'intro'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/introtoessentialoils.jpg)">
+                                <h3>Intro Classes</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'essential'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/wellness.jpg)">
+                                <h3>Essential Wellness</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'international'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/international.jpg)">
+                                <h3>International</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'corporate'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/corporate.jpg)">
+                                <h3>Corporate Events</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'diamond'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/diamondclub.jpg)">
+                                <h3>Diamond Club</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'business'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/businesstraining.jpg)">
+                                <h3>Business Training</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'specialty'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/specialtyclasses.jpg)">
+                                <h3>Specialty Oil Classes</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'skin'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/skinandbodycare.jpg)">
+                                <h3>Skin & Body Care</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category:'aromatic' }" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/aromatouchcertification.jpg)">
+                                <h3>Aromatic Certificate</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'personal'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/personal_development.jpg)">
+                                <h3>Personal Development</h3>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="swiper-slide" fxLayout="column" fxLayoutAlign="center center">
+                        <a [routerLink]="['/search']" [queryParams]="{ category: 'online'}" class="grid-item">
+                            <div style="background-image: linear-gradient( rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35) ), url(../../../assets/images/categories/onlineevent.jpg)">
+                                <h3>Online Events</h3>
+                            </div>
+                        </a>
+                    </div>
+
+                </swiper>
+            </div>
+        </div>
+    </div>
+    <!-- .container -->
+
+</section>
