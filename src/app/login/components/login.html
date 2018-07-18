@@ -1,0 +1,14 @@
+<div style="margin-top:75px;text-align:center;">
+  <img src="../../../assets/images/logo.svg" style="width:230px;" />
+</div>
+
+<div style="margin-bottom:150px;margin-top:20px;border-radius:1px;">
+  <div class="login-page row">
+    <div class="center-box" *ngIf="login">
+      <fl-sign-in (bubbleJoin)="showJoin()"></fl-sign-in>
+    </div>
+    <div class="center-box" *ngIf="join">
+      <fl-join (bubbleLogin)="showLogin()"> </fl-join>
+    </div>
+  </div>
+</div>
