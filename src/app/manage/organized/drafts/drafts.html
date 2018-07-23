@@ -1,0 +1,7 @@
+<section class="secondary-content">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6" manage-card *ngFor="let event of events$ | async" [eventId]="event.$key" [eventType]="'draft'"></div>
+    </div>
+  </div>
+</section>
