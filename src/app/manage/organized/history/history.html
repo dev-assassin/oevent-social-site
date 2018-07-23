@@ -1,36 +1,37 @@
 <section class="secondary-content">
-    <div class="container">
+  <div class="container">
 
-        <div class="row">
-            <div class="col-md-12">
-                <div>
+    <div class="row">
+      <div class="col-md-12">
+        <div>
 
-                    <div class="c-margin-b-40 c-order-history-2">
-                        <div class="row c-cart-table-title">
-                            <div class="col-md-2 c-cart-image">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"></h3>
-                            </div>
-                            <div class="col-md-2 c-cart-ref">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Date</h3>
-                            </div>
-                            <div class="col-md-3 c-cart-desc">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Description</h3>
-                            </div>
-                            <div class="col-md-2 c-cart-price">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Promoters</h3>
-                            </div>
-                            <div class="col-md-3 c-cart-total">
-                                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Registrations</h3>
-                            </div>
-                        </div>
-
-                        <manage-detail *ngFor="let event of events" [event]="event" [live]="true"></manage-detail>
-
-                    </div>
-                </div>
+          <div class="c-margin-b-40 c-order-history-2">
+            <div class="row c-cart-table-title">
+              <div class="col-md-2 c-cart-image">
+                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2"></h3>
+              </div>
+              <div class="col-md-2 c-cart-ref">
+                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Date</h3>
+              </div>
+              <div class="col-md-3 c-cart-desc">
+                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Description</h3>
+              </div>
+              <div class="col-md-2 c-cart-price">
+                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Promoters</h3>
+              </div>
+              <div class="col-md-3 c-cart-total">
+                <h3 class="c-font-uppercase c-font-bold c-font-16 c-font-grey-2">Registrations</h3>
+              </div>
             </div>
-        </div>
 
-    </div><!-- .container -->
+            <manage-detail *ngFor="let event of events" [event]="event" [live]="true"></manage-detail>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <!-- .container -->
 
 </section>
