@@ -1,0 +1,49 @@
+<!-- BEGIN: ORDER HISTORY ITEM ROW -->
+
+<div style="clear:both"></div>
+
+<div class="row c-cart-table-row">
+  <div class="col-md-2 col-sm-3 col-sm-5 c-cart-image">
+    <div>
+      <img [src]="event.imagePath" class="img-fluid">
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-3 col-sm-6 c-cart-ref">
+    <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Date</p>
+    <p>{{ event.date }}</p>
+  </div>
+  <div class="col-md-3 col-sm-6 col-sm-6 c-cart-desc">
+    <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Description</p>
+    <span *ngIf="event.dateType == 'course'">
+      <strong>Event is part of a course/series</strong>
+    </span>
+
+    <p class="c-price c-font-12 c-font-slim">{{ event.time }}</p>
+    <p class="c-title c-font-16 c-font-bold c-font-uppercase" *ngIf="!live">
+      <a routerLink="/event/{{ event.$key }}">{{ event.title }}</a>
+      <a routerLink="/create/{{ event.$key }}" class="edit">[
+        <i class="fa fa-pencil"></i> Edit ]
+      </a>
+
+    </p>
+    <p class="c-title c-font-16 c-font-bold c-font-uppercase" *ngIf="live">
+      <a routerLink="/my-event/{{ event.$key }}/details">{{ event.title }}</a>
+      <a routerLink="/create/{{ event.$key }}" class="edit">[
+        <i class="fa fa-pencil"></i> Edit ]</a>
+    </p>
+
+    <p class="c-price c-font-14 c-font-slim">{{ event.location }}</p>
+  </div>
+  <div class="clearfix col-md-2 col-sm-3 col-sm-6 c-cart-price">
+    <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Promoters</p>
+    <p class="c-cart-price c-font-bold">{{ event.promoters }}</p>
+  </div>
+  <div class="col-md-3 col-sm-3 col-sm-6 c-cart-total">
+    <p class="c-cart-sub-title c-theme-font c-font-uppercase c-font-bold">Registrations</p>
+    <p class="c-cart-price c-font-bold">{{ event.registrations }}</p>
+  </div>
+
+</div>
+
+<div style="clear:both"></div>
+<!-- END: ORDER HISTORY ITEM ROW -->
