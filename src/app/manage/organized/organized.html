@@ -1,0 +1,116 @@
+<section class="secondary-content">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li>
+                <a routerLink="/manage">
+                    Manage Events
+                </a>
+            </li>
+            <li>
+                Organized Events
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line">
+                    Organized Events
+                </h3>
+
+                <div class="c-content-tab-1 c-theme c-margin-t-30">
+
+                    <ul class="nav nav-inline nav-tabs c-font-uppercase c-font-bold light-bottom-border">
+                        <li class="nav-item" routerLink="live" routerLinkActive="active">
+                            <a class="nav-link">Live</a>
+                        </li>
+                        <li class="nav-item" routerLink="drafts" routerLinkActive="active">
+                            <a class="nav-link" >Drafts</a>
+                        </li>
+                        <li class="nav-item" routerLink="history" routerLinkActive="active">
+                            <a class="nav-link">History</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+
+
+                <div style="display:none">
+
+                    <div class="grid-container row">
+
+                        <div class="col-sm-4 margin-vertical">
+                            <div class="c-content-product-2 c-bg-white c-border event-category two-liner">
+                                <div class="c-content-overlay" routerLink="/manage/organized/drafts">
+                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 250px; background-image: linear-gradient( rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.56) ), url(../../../../assets/images/events/authentic_network_marketing.jpg);">
+                                        <h3><span class="fa fa-pencil"></span> Drafts</h3>
+                                        <h3>
+                                            <span *ngIf="set">{{ counts.draft }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 margin-vertical">
+                            <div class="c-content-product-2 c-bg-white c-border event-category two-liner">
+                                <div class="c-content-overlay" routerLink="/manage/organized/active">
+                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 250px; background-image: linear-gradient( rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.56) ), url(../../../../assets/images/categories/retreatsbootcamps.jpg);">
+                                        <h3><span class="fa fa-refresh"></span> Active Events</h3>
+                                        <h3>
+                                            <span *ngIf="set">{{ counts.active }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 margin-vertical">
+                            <div class="c-content-product-2 c-bg-white c-border event-category two-liner">
+                                <div class="c-content-overlay" routerLink="/manage/organized/closed">
+                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 250px; background-image: linear-gradient( rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.56) ), url(../../../../assets/images/categories/personal_development.jpg);">
+                                        <h3><span class="fa fa-check-circle"></span> Closed Events</h3>
+                                        <h3>
+                                            <span *ngIf="set">{{ counts.closed }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-sm-4 offset-sm-2 margin-vertical">
+                            <div class="c-content-product-2 c-bg-white c-border event-category two-liner">
+                                <div class="c-content-overlay" routerLink="/manage/organized/cancelled">
+                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 250px; background-image: linear-gradient( rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.56) ), url(../../../../assets/images/events/intro_class.jpg);">
+                                        <h3><span class="fa fa-ban"></span> Cancelled Events</h3>
+                                        <h3>
+                                            <span *ngIf="set">{{ counts.cancelled }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-4 margin-vertical">
+                            <div class="c-content-product-2 c-bg-white c-border event-category two-liner">
+                                <div class="c-content-overlay" routerLink="/manage/organized/completed">
+                                    <div class="c-bg-img-center c-overlay-object" data-height="height" style="height: 250px; background-image: linear-gradient( rgba(0, 0, 0, 0.67), rgba(0, 0, 0, 0.56) ), url(../../../../assets/images/events/intro_class.jpg);">
+                                        <h3> <span class="fa fa-history"></span> Completed Events</h3>
+                                        <h3>
+                                            <span *ngIf="set">{{ counts.completed }}</span>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div><!-- .container -->
+
+</section>
