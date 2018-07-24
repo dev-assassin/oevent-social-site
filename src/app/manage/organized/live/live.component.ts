@@ -7,7 +7,7 @@ import { AuthService } from '../../../auth/services/auth-service';
 import { ManageService } from '../../../shared-module/services/manage-service';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { IoEvent } from '../../../shared-models/oevent';
-import { FirebaseListObservable } from 'angularfire2/database/firebase_list_observable';
+// import { FirebaseListObservable } from 'angularfire2/database/firebase_list_observable';
 
 @Component({
     templateUrl: './live.html',
@@ -31,7 +31,8 @@ import { FirebaseListObservable } from 'angularfire2/database/firebase_list_obse
 export class OrganizedLiveComponent {
 
     events: IoEvent[] = [];
-    activeEvents$: FirebaseListObservable<any[]>;
+    activeEvents$: any;
+    // activeEvents$: FirebaseListObservable<any[]>;
 
     constructor(private auth: AuthService, private router: Router, public manageService: ManageService, private af: AngularFireDatabase) {
         this.activeEvents$ = this.manageService.getEvents('active');
