@@ -1,0 +1,12 @@
+<div class="secondary-content">
+  <div class="container">
+    <div *ngIf="promotions.length == 0">
+      You haven't promoted any events yet!
+    </div>
+    <div *ngIf="promotions.length > 0">
+      <horizontal-card [id]="event.$key" *ngFor="let event of promotionsService.myPromotions$ | async"></horizontal-card>
+    </div>
+  </div>
+  <!-- end .container -->
+</div>
+<!-- end .secondary-content -->
