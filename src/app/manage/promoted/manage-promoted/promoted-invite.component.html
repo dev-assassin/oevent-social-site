@@ -1,0 +1,178 @@
+<h3 class="line" style="margin-bottom:0px;">
+    {{ eventService.event.title }} - Invitations
+</h3>
+
+<o-invite-manage
+        [twoSocials]="true"
+        [eventId]="eventService.eventId"
+        [ocode]="appService.ocode"
+        [title]="eventService.event.title"
+        [description]="eventService.event.descriptionText"
+        [imagePath]="eventService.event.imagePath"></o-invite-manage>
+
+
+<h4 class="center-no-line c-margin-t-40">Send Email Invitations</h4>
+
+<form #emailForm="ngForm" novalidate>
+
+    <label>Reply-to Email</label>
+    <input
+        class="form-control c-margin-b-15"
+        name="replyEmail"
+        id="replyEmail"
+        required
+        disabled
+        [(ngModel)]="replyEmail" />
+
+    <label>Subject Line</label>
+    <input
+            class="form-control c-margin-b-15"
+            name="subjectLine"
+            id="subjectLine"
+            required
+            [(ngModel)]="inviteTemplate.subject" />
+    <div *ngIf="!fieldValidations.get('subject').valid"  class="validation-error-text">{{fieldValidations.get('subject').errorMessage}}</div><br />
+    <div class="email-template" [ngClass]="{editing:editing}">
+
+        <button class="round-icon" (click)="editTemplate()" *ngIf="!editing">
+            <i class="fa fa-pencil"></i>
+        </button>
+
+        <button class="btn round-icon btn-danger" (click)="cancelTemplate()" *ngIf="editing" style="right:40px">
+            <i class="fa fa-times"></i>
+        </button>
+
+        <button class="round-icon" (click)="saveTemplate()" *ngIf="editing">
+            <i class="fa fa-save"></i>
+        </button>
+
+        <div class="c-desc" >
+            <div id="toolbar"></div>
+
+            <h4 class="text-center">Email Template:</h4>
+
+            <div class="row">
+                <div class="col-md-8">
+                    <div id="template" style=""></div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="col-md-4">
+                    <a [href]="eventService.shareLink">
+                        <strong> {{ eventService.event.title }} </strong>
+                    </a>
+
+                    <a [href]="eventService.shareLink">
+                        <img [src]="eventService.event.imagePath" style="width:100%;" />
+                    </a>
+
+                    <br /><br />
+
+                    <a class="btn btn-primary btn-block" [href]="eventService.shareLink">
+                        Join My Event!
+                    </a>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <label>Send test to:</label>
+    <div class="input-group">
+        <input class="form-control" type="text" [(ngModel)]="testEmail"  id="testEmail" name="testEmail" />
+        <span class="input-group-btn">
+            <button class="btn btn-primary" (click)="sendInvitation(true)">
+                Send Test
+            </button>
+        </span>
+    </div>
+
+    <div *ngIf="!fieldValidations.get('testEmail').valid"  class="validation-error-text">{{fieldValidations.get('testEmail').errorMessage}}</div>
+
+</form>
+
+
+<div style="margin-top:2.5rem;">
+
+    <h4>Email List</h4>
+
+    <div *ngIf="!inviteEmails.length" class="text-center padding-vertical" >
+        <h4 class="center-no-line c-margin-b-60">No emails yet!</h4>
+        <button class="btn btn-lg btn-primary" (click)="openAddEmailsModal()">
+            <i class="fa fa-plus"></i>
+            Add Emails
+        </button>
+    </div>
+
+    <div *ngIf="inviteEmails.length">
+        <a (click)="openAddEmailsModal()" class="btn btn-primary btn-sm">
+            Add Emails
+        </a>
+        <table class="table table-striped" style="margin-top:15px;" >
+            <thead>
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" (change)="selectAllToggle()" [(ngModel)]="selectAll"/>
+                        </div>
+                        <div class="col-sm-3">
+                            Email
+                        </div>
+                        <div class="col-sm-4">
+                            First Name
+                        </div>
+                        <div class="col-sm-4">
+                            Last Name
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Check tickets.component.ts as reference -->
+            <tr *ngFor="let inviteEmail of inviteEmails">
+                <td>
+                     <div class="row">
+                        <div class="col-sm-1">
+                            <input type="checkbox" [(ngModel)]="emailSelectionMap.get(inviteEmail.$key).checked"  />
+                        </div>
+                        <div class="col-sm-3">
+                            {{inviteEmail.email}}
+                        </div>
+                        <div class="col-sm-4">
+                            {{inviteEmail.firstName}} <a href="javascript:null" (click)="openUpdateEmailModal(inviteEmail.$key)" *ngIf="!inviteEmail.firstName">(add name)</a>
+                        </div>
+                        <div class="col-sm-4">
+                            {{inviteEmail.lastName}} <a href="javascript:null" (click)="openUpdateEmailModal(inviteEmail.$key)" *ngIf="!inviteEmail.lastName">(add name)</a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="row">
+            <div class="col-sm-6">
+                <a (click)="removeSelectedEmails()" class="btn btn-primary btn-sm">
+                    Remove Selected
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="!fieldValidations.get('emails').valid"  class="validation-error-text">{{fieldValidations.get('emails').errorMessage}}</div>
+
+    <hr />
+
+    <div class="row" style="margin-top:3rem;">
+        <div class="col-md-12">
+            <div *ngIf="!validToSendMessage" class="validation-error-text">Check errors above</div>
+            <button class="btn btn-primary btn-lg" (click)="sendInvitation()">Send Now</button> &nbsp;
+            <button class="btn btn-outline-primary btn-lg">Save as Draft</button> &nbsp;
+            <button class="btn btn-default btn-lg">Cancel</button> &nbsp;
+        </div>
+    </div>
+
+</div>
