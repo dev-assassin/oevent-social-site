@@ -144,7 +144,7 @@ export class PromotedSendEmailComponent implements OnInit {
 
     @Input() title: string;
     eventId: string;
-    set: boolean = false;
+    set = false;
     replyToEmail: string;
     promoters$: any;
     attendees$: any;
@@ -159,11 +159,11 @@ export class PromotedSendEmailComponent implements OnInit {
     attendeeEmails: string[];
     listGroup: string;
     fieldValidations: Map<string, FieldValidation>;
-    valid: boolean = true;
+    valid = true;
     testEmail: string;
     regType: string;
     messageQuill: any;
-    organizerEmail: string = "";
+    organizerEmail: string;
     listGroupSelected: string;
 
 
@@ -172,7 +172,7 @@ export class PromotedSendEmailComponent implements OnInit {
         public eventService: EventService,
         public appService: AppService,
         public emailService: EmailService) {
-        this.listGroup = "";
+        this.listGroup = '';
         this.promoterEmails = new Array<string>();
         this.attendeeEmails = new Array<string>();
         this.registrationTypeAttendees = new Map<string, string[]>();
@@ -183,18 +183,19 @@ export class PromotedSendEmailComponent implements OnInit {
 
     initFieldValidations() {
         this.fieldValidations = new Map<string, FieldValidation>();
-        this.fieldValidations.set("subject", new FieldValidation());
-        this.fieldValidations.set("body", new FieldValidation());
+        this.fieldValidations.set('subject', new FieldValidation());
+        this.fieldValidations.set('body', new FieldValidation());
     }
 
+    // tslint:disable-next-line:use-life-cycle-interface
     ngAfterViewInit() {
-        //INITIALIZE QUILL EDITOR
+        // INITIALIZE QUILL EDITOR
         this.initializeEdit();
     }
 
     initializeEdit() {
 
-        let toolbarOptions = [
+        const toolbarOptions = [
             ['bold', 'italic', 'underline'],
             [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
@@ -202,7 +203,7 @@ export class PromotedSendEmailComponent implements OnInit {
             ['link']
         ];
 
-        //INSTANTIATE BASED ON ID
+        // INSTANTIATE BASED ON ID
         this.messageQuill = new Quill('#message', {
             modules: {
                 toolbar: toolbarOptions
@@ -222,8 +223,7 @@ export class PromotedSendEmailComponent implements OnInit {
         if (this.eventService.set) {
             this.set = true;
             this.loadToLists();
-        }
-        else {
+        } else {
             this.eventService.eventUpdated.first()
                 .subscribe(() => {
                     this.set = true;
@@ -233,8 +233,7 @@ export class PromotedSendEmailComponent implements OnInit {
 
         if (this.appService.contactSet) {
             this.replyToEmail = this.appService.contact.email;
-        }
-        else {
+        } else {
             this.appService.contactEmitter.first().subscribe(() => {
                 this.replyToEmail = this.appService.contact.email;
             });
@@ -242,17 +241,15 @@ export class PromotedSendEmailComponent implements OnInit {
 
         if (this.eventService.profileSet) {
             this.organizerEmail = this.eventService.profile.email;
-        }
-        else {
+        } else {
             this.eventService.profileEmitter.first().subscribe(() => {
                 this.organizerEmail = this.eventService.profile.email;
-            })
+            });
         }
 
         if (this.appService.ocodeSet) {
             this.populateAttendees();
-        }
-        else {
+        } else {
             this.appService.ocodeService.ocodeEmitter.subscribe((ocode) => {
                 this.populateAttendees();
             });
@@ -265,8 +262,7 @@ export class PromotedSendEmailComponent implements OnInit {
         if (this.appService.contact.email) {
             this.replyToEmail = this.appService.contact.email;
 
-        }
-        else {
+        } else {
             this.replyToEmail = this.appService.auth.email;
             this.af.object(`/contact/${this.appService.auth.id}`)
                 .subscribe((snap) => {
@@ -291,11 +287,12 @@ export class PromotedSendEmailComponent implements OnInit {
         this.promoters$.subscribe((data) => {
             if (data && data.length > 0) {
 
-                for (let promoter of data) {
+                for (const promoter of data) {
                     this.af.object(`/ocodes/${promoter.$key}`)
                         .subscribe((snap) => {
 
                             this.af.object(`/contact/${snap.uid}`)
+                                // tslint:disable-next-line:no-shadowed-variable
                                 .subscribe((snap) => {
 
                                     this.promoterEmails.push(String(snap.email));
@@ -314,34 +311,34 @@ export class PromotedSendEmailComponent implements OnInit {
         this.eventService.getAttendeesByOcode(this.appService.ocode).then((attendees) => {
             console.log(attendees);
             this.attendeeEmails = [];
-            for (let attendee of attendees) {
+            for (const attendee of attendees) {
                 this.attendeeEmails.push(attendee.email);
             }
-            this.listGroup = "my_attendees";
-        })
+            this.listGroup = 'my_attendees';
+        });
     }
 
     cancel() {
-        this.subject = "";
-        this.body = "";
-        this.toList = "";
-        this.regType = "";
-        this.listGroup = "";
+        this.subject = '';
+        this.body = '';
+        this.toList = '';
+        this.regType = '';
+        this.listGroup = '';
     }
 
     validToSend(emailMessage: EmailMessage): boolean {
         this.valid = true;
-        this.fieldValidations.set("subject", new FieldValidation());
-        this.fieldValidations.set("body", new FieldValidation());
+        this.fieldValidations.set('subject', new FieldValidation());
+        this.fieldValidations.set('body', new FieldValidation());
 
         if (FieldValidation.isEmptyText(emailMessage.subject)) {
-            this.fieldValidations.get("subject").valid = false;
-            this.fieldValidations.get("subject").errorMessage = "Subject is required";
+            this.fieldValidations.get('subject').valid = false;
+            this.fieldValidations.get('subject').errorMessage = 'Subject is required';
             this.valid = false;
         }
         if (FieldValidation.isEmptyText(emailMessage.body)) {
-            this.fieldValidations.get("body").valid = false;
-            this.fieldValidations.get("body").errorMessage = "Body is required";
+            this.fieldValidations.get('body').valid = false;
+            this.fieldValidations.get('body').errorMessage = 'Body is required';
             this.valid = false;
         }
         return this.valid;
@@ -353,18 +350,18 @@ export class PromotedSendEmailComponent implements OnInit {
     }
 
     sendEmail() {
-        let toList: string = "";
-        if (this.listGroup == "my_attendees") {
-            toList = this.attendeeEmails.join(",");
-        } else if (this.listGroup == "organizer") {
+        let toList: string;
+        if (this.listGroup === 'my_attendees') {
+            toList = this.attendeeEmails.join(',');
+        } else if (this.listGroup === 'organizer') {
             toList = this.organizerEmail;
         }
-        this.sendEmailToRecipient(toList)
+        this.sendEmailToRecipient(toList);
     }
 
     sendEmailToRecipient(toList: string) {
 
-        let pendingMessage: EmailMessage = new EmailMessage();
+        const pendingMessage: EmailMessage = new EmailMessage();
         pendingMessage.subject = this.subject;
         pendingMessage.body = this.messageQuill.root.innerHTML;
         pendingMessage.from = this.replyToEmail;
@@ -374,13 +371,12 @@ export class PromotedSendEmailComponent implements OnInit {
         if (this.validToSend(pendingMessage)) {
             this.emailService.triggerPendingEmail(pendingMessage)
                 .then(() => {
-                    this.toasty.success("Email Sent");
+                    this.toasty.success('Email Sent');
                 }, (err) => {
-                        this.toasty.error(err.message);
-                    });
-        }
-        else {
-            this.toasty.error("Validation failed");
+                    this.toasty.error(err.message);
+                });
+        } else {
+            this.toasty.error('Validation failed');
         }
     }
 }
