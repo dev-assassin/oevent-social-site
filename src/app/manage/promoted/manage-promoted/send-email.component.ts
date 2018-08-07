@@ -1,150 +1,146 @@
-import "rxjs/add/operator/do";
-import "rxjs/add/operator/pluck";
-import {Component, OnInit, Input} from "@angular/core";
-import {AngularFireDatabase} from "angularfire2/database";
-import {AppService} from "../../../services/app-service";
-import {EmailMessage} from "../../../shared-models/email-message";
-import {EmailService} from "../../../shared-module/services/email.service";
-import {ToastyService} from "ng2-toasty";
-import * as moment from "moment";
-import {FieldValidation} from "../../../../assets/common/validation/field-validation";
-import {EventService} from "../../../event/services/event-service";
+import 'rxjs/add/operator/do';
+import 'rxjs/add/operator/pluck';
+import { Component, OnInit, Input } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { AppService } from '../../../services/app-service';
+import { EmailMessage } from '../../../shared-models/email-message';
+import { EmailService } from '../../../shared-module/services/email.service';
+import { ToastyService } from 'ng2-toasty';
+import * as moment from 'moment';
+import { FieldValidation } from '../../../../assets/common/validation/field-validation';
+import { EventService } from '../../../event/services/event-service';
 declare var Quill: any;
 
 @Component({
-    selector: 'my-event-send-email',
+    selector: 'app-my-event-send-email',
     template: `
         <h3 class="line" style="margin-bottom:0px;">
             {{ eventService.event.title }} - Send Email
-        </h3>        
-        
-        <div div class="row"> 
-            <div class="col-md-12"> 
-                <label> 
+        </h3>
+
+        <div div class="row">
+            <div class="col-md-12">
+                <label>
                     Reply-to Email
                 </label>
-                <div> 
+                <div>
                     <input class="form-control" disabled [(ngModel)]="replyToEmail" />
                 </div>
             </div>
         </div>
-        
+
         <div class="row padding-vertical">
-               
-                <div class="col-md-4"> 
-                 <label> 
+
+                <div class="col-md-4">
+                 <label>
                     To:
                 </label>
-                <select class="form-control" [(ngModel)]="listGroup" (change)="listGroupSelected()"> 
-                    <option value="my_attendees"> 
+                <select class="form-control" [(ngModel)]="listGroup" (change)="listGroupSelected()">
+                    <option value="my_attendees">
                         My Attendees ({{attendeeEmails.length}})
                     </option>
-                    <option value="organizer"> 
+                    <option value="organizer">
                         Organizer ({{ organizerEmail }})
-                    </option>                               
+                    </option>
                 </select>
                 </div>
                 <div class="col-md-4" *ngIf="listGroup == 'attendees_by_registration_type'">
-                 <label> 
+                 <label>
                     Registration Type:
                 </label>
-                 <select class="form-control" [(ngModel)]="regType" > 
+                 <select class="form-control" [(ngModel)]="regType" >
                     <option value="{{regType.$key}}" *ngFor="let regType of eventService.eventTickets$ | async">
-                        {{regType.ticketTitle}} ({{registrationTypeAttendees.get(regType.$key)?registrationTypeAttendees.get(regType.$key).length:0}})
+                        {{regType.ticketTitle}} ({{registrationTypeAttendees.get(regType.$key)?
+                            registrationTypeAttendees.get(regType.$key).length:0}})
                     </option>
                 </select>
                 </div>
-                
-           
+
         </div>
-        
-        <div div class="row"> 
-            <div class="col-md-12 {{!fieldValidations.get('subject').valid?'has-error':''}}"> 
-                <label> 
+
+        <div div class="row">
+            <div class="col-md-12 {{!fieldValidations.get('subject').valid?'has-error':''}}">
+                <label>
                     Subject
                 </label>
-                <div> 
+                <div>
                     <input class="form-control" [(ngModel)]="subject" />
                     <div *ngIf="!fieldValidations.get('subject').valid" class="validation-error-text">
                     {{fieldValidations.get("subject").errorMessage}}
-                    </div> 
-        
+                    </div>
+
                 </div>
             </div>
         </div>
-        
-        <!-- <div div class="row padding-vertical"> 
-            <div class="col-md-4"> 
-                <label> 
+
+        <!-- <div div class="row padding-vertical">
+            <div class="col-md-4">
+                <label>
                     Salutation
                 </label>
-                <div> 
-                    <select class="form-control">> 
+                <div>
+                    <select class="form-control">>
                         <option>Hi</option>
                     </select>
                 </div>
             </div>
-            <div class="col-md-4"> 
-                <label> 
+            <div class="col-md-4">
+                <label>
                     &nbsp;
                 </label>
-                <div> 
-                    <select class="form-control">> 
+                <div>
+                    <select class="form-control">>
                         <option>&lt;First Name&gt;</option>
                     </select>
                 </div>
             </div>
         </div> -->
-        
+
         <div class="row">
-            <div class="col-md-12 {{!fieldValidations.get('body').valid?'has-error':''}}"> 
-                <label> 
+            <div class="col-md-12 {{!fieldValidations.get('body').valid?'has-error':''}}">
+                <label>
                     Body
                 </label>
-                <div> 
+                <div>
                     <div id="toolbar"></div>
                     <div id="message" style="min-height:150px;"></div>
                     <div *ngIf="!fieldValidations.get('body').valid" class="validation-error-text">
                     {{fieldValidations.get("body").errorMessage}}
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="row padding-vertical"> 
-            <div class="col-md-9"> 
-                <label> 
+
+        <div class="row padding-vertical">
+            <div class="col-md-9">
+                <label>
                     Send Test Email
                 </label>
-                <div> 
+                <div>
                     <input class="form-control" [(ngModel)]="testEmail" />
                 </div>
             </div>
-            <div class="col-md-3"> 
+            <div class="col-md-3">
                 <br />
                 <button class="btn btn-primary btn-block" (click)="sendTestEmail()">Send</button>
             </div>
         </div>
-        
-        <div class="row"> 
-            <div class="col-md-12"> 
+
+        <div class="row">
+            <div class="col-md-12">
                 <button class="btn btn-primary btn-lg" (click)="sendEmail()">Send Now</button> &nbsp;
                <!-- <button class="btn btn-outline-primary btn-lg">Save as Draft</button> &nbsp;  -->
                 <button class="btn btn-default btn-lg" (click)="cancel()">Cancel</button> &nbsp;
             </div>
         </div>
-        
     `,
     styles: [
-        `
-               
-        `
+        ``
     ]
 
 })
 
-export class PromotedSendEmailComponent implements OnInit
-{
+export class PromotedSendEmailComponent implements OnInit {
 
     @Input() title: string;
     eventId: string;
@@ -156,52 +152,51 @@ export class PromotedSendEmailComponent implements OnInit
     promotersCount: number;
     attendeesCount: number;
     everyOneCount: number;
-    registrationTypeAttendees:Map<string,string[]>;
+    registrationTypeAttendees: Map<string, string[]>;
     body: string;
     toList: string;
     promoterEmails: string[];
     attendeeEmails: string[];
     listGroup: string;
-    fieldValidations: Map<string,FieldValidation>;
+    fieldValidations: Map<string, FieldValidation>;
     valid: boolean = true;
     testEmail: string;
-    regType:string;
-    messageQuill:any;
-    organizerEmail:string = "";
+    regType: string;
+    messageQuill: any;
+    organizerEmail: string = "";
+    listGroupSelected: string;
 
 
     constructor(private toasty: ToastyService,
-                private af: AngularFireDatabase,
-                public eventService: EventService,
-                public appService: AppService,
-                public emailService: EmailService)
-    {
+        private af: AngularFireDatabase,
+        public eventService: EventService,
+        public appService: AppService,
+        public emailService: EmailService) {
         this.listGroup = "";
         this.promoterEmails = new Array<string>();
         this.attendeeEmails = new Array<string>();
-        this.registrationTypeAttendees = new Map<string,string[]>();
+        this.registrationTypeAttendees = new Map<string, string[]>();
         this.attendees$ = this.eventService.getAttendeesByType();
         this.promoters$ = this.eventService.getPromoters();
         this.initFieldValidations();
     }
 
-    initFieldValidations()
-    {
-        this.fieldValidations = new Map<string,FieldValidation>();
+    initFieldValidations() {
+        this.fieldValidations = new Map<string, FieldValidation>();
         this.fieldValidations.set("subject", new FieldValidation());
         this.fieldValidations.set("body", new FieldValidation());
     }
 
-    ngAfterViewInit(){
+    ngAfterViewInit() {
         //INITIALIZE QUILL EDITOR
         this.initializeEdit();
     }
 
-    initializeEdit(){
+    initializeEdit() {
 
         let toolbarOptions = [
             ['bold', 'italic', 'underline'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             [{ 'color': [] }, { 'background': [] }],
             ['link']
@@ -222,8 +217,7 @@ export class PromotedSendEmailComponent implements OnInit
 
     }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.loadReplyToEmail();
         if (this.eventService.set) {
             this.set = true;
@@ -231,36 +225,35 @@ export class PromotedSendEmailComponent implements OnInit
         }
         else {
             this.eventService.eventUpdated.first()
-                .subscribe(()=>
-                {
+                .subscribe(() => {
                     this.set = true;
                     this.loadToLists();
                 });
         }
 
-        if(this.appService.contactSet){
+        if (this.appService.contactSet) {
             this.replyToEmail = this.appService.contact.email;
         }
-        else{
-            this.appService.contactEmitter.first().subscribe(()=>{
+        else {
+            this.appService.contactEmitter.first().subscribe(() => {
                 this.replyToEmail = this.appService.contact.email;
             });
         }
 
-        if(this.eventService.profileSet){
+        if (this.eventService.profileSet) {
             this.organizerEmail = this.eventService.profile.email;
         }
-        else{
-            this.eventService.profileEmitter.first().subscribe(()=>{
+        else {
+            this.eventService.profileEmitter.first().subscribe(() => {
                 this.organizerEmail = this.eventService.profile.email;
             })
         }
 
-        if(this.appService.ocodeSet){
+        if (this.appService.ocodeSet) {
             this.populateAttendees();
         }
-        else{
-            this.appService.ocodeService.ocodeEmitter.subscribe((ocode)=>{
+        else {
+            this.appService.ocodeService.ocodeEmitter.subscribe((ocode) => {
                 this.populateAttendees();
             });
         }
@@ -268,8 +261,7 @@ export class PromotedSendEmailComponent implements OnInit
 
     }
 
-    loadReplyToEmail()
-    {
+    loadReplyToEmail() {
         if (this.appService.contact.email) {
             this.replyToEmail = this.appService.contact.email;
 
@@ -277,8 +269,7 @@ export class PromotedSendEmailComponent implements OnInit
         else {
             this.replyToEmail = this.appService.auth.email;
             this.af.object(`/contact/${this.appService.auth.id}`)
-                .subscribe((snap)=>
-                {
+                .subscribe((snap) => {
                     this.replyToEmail = snap.email;
                 });
 
@@ -286,11 +277,9 @@ export class PromotedSendEmailComponent implements OnInit
     }
 
 
-    loadToLists(): void
-    {
+    loadToLists(): void {
         this.everyOneCount = 0;
-        this.promoters$.subscribe((data)=>
-        {
+        this.promoters$.subscribe((data) => {
             this.promotersCount = data.length;
             this.everyOneCount += data.length;
         });
@@ -299,18 +288,15 @@ export class PromotedSendEmailComponent implements OnInit
     }
 
     populatePromoters() {
-        this.promoters$.subscribe((data)=>
-        {
+        this.promoters$.subscribe((data) => {
             if (data && data.length > 0) {
 
                 for (let promoter of data) {
                     this.af.object(`/ocodes/${promoter.$key}`)
-                        .subscribe((snap)=>
-                        {
+                        .subscribe((snap) => {
 
                             this.af.object(`/contact/${snap.uid}`)
-                                .subscribe((snap)=>
-                                {
+                                .subscribe((snap) => {
 
                                     this.promoterEmails.push(String(snap.email));
                                 });
@@ -323,19 +309,19 @@ export class PromotedSendEmailComponent implements OnInit
         });
     }
 
-    populateAttendees(){
+    populateAttendees() {
         this.attendeesCount = 0;
-        this.eventService.getAttendeesByOcode(this.appService.ocode).then((attendees)=>{
+        this.eventService.getAttendeesByOcode(this.appService.ocode).then((attendees) => {
             console.log(attendees);
-            this.attendeeEmails=[];
-            for(let attendee of attendees){
+            this.attendeeEmails = [];
+            for (let attendee of attendees) {
                 this.attendeeEmails.push(attendee.email);
             }
             this.listGroup = "my_attendees";
         })
     }
 
-    cancel(){
+    cancel() {
         this.subject = "";
         this.body = "";
         this.toList = "";
@@ -343,7 +329,7 @@ export class PromotedSendEmailComponent implements OnInit
         this.listGroup = "";
     }
 
-    validToSend(emailMessage: EmailMessage): boolean{
+    validToSend(emailMessage: EmailMessage): boolean {
         this.valid = true;
         this.fieldValidations.set("subject", new FieldValidation());
         this.fieldValidations.set("body", new FieldValidation());
@@ -362,24 +348,21 @@ export class PromotedSendEmailComponent implements OnInit
     }
 
 
-    sendTestEmail()
-    {
+    sendTestEmail() {
         this.sendEmailToRecipient(this.testEmail);
     }
 
-    sendEmail()
-    {
+    sendEmail() {
         let toList: string = "";
         if (this.listGroup == "my_attendees") {
             toList = this.attendeeEmails.join(",");
-        }else if(this.listGroup == "organizer"){
+        } else if (this.listGroup == "organizer") {
             toList = this.organizerEmail;
         }
         this.sendEmailToRecipient(toList)
     }
 
-    sendEmailToRecipient(toList: string)
-    {
+    sendEmailToRecipient(toList: string) {
 
         let pendingMessage: EmailMessage = new EmailMessage();
         pendingMessage.subject = this.subject;
@@ -390,13 +373,11 @@ export class PromotedSendEmailComponent implements OnInit
 
         if (this.validToSend(pendingMessage)) {
             this.emailService.triggerPendingEmail(pendingMessage)
-                .then(()=>
-                {
+                .then(() => {
                     this.toasty.success("Email Sent");
-                }, (err)=>
-                {
-                    this.toasty.error(err.message);
-                });
+                }, (err) => {
+                        this.toasty.error(err.message);
+                    });
         }
         else {
             this.toasty.error("Validation failed");
