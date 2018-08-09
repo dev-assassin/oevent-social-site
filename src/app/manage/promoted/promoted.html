@@ -1,0 +1,42 @@
+<section class="secondary-content">
+    <div class="container">
+        <ul class="breadcrumbs">
+            <li>
+                <a routerLink="/manage">
+                    Manage Events
+                </a>
+            </li>
+            <li>
+                Organized Events
+            </li>
+        </ul>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 class="line">
+                    Manage My Promotions
+                </h3>
+
+                <div class="c-content-tab-1 c-theme c-margin-t-30">
+
+                    <ul class="nav nav-inline nav-tabs c-font-uppercase c-font-bold light-bottom-border">
+                        <li class="nav-item" routerLink="live" routerLinkActive="active">
+                            <a class="nav-link">Live</a>
+                        </li>
+                        <li class="nav-item" routerLink="history" routerLinkActive="active">
+                            <a class="nav-link">History</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="margin-top: 60px;">
+                    <router-outlet></router-outlet>
+                </div>
+
+
+
+            </div>
+        </div>
+
+    </div><!-- .container -->
+
+</section>
