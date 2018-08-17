@@ -1,0 +1,209 @@
+<section class="secondary-content">
+    <div class="container">
+        <div class="row c-margin-b-10">
+            <div class="col-md-12">
+                <div class="c-content-title-1 c-title-pricing-1">
+                    <h3 class="line">Membership Options</h3>
+                    <h4>Current Membership: Standard</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row" *ngIf="set">
+            <div class="c-content-pricing-1 c-opt-1">
+                <div class="col-md-3 c-sm-hidden">
+                    <div class="c-content c-column-odd c-padding-adjustment">
+                        <div class="c-row c-type c-font-20 c-align-left">Product Features</div>
+                        <div class="c-row c-title c-font-17">Attend Events</div>
+                        <div class="c-row c-title c-font-17">Follow Leaders</div>
+                        <div class="c-row c-title c-font-17">Follow Locations</div>
+                        <div class="c-row c-title c-font-17">Bookmark Events</div>
+                        <div class="c-row c-title c-font-17">Promote Events</div>
+                        <div class="c-row c-title c-font-17">Create Events</div>
+                        <div class="c-row c-title c-font-17">Library Access</div>
+                        <div class="c-row c-empty">&nbsp;</div>
+                        <div class="c-row c-empty">&nbsp;</div>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-sm-4">
+                    <div class="c-content c-column-even c-padding-adjustment">
+                        <div class="c-row c-type c-font-20">Free</div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Attend Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Leaders</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Locations</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Bookmark Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Promote Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Create Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Library Access</span>
+                        </div>
+                        <div class="c-row c-price">
+                            <span class="c-dollar c-font-20"></span>
+                            <span class="c-font-30 c-font-bold">Free</span>
+                        </div>
+                        <div class="c-row c-purchase">
+
+                            <div class="c-row c-purchase" *ngIf="membership != 'free'">
+                                <a class="btn btn-lg btn-primary" (click)="updateMembership('free')">SELECT</a>
+                            </div>
+                            <div class="c-row c-purchase curr-level" *ngIf="membership == 'free'">
+                                Current Level
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="c-content c-column-odd c-padding-adjustment">
+                        <div class="c-row c-type c-font-20">Basic</div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Attend Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Leaders</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Locations</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Bookmark Events</span>
+                        </div>
+                        <div class="c-row c-font-17 c-font-bold">2
+                            <span class="c-sub-title">Promote Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Create Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Library Access</span>
+                        </div>
+                        <div class="c-row c-price">
+                            <span class="c-dollar c-font-20">$</span>
+                            <span class="c-font-30 c-font-bold">2.95</span>
+                        </div>
+
+                        <div class="c-row c-purchase" *ngIf="membership != 'basic'">
+                            <a class="btn btn-lg btn-primary" (click)="updateMembership('basic')">SELECT</a>
+                        </div>
+                        <div class="c-row c-purchase curr-level" *ngIf="membership == 'basic'">
+                            Current Level
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="c-content c-column-even c-padding-adjustment">
+                        <div class="c-row c-type c-font-20">Standard</div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Attend Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Leaders</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Locations</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Bookmark Events</span>
+                        </div>
+                        <div class="c-row c-font-2 c-font-bold">5
+                            <span class="c-sub-title">Promote Events</span>
+                        </div>
+                        <div class="c-row c-font-17 c-font-bold">2
+                            <span class="c-sub-title">Create Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-times c-font-20"></i>
+                            <span class="c-sub-title">Library Access</span>
+                        </div>
+                        <div class="c-row c-price">
+                            <span class="c-dollar c-font-20">$</span>
+                            <span class="c-font-30 c-font-bold">9.95</span>
+                        </div>
+
+                        <div class="c-row c-purchase" *ngIf="membership != 'standard'">
+                            <a class="btn btn-lg btn-primary" (click)="updateMembership('standard')">SELECT</a>
+                        </div>
+                        <div class="c-row c-purchase curr-level" *ngIf="membership == 'standard'">
+                            Current Level
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-4">
+                    <div class="c-content c-column-odd">
+                        <div class="c-row c-type c-font-20">Professional</div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Attend Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Leaders</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Follow Locations</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Bookmark Events</span>
+                        </div>
+                        <div class="c-row c-font-17 c-font-bold">UNLIMITED
+                            <span class="c-sub-title">Promote Events</span>
+                        </div>
+                        <div class="c-row c-font-17 c-font-bold">UNLIMITED
+                            <span class="c-sub-title">Create Events</span>
+                        </div>
+                        <div class="c-row">
+                            <i class="fa fa-check c-font-20"></i>
+                            <span class="c-sub-title">Library Access</span>
+                        </div>
+                        <div class="c-row c-price">
+                            <span class="c-dollar c-font-20">$</span>
+                            <span class="c-font-30 c-font-bold">24.95</span>
+                        </div>
+
+                        <div class="c-row c-purchase" *ngIf="membership != 'professional'">
+                            <a class="btn btn-lg btn-primary" (click)="updateMembership('professional')">SELECT</a>
+                        </div>
+                        <div class="c-row c-purchase curr-level" *ngIf="membership == 'professional'">
+                            Current Level
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
