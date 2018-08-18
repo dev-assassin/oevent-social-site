@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FirebaseApp, AngularFireModule } from 'angularfire2';
 import { Observable } from 'rxjs/Observable';
+// tslint:disable-next-line:import-blacklist
 import { Subject } from 'rxjs';
 import { IFile, File } from '../models/file';
 import * as firebase from 'firebase/app';
@@ -188,7 +189,7 @@ export class AuthService {
     });
 
 
-    let about$ = this.af.object(`/about/${this.id}`);
+    const about$ = this.af.object(`/about/${this.id}`);
 
     about$.subscribe((values) => {
 
@@ -212,12 +213,12 @@ export class AuthService {
     const slicesCount = Math.ceil(bytesLength / sliceSize);
     const byteArrays = new Array(slicesCount);
 
-    for (const sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
+    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
       const begin = sliceIndex * sliceSize;
       const end = Math.min(begin + sliceSize, bytesLength);
 
       const bytes = new Array(end - begin);
-      for (const offset = begin, i = 0; offset < end; ++i, ++offset) {
+      for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
         bytes[i] = byteCharacters[offset].charCodeAt(0);
       }
       byteArrays[sliceIndex] = new Uint8Array(bytes);
