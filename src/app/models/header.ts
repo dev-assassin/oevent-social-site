@@ -3,7 +3,7 @@ export interface IHeader {
 }
 
 export class Header {
-    $value: string = "";
+    $value = '';
 
     constructor(first?) {
         this.$value = first;
