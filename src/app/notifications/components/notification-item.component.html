@@ -1,0 +1,44 @@
+<div class="row people" *ngIf="mini">
+    <div class="col-sm-3">
+        <a href="organizer.html">
+            <img src="../../../assets/images/avatars/brianne.jpg" class="img-responsive img-circle">
+        </a>
+    </div>
+    <div class="col-sm-9 c-pos-relative">
+        <span class="delete-message">
+            <a (click)="archiveMessage(message.$key)">
+                <span class="fa fa-times"></span>
+            </a>
+        </span>
+
+        <a href="organizer.html">{{message.from}}</a> — 4/9, 11:48 PM
+        <div class="c-margin-b-8 c-margin-t-8">
+            {{message.title}}: "{{message.body}}"
+        </div>
+    </div>
+</div>
+
+
+<div class="row people c-pos-relative" *ngIf="!mini">
+    <span class="delete-message">
+        <a (click)="archiveMessage(message.$key)">
+            <span class="fa fa-times"></span>
+        </a>
+    </span>
+    <div class="col-sm-2 col-lg-1">
+        <a href="organizer.html">
+            <img src="../../../assets/images/avatars/brianne.jpg" class="img-circle img-responsive c-pull-left">
+        </a>
+    </div>
+    <div class="col-sm-8 col-lg-9">
+        <a href="organizer.html">{{message.from}}</a>
+        <div class="c-margin-b-5 c-margin-t-8">
+            <strong>{{message.title}}:</strong> "{{message.body}}"
+        </div>
+    </div>
+    <div class="col-sm-2 text-center">
+        <button class="btn btn-primary">
+            Action
+        </button>
+    </div>
+</div>
