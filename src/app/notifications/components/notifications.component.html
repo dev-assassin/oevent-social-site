@@ -1,65 +1,41 @@
 <section class="secondary-content">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="line" style="margin-bottom:0px;padding-bottom:0px;">
-                    Notifications
-                </h3>
-            </div>
-        </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h3 class="line" style="margin-bottom:0px;padding-bottom:0px;">
+          Notifications
+        </h3>
+      </div>
+    </div>
 
-        <div class="c-margin-t-10 cmargin-b-20">
+    <div class="c-margin-t-10 cmargin-b-20">
 
-            <div class="btn-group pull-left" data-toggle="buttons">
-                <label class="btn btn-sm btn-default active">
-                    <input type="radio" name="options" id="option1" selected=""> Active
-                </label>
-                <label class="btn btn-sm btn-default">
-                    <input type="radio" name="options" id="option2"> Archived
-                </label>
-            </div>
+      <div class="btn-group pull-left" data-toggle="buttons">
+        <label class="btn btn-sm btn-default active">
+          <input type="radio" name="options" id="option1" selected=""> Active
+        </label>
+        <label class="btn btn-sm btn-default">
+          <input type="radio" name="options" id="option2"> Archived
+        </label>
+      </div>
 
-            <a class="btn btn-default pull-right" data-toggle="modal" href="#notifications-modal">
-                <span class="fa fa-gear" (click)="openNotifSettings()"></span>
-            </a>
-        </div>
+      <a class="btn btn-default pull-right" data-toggle="modal" href="#notifications-modal">
+        <span class="fa fa-gear" (click)="openNotifSettings()"></span>
+      </a>
+    </div>
 
-        <div style="clear:both;"></div>
+    <div style="clear:both;"></div>
 
-        <div class="people-results-wrapper notifications">
-            <div *ngFor="let message of activeMessages ">
-                <notif-item [message]="message" [mini]=""></notif-item>
-                <!--
-                <div class="row people c-pos-relative">
-                <span class="delete-message">
-                    <a (click)="archiveMessage(message.$key)">
-                        <span class="fa fa-times"></span>
-                    </a>
-                </span>
-                    <div class="col-sm-2 col-lg-1">
-                        <a href="organizer.html">
-                            <img src="../../assets/images/avatars/brianne.jpg" class="img-circle img-responsive c-pull-left">
-                        </a>
-                    </div>
-                    <div class="col-sm-8 col-lg-9">
-                        <a href="organizer.html">{{message.from}}</a>
-                        <div class="c-margin-b-5 c-margin-t-8">
-                            <strong>{{message.title}}:</strong> "{{message.body}}"
-                        </div>
-                    </div>
-                    <div class="col-sm-2 text-center">
-                        <button class="btn btn-primary">
-                            Action
-                        </button>
-                    </div>
-                </div>
-                -->
-                <hr/>
+    <div class="people-results-wrapper notifications">
+      <div *ngFor="let message of activeMessages ">
+        <notif-item [message]="message" [mini]=""></notif-item>
+        <hr/>
 
-            </div>
+      </div>
 
-        </div>
+    </div>
 
-    </div><!-- .container -->
+  </div>
+  <!-- .container -->
 
 </section>
